@@ -1,9 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Sidebar from "../components/Sidebar";
 
 export default function Home() {
   const [isDark, setIsDark] = useState(true);
+  const [showSidebar, setShowSidebar] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowSidebar(window.scrollY > window.innerHeight * 0.8);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <main
@@ -14,7 +28,7 @@ export default function Home() {
       }`}
     >
       {/* Toggle */}
-      <div className="absolute top-10 left-1/2 -translate-x-1/2">
+      <div className="fixed top-10 left-1/2 -translate-x-1/2 z-50">
         <div className="flex items-center gap-4">
           <span
             className={`text-xs uppercase tracking-[0.3em] ${
@@ -51,16 +65,19 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Hero */}
-      <div className="min-h-screen flex flex-col items-center justify-center">
+      {/* HERO */}
+      <section
+        id="hero"
+        className="min-h-screen flex flex-col items-center justify-center"
+      >
         <h1
-          className={`text-[120px] leading-none ${
+          className={`leading-none ${
             isDark
-              ? "font-mono tracking-wide"
-              : "font-editorial tracking-normal"
+              ? "text-[100px] font-mono tracking-wide"
+              : "text-[115px] font-editorial tracking-normal"
           }`}
         >
-          Dhwani Patel
+          DHWANI PATEL
         </h1>
 
         <p
@@ -72,8 +89,58 @@ export default function Home() {
         >
           {isDark
             ? "Creative Developer & Digital Designer"
-            : "Designer • Storyteller • Creative Technologist"}
+            : "Storyteller & Creative Technologist"}
         </p>
+      </section>
+
+      {/* PORTFOLIO AREA */}
+      <div className="relative">
+        {showSidebar && <Sidebar />}
+
+        <section
+          id="intro"
+          className="min-h-screen ml-[320px] flex items-center justify-center"
+        >
+          <h2 className="text-6xl font-mono">
+            INTRO
+          </h2>
+        </section>
+
+        <section
+          id="skills"
+          className="min-h-screen ml-[320px] flex items-center justify-center"
+        >
+          <h2 className="text-6xl font-mono">
+            SKILLS
+          </h2>
+        </section>
+
+        <section
+          id="experience"
+          className="min-h-screen ml-[320px] flex items-center justify-center"
+        >
+          <h2 className="text-6xl font-mono">
+            EXPERIENCE
+          </h2>
+        </section>
+
+        <section
+          id="work"
+          className="min-h-screen ml-[320px] flex items-center justify-center"
+        >
+          <h2 className="text-6xl font-mono">
+            WORK
+          </h2>
+        </section>
+
+        <section
+          id="contact"
+          className="min-h-screen ml-[320px] flex items-center justify-center"
+        >
+          <h2 className="text-6xl font-mono">
+            CONTACT
+          </h2>
+        </section>
       </div>
     </main>
   );
