@@ -7,58 +7,75 @@ export default function Home() {
 
   return (
     <main
-      className={`min-h-screen transition-all duration-700 ${
+      className={`min-h-screen transition-colors duration-900 ${
         isDark
           ? "bg-black text-white"
-          : "bg-[#F7F5F2] text-black"
+          : "bg-[#F8F6F2] text-black"
       }`}
     >
       {/* Toggle */}
       <div className="absolute top-10 left-1/2 -translate-x-1/2">
         <div className="flex items-center gap-4">
-          <span className="text-xs tracking-[0.25em] uppercase">
-            Light
+          <span
+            className={`text-xs uppercase tracking-[0.3em] ${
+              !isDark ? "opacity-100" : "opacity-40"
+            }`}
+          >
+            Editorial
           </span>
 
           <button
             onClick={() => setIsDark(!isDark)}
-            className={`relative h-10 w-20 rounded-full border transition-all duration-500 ${
-              isDark ? "border-white" : "border-black"
+            className={`relative h-10 w-20 rounded-full border ${
+              isDark
+                ? "border-white"
+                : "border-black"
             }`}
           >
             <div
               className={`absolute top-1 h-8 w-8 rounded-full transition-all duration-500 ${
                 isDark
-                  ? "left-[42px] bg-white"
+                  ? "left-10 bg-white"
                   : "left-1 bg-black"
               }`}
             />
           </button>
 
-          <span className="text-xs tracking-[0.25em] uppercase">
-            Dark
+          <span
+            className={`text-xs uppercase tracking-[0.3em] ${
+              isDark ? "opacity-100" : "opacity-40"
+            }`}
+          >
+            Blueprint
           </span>
         </div>
       </div>
 
       {/* Hero */}
-      <section className="flex min-h-screen flex-col items-center justify-center">
+      <div className="min-h-screen flex flex-col items-center justify-center">
         <h1
-          className={`transition-all duration-700 ${
+          className={`text-[120px] leading-none ${
             isDark
-              ? "text-8xl font-light tracking-wide"
-              : "text-8xl font-light tracking-wide"
+              ? "font-mono tracking-wide"
+              : "font-editorial tracking-normal"
           }`}
         >
           Dhwani Patel
         </h1>
 
-        <p className="mt-8 text-sm uppercase tracking-[0.45em] opacity-80 transition-all duration-700">
+        <p
+          className={`mt-6 text-xl opacity-80 ${
+            isDark
+              ? "font-mono uppercase tracking-[0.3em]"
+              : "font-editorial italic tracking-wide"
+          }`}
+        >
           {isDark
             ? "Creative Developer & Digital Designer"
-            : "Designer • Storyteller • Creative"}
+            : "Designer • Storyteller • Creative Technologist"}
         </p>
-      </section>
+      </div>
     </main>
   );
 }
+
