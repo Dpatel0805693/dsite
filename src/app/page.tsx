@@ -1,7 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Experience from "../components/Experience";
+import Intro from "../components/Intro";
 import Sidebar from "../components/Sidebar";
+import Skills from "../components/Skills";
+import Work from "../components/Work";
 
 export default function Home() {
   const [isDark, setIsDark] = useState(true);
@@ -99,61 +103,11 @@ export default function Home() {
 
         
         
-        <section
-          id="intro"
-          className="min-h-screen ml-[500px] flex items-center"
-        >
-          <div className="max-w-3xl px-20">
-
-            <p className="font-mono text-lg leading-relaxed">
-              I'm a Computer Science student,
-              designer, and creative developer
-              focused on building meaningful
-              digital experiences.
-              My work lives at the intersection
-              of technology and storytelling,
-              combining clean systems with
-              thoughtful design.
-              Currently pursuing a B.S. in
-              Computer Science with a Minor
-              in New Media at the University
-              of Tampa.
-            </p>
-
-
-          </div>
-        </section>
-
-
-
-
-
-        <section
-          id="skills"
-          className="min-h-screen ml-[320px] flex items-center justify-center"
-        >
-          <h2 className="text-6xl font-mono">
-            SKILLS
-          </h2>
-        </section>
-
-        <section
-          id="experience"
-          className="min-h-screen ml-[320px] flex items-center justify-center"
-        >
-          <h2 className="text-6xl font-mono">
-            EXPERIENCE
-          </h2>
-        </section>
-
-        <section
-          id="work"
-          className="min-h-screen ml-[320px] flex items-center justify-center"
-        >
-          <h2 className="text-6xl font-mono">
-            WORK
-          </h2>
-        </section>
+        <Intro />
+        <Skills />
+        <Experience />
+        <Work />
+      
 
         <section
           id="contact"
