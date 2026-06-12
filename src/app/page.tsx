@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Contact from "../components/Contact";
 import Experience from "../components/Experience";
 import Intro from "../components/Intro";
 import Sidebar from "../components/Sidebar";
@@ -107,16 +108,9 @@ export default function Home() {
         <Skills />
         <Experience />
         <Work />
-      
+        <Contact />
 
-        <section
-          id="contact"
-          className="min-h-screen ml-[320px] flex items-center justify-center"
-        >
-          <h2 className="text-6xl font-mono">
-            CONTACT
-          </h2>
-        </section>
+       
       </div>
     </main>
   );
