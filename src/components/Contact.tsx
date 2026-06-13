@@ -9,21 +9,25 @@ export default function Contact() {
           <div className="w-full max-w-5xl px-10 font-mono">
   
             <div className="grid grid-cols-[320px_320px] gap-12 items-center justify-center">
-  
-              {/* TEXT */}
-              <div>
-  
-                <h2 className="text-4xl mb-4 tracking-wide">
-                  Let's Connect
-                </h2>
-  
-                <p className="max-w-xs text-sm leading-8 opacity-70">
-                  Creating thoughtful digital
-                  experiences through design,
-                  development, and storytelling.
-                </p>
-  
-              </div>
+
+            {/* TEXT */}
+            <div>
+
+            <h2 className="text-4xl mb-6 tracking-wide">
+                Dhwani Patel
+            </h2>
+
+            <div className="space-y-2 text-sm opacity-70 leading-relaxed">
+
+                <p>B.S. Computer Science</p>
+
+                <p>Minor in New Media</p>
+
+                <p>University of Tampa</p>
+
+            </div>
+
+            </div>
   
               {/* IMAGE */}
               <div>

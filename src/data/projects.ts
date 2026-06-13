@@ -1,9 +1,10 @@
 export const projects = {
     "Adobe Creative Suite": [
       "Self Portrait",
-      "GIF Heart",
-      "Stranger Things GIF",
-      "Business Cards",
+      "Heart",
+      "Stranger Things",
+      "The Wave",
+      "SHE",
     ],
   
     "UI/UX Design Projects": [
@@ -15,9 +16,8 @@ export const projects = {
       "Northern Lights",
       "Vector Mandala",
       "Sanskrit",
-      "Heart & Brain",
-      "Butterfly Game",
-      "Typography",
+      "Brain vs Heart",
+      "Catch some Butterflies",
     ],
   
     Python: [

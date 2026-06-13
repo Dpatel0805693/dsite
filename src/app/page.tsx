@@ -65,7 +65,7 @@ export default function Home() {
               isDark ? "opacity-100" : "opacity-40"
             }`}
           >
-            Blueprint
+            Technical
           </span>
         </div>
       </div>
@@ -105,9 +105,9 @@ export default function Home() {
         
         
         <Intro />
-        <Skills />
-        <Experience />
         <Work />
+        <Experience />
+        <Skills />
         <Contact />
 
        

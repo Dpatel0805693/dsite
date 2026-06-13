@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { projectDetails } from "../data/projectDetails";
 import { projects } from "../data/projects";
 
 export default function Work() {
@@ -11,6 +12,11 @@ export default function Work() {
   const [selectedProject, setSelectedProject] = useState(
     "Self Portrait"
   );
+
+  const currentProject =
+    projectDetails[
+      selectedProject as keyof typeof projectDetails
+    ];
 
   return (
     <section
@@ -77,37 +83,116 @@ export default function Work() {
               {selectedProject}
             </h2>
 
-            <p className="uppercase tracking-[0.3em] text-xs opacity-50 mb-4">
-              Project
+            <p className="uppercase tracking-[0.4em] text-[10px] opacity-40 mb-4">
+              {currentProject.type}
             </p>
 
-            {/* IMAGE */}
-            <div className="h-[320px] w-full border border-white/20 rounded-lg flex items-center justify-center">
-              <p className="opacity-40">
-                PROJECT IMAGE
-              </p>
+            {/* MEDIA */}
+            <div className="flex justify-start mb-6">
+
+            {selectedProject === "Stranger Things" ? (
+
+            <div className="grid grid-cols-[1fr_1fr] gap-4 w-[500px]">
+
+                <img
+                src={currentProject.images[0]}
+                alt=""
+                className="h-full object-cover rounded-lg border border-white/20"
+                />
+
+                <div className="grid grid-rows-2 gap-4">
+
+                <img
+                    src={currentProject.images[1]}
+                    alt=""
+                    className="w-full object-cover rounded-lg border border-white/20"
+                />
+
+                <img
+                    src={currentProject.images[2]}
+                    alt=""
+                    className="w-full object-cover rounded-lg border border-white/20"
+                />
+
+                </div>
+
+            </div>
+
+            ) : "images" in currentProject ? (
+
+            <div className="grid grid-cols-2 gap-4 w-[600px]">
+
+                {currentProject.images.map((image) => (
+                <img
+                    key={image}
+                    src={image}
+                    alt={selectedProject}
+                    className="w-full object-cover rounded-lg border border-white/20"
+                />
+                ))}
+
+            </div>
+
+            ) : "gif" in currentProject ? (
+
+            <img
+                src={currentProject.gif}
+                alt={selectedProject}
+                className="w-[550px] rounded-lg border border-white/20"
+            />
+        ) : (
+
+            <video
+                src={currentProject.video}
+                autoPlay={
+                  selectedProject === "Northern Lights" ||
+                  selectedProject === "Vector Mandala" ||
+                  selectedProject === "Sanskrit" ||
+                  selectedProject === "Brain vs Heart" ||
+                  selectedProject === "Catch some Butterflies"
+                }
+                loop={
+                  selectedProject === "Northern Lights" ||
+                  selectedProject === "Vector Mandala" ||
+                  selectedProject === "Sanskrit" ||
+                  selectedProject === "Brain vs Heart" ||
+                  selectedProject === "Catch some Butterflies"
+                }
+                muted
+                playsInline
+                controls={
+                  selectedProject !== "Northern Lights" &&
+                  selectedProject !== "Vector Mandala" &&
+                  selectedProject !== "Sanskrit" &&
+                  selectedProject !== "Brain vs Heart" &&
+                  selectedProject !== "Catch some Butterflies"
+                }
+                className={`rounded-lg border border-white/20 ${
+                    selectedProject === "SHE"
+                      ? "w-[380px]"
+                      : selectedProject === "The Wave"
+                      ? "w-[450px]"
+                      : selectedProject === "Northern Lights" ||
+                        selectedProject === "Vector Mandala"
+                      ? "w-[390px]"
+                      : "w-[420px]"
+                  }`}
+            />
+            
+            )}
+
             </div>
 
             {/* INFO */}
-            <div className="flex gap-10 mt-6">
+            <div className="flex gap-10 mt-4">
 
-              <div className="max-w-[220px]">
+              <div className="max-w-[260px]">
                 <p className="text-xs uppercase tracking-[0.3em] opacity-50 mb-2">
                   Overview
                 </p>
 
                 <p className="text-sm opacity-80 leading-relaxed">
-                  Project overview will go here.
-                </p>
-              </div>
-
-              <div>
-                <p className="text-xs uppercase tracking-[0.3em] opacity-50 mb-2">
-                  Role
-                </p>
-
-                <p className="text-sm opacity-80">
-                  Designer
+                  {currentProject.overview}
                 </p>
               </div>
 
@@ -117,21 +202,27 @@ export default function Work() {
                 </p>
 
                 <p className="text-sm opacity-80">
-                  Adobe Suite
+                  {currentProject.tools}
                 </p>
               </div>
 
-              <div>
+              <div className="max-w-[220px]">
                 <p className="text-xs uppercase tracking-[0.3em] opacity-50 mb-2">
-                  Highlights
+                  Process
                 </p>
 
-                <p className="text-sm opacity-80">
-                  Creativity
-                  <br />
-                  Design
-                  <br />
-                  Development
+                <p className="text-sm opacity-80 leading-relaxed">
+                  {currentProject.process}
+                </p>
+              </div>
+
+              <div className="max-w-[220px]">
+                <p className="text-xs uppercase tracking-[0.3em] opacity-50 mb-2">
+                  Outcome
+                </p>
+
+                <p className="text-sm opacity-80 leading-relaxed">
+                  {currentProject.outcome}
                 </p>
               </div>
 
