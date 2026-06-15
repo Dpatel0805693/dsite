@@ -5,9 +5,7 @@ import { projectDetails } from "../data/projectDetails";
 import { projects } from "../data/projects";
 
 export default function Work() {
-  const [selectedCategory, setSelectedCategory] = useState(
-    "Adobe Creative Suite"
-  );
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const [selectedProject, setSelectedProject] = useState("");
 
@@ -36,9 +34,10 @@ export default function Work() {
                   onClick={() => {
                     if (selectedCategory === category) {
                       setSelectedCategory("");
+                      setSelectedProject("");
                     } else {
                       setSelectedCategory(category);
-                      setSelectedProject(projects[category][0]);
+                      setSelectedProject("");
                     }
                   }}
                   className={`text-left text-lg transition ${
@@ -80,13 +79,15 @@ export default function Work() {
 
           {!selectedProject ? (
   <>
-    <h2 className="text-4xl tracking-wide mb-3">
+    <h2 className="text-4xl mb-3">
       Projects
     </h2>
 
     <p className="max-w-md text-sm opacity-60 leading-8">
-      A collection of work across design, animation,
-      development, and interactive experiences.
+      Designed. Developed. Deployed.
+      <br />
+      <br />
+
     </p>
   </>
 ) : (
