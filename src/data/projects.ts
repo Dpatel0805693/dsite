@@ -32,6 +32,6 @@ export const projects = {
   ],
 
   Research: [
-    "Why Fans Get Too Attached",
+    "When Fans Get Too Attached",
   ],
 };

@@ -166,7 +166,8 @@ export default function Work() {
                   selectedProject === "Vector Mandala" ||
                   selectedProject === "Sanskrit" ||
                   selectedProject === "Brain vs Heart" ||
-                  selectedProject === "Catch some Butterflies"
+                  selectedProject === "Catch some Butterflies" ||
+                  selectedProject === "When Fans Get Too Attached"
                 }
                 loop={
                   selectedProject === "Northern Lights" ||
@@ -199,6 +200,19 @@ export default function Work() {
             )}
 
             </div>
+
+            {"github" in currentProject && (
+  <div className="mt-6">
+    <a
+      href={currentProject.github}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-sm opacity-70 hover:opacity-100 underline"
+    >
+      GitHub ↗
+    </a>
+  </div>
+)}
 
             {/* INFO */}
             <div className="flex gap-10 mt-4">

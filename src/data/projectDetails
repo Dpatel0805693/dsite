@@ -203,4 +203,25 @@ export const projectDetails = {
 
   video: "/videos/Typography.mov",
 },
+
+"When Fans Get Too Attached": {
+  type: "Research Simulation",
+
+  overview:
+    "An agent-based simulation that explores how parasocial relationships between fans and online personalities evolve over time. ",
+
+  tools:
+    "Python, Mesa, HTML5, JavaScript, Data Visualization",
+
+  process:
+    "Designed and developed an interactive simulation model with adjustable variables representing celebrity traits, fan characteristics, and environmental influences. .",
+
+  outcome:
+    "The project was presented as a research study and supported by quantitative simulation results.",
+
+  video: "/videos/Research.mov",
+
+  github:
+    "https://github.com/Dpatel0805693/When-Fans-get-too-attached",
+},
   };
