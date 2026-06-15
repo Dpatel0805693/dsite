@@ -10,7 +10,7 @@ type SidebarProps = {
   
         {/* Name */}
         <div>
-          <h2 className="font-mono text-2xl">
+          <h2 className="font-mono text-2xl">a
             Dhwani Patel
           </h2>
         </div>

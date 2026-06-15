@@ -11,13 +11,40 @@ import Work from "../components/Work";
 export default function Home() {
   const [isDark, setIsDark] = useState(true);
   const [showSidebar, setShowSidebar] = useState(false);
+  const [activeSection, setActiveSection] = useState("intro");
 
   useEffect(() => {
     const handleScroll = () => {
       setShowSidebar(window.scrollY > window.innerHeight * 0.8);
+
+      const sections = [
+        "intro",
+        "work",
+        "experience",
+        "skills",
+        "contact",
+      ];
+
+      for (const section of sections) {
+        const element = document.getElementById(section);
+
+        if (element) {
+          const rect = element.getBoundingClientRect();
+
+          if (
+            rect.top <= window.innerHeight * 0.35 &&
+            rect.bottom >= window.innerHeight * 0.35
+          ) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
+
+    handleScroll();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -35,6 +62,7 @@ export default function Home() {
       {/* Toggle */}
       <div className="fixed top-10 left-1/2 -translate-x-1/2 z-50">
         <div className="flex items-center gap-4">
+
           <span
             className={`text-xs uppercase tracking-[0.3em] ${
               !isDark ? "opacity-100" : "opacity-40"
@@ -67,6 +95,7 @@ export default function Home() {
           >
             Technical
           </span>
+
         </div>
       </div>
 
@@ -100,19 +129,19 @@ export default function Home() {
 
       {/* PORTFOLIO AREA */}
       <div className="relative">
-        {showSidebar && <Sidebar />}
 
-        
-        
+        {showSidebar && (
+          <Sidebar activeSection={activeSection} />
+        )}
+
         <Intro />
         <Work />
         <Experience />
         <Skills />
         <Contact />
 
-       
       </div>
+
     </main>
   );
 }
-
