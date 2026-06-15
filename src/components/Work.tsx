@@ -9,14 +9,13 @@ export default function Work() {
     "Adobe Creative Suite"
   );
 
-  const [selectedProject, setSelectedProject] = useState(
-    "Self Portrait"
-  );
+  const [selectedProject, setSelectedProject] = useState("");
 
-  const currentProject =
-    projectDetails[
+  const currentProject = selectedProject
+  ? projectDetails[
       selectedProject as keyof typeof projectDetails
-    ];
+    ]
+  : null;
 
   return (
     <section
@@ -79,14 +78,31 @@ export default function Work() {
           {/* RIGHT SIDE */}
           <div>
 
-            <h2 className="text-2xl tracking-wide mb-1">
-              {selectedProject}
-            </h2>
+          {!selectedProject ? (
+  <>
+    <h2 className="text-4xl tracking-wide mb-3">
+      Projects
+    </h2>
 
-            <p className="uppercase tracking-[0.4em] text-[10px] opacity-40 mb-4">
-              {currentProject.type}
-            </p>
+    <p className="max-w-md text-sm opacity-60 leading-8">
+      A collection of work across design, animation,
+      development, and interactive experiences.
+    </p>
+  </>
+) : (
+  <>
+    <h2 className="text-2xl tracking-wide mb-1">
+      {selectedProject}
+    </h2>
 
+    <p className="uppercase tracking-[0.4em] text-[10px] opacity-40 mb-4">
+      {currentProject?.type}
+    </p>
+  </>
+)}
+
+{selectedProject && (
+  <>
             {/* MEDIA */}
             <div className="flex justify-start mb-6">
 
@@ -227,6 +243,8 @@ export default function Work() {
               </div>
 
             </div>
+            </>
+        )}
 
           </div>
 
