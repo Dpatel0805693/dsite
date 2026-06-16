@@ -13,16 +13,13 @@ export default function Contact() {
             {/* TEXT */}
             <div>
 
-            <h2 className="text-4xl mb-6 tracking-wide">
+            <h2 className="text-2xl mb-2 tracking-wide">
                 Dhwani Patel
             </h2>
 
-            <div className="space-y-2 text-sm opacity-70 leading-relaxed">
+            <div className="space-y text-sm opacity-70 leading-relaxed">
 
-                <p>B.S. Computer Science</p>
-
-                <p>Minor in New Media</p>
-
+                <p>B.S. Computer Science & New Media</p>
                 <p>University of Tampa</p>
 
             </div>

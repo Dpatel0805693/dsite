@@ -11,7 +11,7 @@ type SidebarProps = {
         {/* Name */}
         <div>
           <h2 className="font-mono text-2xl">
-            Dhwani Patel
+            D.P
           </h2>
         </div>
   
@@ -93,8 +93,8 @@ type SidebarProps = {
             </nav>
   
         {/* Footer */}
-        <div className="font-mono text-sm opacity-60">
-          2026 Dhwani Patel
+        <div className="font-mono text-xs opacity-60">
+        Last updated·2026 
         </div>
   
       </aside>
