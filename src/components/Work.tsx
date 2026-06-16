@@ -105,9 +105,30 @@ export default function Work() {
 {selectedProject && (
   <>
             {/* MEDIA */}
-            <div className="flex justify-start mb-6">
+            <div className="flex gap-10 mt-10">
+            
 
-            {selectedProject === "Stranger Things" ? (
+            {selectedProject === "Tampa City Ballet" &&
+ currentProject &&
+ "links" in currentProject ? (
+
+<div className="flex flex-col gap-3 w-[500px]">
+
+  {currentProject.links.map((link) => (
+    <a
+      key={link.title}
+      href={link.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-sm opacity-70 hover:opacity-100 hover:translate-x-2 transition-all duration-300 hover:[text-shadow:0_0_10px_rgba(255,255,255,0.8)]"
+    >
+      {link.title} ↗
+    </a>
+  ))}
+
+</div>
+
+) : selectedProject === "Stranger Things" ? (
 
             <div className="grid grid-cols-[1fr_1fr] gap-4 w-[500px]">
 
@@ -202,20 +223,39 @@ export default function Work() {
             </div>
 
             {"github" in currentProject && (
-  <div className="mt-6">
+  <div className="mt-6 flex gap-8">
+
+    {selectedProject === "Open Spot" && (
+      <a
+        href="https://www.canva.com/design/DAHIKmuaeOE/3MMok8gMN3CDcSp_-C_I-w/edit"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-sm opacity-70 hover:opacity-100 underline"
+      >
+        Project Report↗
+      </a>
+    )}
+
     <a
       href={currentProject.github}
       target="_blank"
       rel="noopener noreferrer"
       className="text-sm opacity-70 hover:opacity-100 underline"
     >
-      GitHub ↗
+      GitHub↗
     </a>
+
   </div>
 )}
 
             {/* INFO */}
-            <div className="flex gap-10 mt-4">
+            <div
+          className={`flex gap-10 ${
+            currentProject && "links" in currentProject
+              ? "mt-14"
+              : "mt-4"
+          }`}
+        >
 
               <div className="max-w-[260px]">
                 <p className="text-xs uppercase tracking-[0.3em] opacity-50 mb-2">

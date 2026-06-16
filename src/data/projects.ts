@@ -16,19 +16,11 @@ export const projects = {
   ],
 
   "UI/UX Design Projects": [
-    "TCB",
-    "UTampa Residence Life",
+    "Tampa City Ballet",
   ],
 
   "UTampa Parking System": [
-    "Research",
-    "Wireframes",
-    "Final Concept",
-  ],
-
-  Python: [
-    "ASCII Art",
-    "Room Adventure",
+    "Open Spot",
   ],
 
   Research: [

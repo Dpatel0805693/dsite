@@ -224,4 +224,63 @@ export const projectDetails = {
   github:
     "https://github.com/Dpatel0805693/When-Fans-get-too-attached",
 },
+
+"Tampa City Ballet": {
+  type: "UI/UX Redesign",
+
+  overview:
+    "A website redesign proposal for Tampa City Ballet focused on improving usability, visual hierarchy, navigation, and overall user experience. ",
+
+  tools:
+    "Figma, Adobe XD, Canva",
+
+  process:
+    "Conducted a UX critique of the existing website, identified areas for improvement, and developed redesign concepts through wireframing and visual exploration.",
+
+  outcome:
+    "Delivered a redesign proposal and wireframe system demonstrating how the Tampa City Ballet website could better support user engagement and communication goals.",
+
+  links: [
+    {
+      title: "Original Website",
+      url: "https://www.tampacityballet.org/",
+    },
+    {
+      title: "Redesign Proposal",
+      url: "https://www.canva.com/design/DAG0OWL9wcA/bXQ5BmO46yA6ubmZc8qIIg/edit",
+    },
+    {
+      title: "Redesign Wireframe",
+      url: "https://www.canva.com/design/DAHMvvloWVM/1v9aq_GTVVtW84-vf1RS_w/edit?ui=e30",
+    },
+  ],
+},
+
+"Open Spot": {
+  type: "Sensor Parking System - Senior Capstone",
+
+  overview:
+    "The project tracks garage occupancy in real time using camera-based vehicle detection and provides students with live parking availability before they arrive on campus.",
+
+  tools:
+    "Python, YOLOv8, OpenCV, Flask, Supabase, Raspberry Pi 5, Hailo SDK",
+
+  process:
+    "Our team designed a full-stack system that detects vehicle entry and exit events using computer vision.",
+
+  outcome:
+    "The system demonstrated reliable communication between hardware, backend services, database infrastructure, and the user-facing dashboard.",
+
+  video: "/videos/Parking.mp4",
+
+  github:
+    "https://github.com/imranali17689/Sensors",
+
+  links: [
+    {
+      title: "Project Report",
+      url: "https://www.canva.com/design/DAHIKmuaeOE/3MMok8gMN3CDcSp_-C_I-w/edit",
+    },
+  ],
+},
   };
