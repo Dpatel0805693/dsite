@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { useState } from "react";
 import { projectDetails } from "../data/projectDetails";
 import { projects } from "../data/projects";
@@ -53,17 +54,37 @@ export default function Work() {
                   <div className="mt-3 ml-4 border-l border-white/20 pl-4 space-y-2">
 
                     {projects[category].map((project) => (
-                      <button
-                        key={project}
-                        onClick={() => setSelectedProject(project)}
-                        className={`block text-sm text-left transition ${
-                          selectedProject === project
-                            ? "opacity-100 translate-x-2"
-                            : "opacity-40 hover:opacity-100"
-                        }`}
-                      >
-                        {project}
-                      </button>
+                      <motion.button
+  key={project}
+  onClick={() => setSelectedProject(project)}
+  whileHover={{ x: 10 }}
+  transition={{
+    type: "spring",
+    stiffness: 350,
+    damping: 25,
+  }}
+  className={`group flex w-full items-center justify-between text-left py-1 ${
+    selectedProject === project
+      ? "opacity-100"
+      : "opacity-40 hover:opacity-100"
+  }`}
+>
+  <span className="text-sm">
+    {project}
+  </span>
+
+  <motion.span
+    initial={{ opacity: 0, x: -8 }}
+    whileHover={{
+      opacity: 1,
+      x: 0,
+    }}
+    transition={{ duration: 0.2 }}
+    className="text-xs opacity-60"
+  >
+    →
+  </motion.span>
+</motion.button>
                     ))}
 
                   </div>
@@ -120,7 +141,7 @@ export default function Work() {
       href={link.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="text-sm opacity-70 hover:opacity-100 hover:translate-x-2 transition-all duration-300 hover:[text-shadow:0_0_10px_rgba(255,255,255,0.8)]"
+      className="text-sm opacity-70 hover:opacity-100 hover:translate-x-4 transition-all duration-300 hover:[text-shadow:0_0_10px_rgba(255,255,255,0.8)]"
     >
       {link.title} ↗
     </a>
