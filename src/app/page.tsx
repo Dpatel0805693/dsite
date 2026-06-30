@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+
+import BlueprintCursor from "../components/BlueprintCursor";
 import Contact from "../components/Contact";
 import Editorial from "../components/Editorial";
 import Experience from "../components/Experience";
@@ -59,12 +61,17 @@ return () => {
 
 return (
 <main
-className={`min-h-screen transition-colors duration-900 ${
+className={`relative min-h-screen transition-colors duration-900 ${
         isDark
           ? "bg-black text-white"
           : "bg-[#F8F6F2] text-black"
       }`}
+
 >
+      {/* Blueprint Background  and cursor*/}
+      
+      {isDark && <BlueprintCursor />}
+      
 {/* Toggle */} <div className="fixed top-10 left-1/2 -translate-x-1/2 z-50"> <div className="flex items-center gap-4">
 
 
