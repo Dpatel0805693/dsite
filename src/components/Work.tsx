@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { projectDetails } from "../data/projectDetails";
+import { projectDetails } from "../data/projectDetails.ts";
 import { projects } from "../data/projects";
 
 export default function Work() {
@@ -28,7 +28,7 @@ export default function Work() {
           {/* LEFT SIDE */}
           <div>
 
-            {Object.keys(projects).map((category) => (
+           (Object.keys(projects) as (keyof typeof projects)[]).map((category) => (
               <div key={category} className="mb-6">
 
                 <button
