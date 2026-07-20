@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 export default function HeroTypewriter() {
-  const line1 = "DHWANI PATEL";
+  const line1 = "DHWANiiI PATEL";
   const line2 = "Creative Developer & Digital Designer";
 
   const [displayedLine1, setDisplayedLine1] = useState("");
