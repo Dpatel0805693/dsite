@@ -1,3 +1,22 @@
+export interface Project {
+  type: string;
+  overview: string;
+  tools: string;
+  process: string;
+  outcome: string;
+
+  images?: string[];
+  video?: string;
+  gif?: string;
+
+  github?: string;
+
+  links?: {
+    title: string;
+    url: string;
+  }[];
+}
+
 export const projectDetails = {
     "Self Portrait": {
       type: "Illustration",

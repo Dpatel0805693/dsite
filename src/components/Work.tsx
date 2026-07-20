@@ -2,19 +2,19 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { projectDetails } from "../data/projectDetails.ts";
+import { projectDetails } from "../data/projectDetails";
 import { projects } from "../data/projects";
 
 export default function Work() {
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<keyof typeof projects | "">("");
 
-  const [selectedProject, setSelectedProject] = useState("");
+  const [selectedProject, setSelectedProject] = useState<string>("");
 
-  const currentProject = selectedProject
-  ? projectDetails[
-      selectedProject as keyof typeof projectDetails
-    ]
-  : null;
+  const currentProject =
+  selectedProject &&
+  selectedProject in projectDetails
+    ? projectDetails[selectedProject as keyof typeof projectDetails]
+    : null;
 
   return (
     <section
@@ -28,7 +28,7 @@ export default function Work() {
           {/* LEFT SIDE */}
           <div>
 
-           (Object.keys(projects) as (keyof typeof projects)[]).map((category) => (
+          {(Object.keys(projects) as (keyof typeof projects)[]).map((category) => (
               <div key={category} className="mb-6">
 
                 <button
@@ -135,7 +135,7 @@ export default function Work() {
 
 <div className="flex flex-col gap-3 w-[500px]">
 
-  {currentProject.links.map((link) => (
+  {currentProject.links!.map((link) => (
     <a
       key={link.title}
       href={link.url}
@@ -149,12 +149,12 @@ export default function Work() {
 
 </div>
 
-) : selectedProject === "Stranger Things" ? (
+) : selectedProject === "Stranger Things" && currentProject && "images" in currentProject ? (
 
             <div className="grid grid-cols-[1fr_1fr] gap-4 w-[500px]">
 
                 <img
-                src={currentProject.images[0]}
+                src={currentProject.images![0]}
                 alt=""
                 className="h-full object-cover rounded-lg border border-white/20"
                 />
@@ -162,13 +162,13 @@ export default function Work() {
                 <div className="grid grid-rows-2 gap-4">
 
                 <img
-                    src={currentProject.images[1]}
+                    src={currentProject.images![1]}
                     alt=""
                     className="w-full object-cover rounded-lg border border-white/20"
                 />
 
                 <img
-                    src={currentProject.images[2]}
+                    src={currentProject.images![2]}
                     alt=""
                     className="w-full object-cover rounded-lg border border-white/20"
                 />
@@ -177,11 +177,11 @@ export default function Work() {
 
             </div>
 
-            ) : "images" in currentProject ? (
+) : currentProject && "images" in currentProject ? (
 
             <div className="grid grid-cols-2 gap-4 w-[600px]">
 
-                {currentProject.images.map((image) => (
+                {currentProject.images!.map((image) => (
                 <img
                     key={image}
                     src={image}
@@ -192,7 +192,7 @@ export default function Work() {
 
             </div>
 
-            ) : "gif" in currentProject ? (
+) : currentProject && "gif" in currentProject ? (
 
             <img
                 src={currentProject.gif}
@@ -202,7 +202,7 @@ export default function Work() {
         ) : (
 
             <video
-                src={currentProject.video}
+                src={currentProject!.video}
                 autoPlay={
                   selectedProject === "Northern Lights" ||
                   selectedProject === "Vector Mandala" ||
@@ -243,7 +243,7 @@ export default function Work() {
 
             </div>
 
-            {"github" in currentProject && (
+            {"github" in currentProject! && (
   <div className="mt-6 flex gap-8">
 
     {selectedProject === "Open Spot" && (
@@ -284,7 +284,7 @@ export default function Work() {
                 </p>
 
                 <p className="text-sm opacity-80 leading-relaxed">
-                  {currentProject.overview}
+                  {currentProject!.overview}
                 </p>
               </div>
 
@@ -294,7 +294,7 @@ export default function Work() {
                 </p>
 
                 <p className="text-sm opacity-80">
-                  {currentProject.tools}
+                  {currentProject!.tools}
                 </p>
               </div>
 
@@ -304,7 +304,7 @@ export default function Work() {
                 </p>
 
                 <p className="text-sm opacity-80 leading-relaxed">
-                  {currentProject.process}
+                  {currentProject!.process}
                 </p>
               </div>
 
@@ -314,7 +314,7 @@ export default function Work() {
                 </p>
 
                 <p className="text-sm opacity-80 leading-relaxed">
-                  {currentProject.outcome}
+                  {currentProject!.outcome}
                 </p>
               </div>
 
