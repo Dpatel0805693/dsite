@@ -156,7 +156,7 @@ export default function Work() {
   </p>
 
   <p className="mt-6 text-sm opacity-60">
-  {status}
+    {status}
   </p>
 
   <div className="mt-5 h-[6px] w-full bg-white/10 rounded-full overflow-hidden">
@@ -173,7 +173,29 @@ export default function Work() {
 </div>
 
 ) : selectedProject && (
-  <>
+
+  <motion.div
+    initial={{
+        opacity: 0,
+        scale: 0.92,
+        x: -30,
+    }}
+
+    animate={{
+        opacity: 1,
+        scale: 1,
+        x: 0,
+    }}
+
+    style={{
+        transformOrigin: "top left",
+    }}
+
+    transition={{
+        duration: 0.45,
+        ease: "easeOut",
+    }}
+>
             {/* MEDIA */}
             <div className="flex gap-10 mt-10">
             
@@ -369,7 +391,7 @@ export default function Work() {
               </div>
 
             </div>
-            </>
+            </motion.div>
         )}
 
           </div>
