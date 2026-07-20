@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import type { Project } from "../data/projectDetails";
 import { projectDetails } from "../data/projectDetails";
 import { projects } from "../data/projects";
 
@@ -10,9 +11,9 @@ export default function Work() {
 
   const [selectedProject, setSelectedProject] = useState<string>("");
 
-  const currentProject =
-  selectedProject &&
-  selectedProject in projectDetails
+
+  const currentProject: Project | null =
+  selectedProject && selectedProject in projectDetails
     ? projectDetails[selectedProject as keyof typeof projectDetails]
     : null;
 
@@ -199,10 +200,10 @@ export default function Work() {
                 alt={selectedProject}
                 className="w-[550px] rounded-lg border border-white/20"
             />
-        ) : (
+          ) : currentProject?.video ? (
 
             <video
-                src={currentProject!.video}
+                src={currentProject.video}
                 autoPlay={
                   selectedProject === "Northern Lights" ||
                   selectedProject === "Vector Mandala" ||
@@ -239,11 +240,12 @@ export default function Work() {
                   }`}
             />
             
-            )}
+          ) : null}
+           
 
             </div>
 
-            {"github" in currentProject! && (
+            {currentProject?.github && (
   <div className="mt-6 flex gap-8">
 
     {selectedProject === "Open Spot" && (
@@ -272,7 +274,7 @@ export default function Work() {
             {/* INFO */}
             <div
           className={`flex gap-10 ${
-            currentProject && "links" in currentProject
+            currentProject?.links
               ? "mt-14"
               : "mt-4"
           }`}
