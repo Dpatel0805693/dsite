@@ -10,12 +10,35 @@ export default function Work() {
   const [selectedCategory, setSelectedCategory] = useState<keyof typeof projects | "">("");
 
   const [selectedProject, setSelectedProject] = useState<string>("");
-
+  const [loadingProject, setLoadingProject] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [status, setStatus] = useState("Waiting...");
 
   const currentProject: Project | null =
   selectedProject && selectedProject in projectDetails
     ? projectDetails[selectedProject as keyof typeof projectDetails]
     : null;
+
+    const openProject = async (project: string) => {
+      setLoadingProject(true);
+      setProgress(0);
+    
+      const steps = [
+        { progress: 12, label: "Initializing Blueprint..." },
+        { progress: 38, label: "Loading Assets..." },
+        { progress: 71, label: "Compiling Components..." },
+        { progress: 100, label: "Blueprint Ready." },
+      ];
+    
+      for (const step of steps) {
+        await new Promise((resolve) => setTimeout(resolve, 300));
+        setProgress(step.progress);
+        setStatus(step.label);
+      }
+    
+      setSelectedProject(project);
+      setLoadingProject(false);
+    };
 
   return (
     <section
@@ -57,7 +80,7 @@ export default function Work() {
                     {projects[category].map((project) => (
                       <motion.button
   key={project}
-  onClick={() => setSelectedProject(project)}
+  onClick={() => openProject(project)}
   whileHover={{ x: 10 }}
   transition={{
     type: "spring",
@@ -124,7 +147,32 @@ export default function Work() {
   </>
 )}
 
-{selectedProject && (
+{loadingProject ? (
+
+<div className="mt-10 w-[600px] border border-cyan-400/20 p-8">
+
+  <p className="text-xs tracking-[0.4em] text-cyan-400">
+    INITIALIZING...
+  </p>
+
+  <p className="mt-6 text-sm opacity-60">
+  {status}
+  </p>
+
+  <div className="mt-5 h-[6px] w-full bg-white/10 rounded-full overflow-hidden">
+    <div
+      className="h-full bg-cyan-400 transition-all duration-300"
+      style={{ width: `${progress}%` }}
+    />
+  </div>
+
+  <p className="mt-4 text-xs opacity-40">
+    {progress}% COMPLETE
+  </p>
+
+</div>
+
+) : selectedProject && (
   <>
             {/* MEDIA */}
             <div className="flex gap-10 mt-10">
@@ -241,7 +289,7 @@ export default function Work() {
             />
             
           ) : null}
-           
+            
 
             </div>
 
