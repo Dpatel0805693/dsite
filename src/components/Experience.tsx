@@ -15,7 +15,7 @@ export default function Experience() {
             </p>
 
             <h3 className="text-xl uppercase tracking-wide">
-              Junior Web Designer
+              Junior Web Developer & Designer
             </h3>
           </div>
 
@@ -23,7 +23,7 @@ export default function Experience() {
             <div className="pt-4 pl-12">
 
               <p className="mb-2 text-sm opacity-60">
-                University of Tampa · Jan 2025 — Present
+                University of Tampa · Dec 2024 — Present
               </p>
 
               <p className="mb-4 text-sm leading-relaxed opacity-80">
@@ -34,7 +34,7 @@ export default function Experience() {
               </p>
 
               <p className="text-xs opacity-50">
-                HTML · CSS · JavaScript · WordPress · Accessibility
+              AEM • Quality Assurance • Web Accessibility • UX
               </p>
 
             </div>
@@ -59,7 +59,7 @@ export default function Experience() {
             <div className="pt-4 pl-12">
 
               <p className="mb-2 text-sm opacity-60">
-                Math Center · University of Tampa · Jan 2024 — Present
+                UTampa Center for Mathematics · University of Tampa · Jan 2024 — Present
               </p>
 
               <p className="mb-4 text-sm leading-relaxed opacity-80">
@@ -70,7 +70,7 @@ export default function Experience() {
               </p>
 
               <p className="text-xs opacity-50">
-                Python · Java · Mathematics · Problem Solving · Mentoring
+              Problem Solving • Debugging • Technical Communication • Analytical Thinking
               </p>
 
             </div>
@@ -106,7 +106,7 @@ export default function Experience() {
               </p>
 
               <p className="text-xs opacity-50">
-                Content Creation · Branding · Canva · Adobe Creative Suite · Analytics
+              Content Strategy • Graphic Design • Digital Marketing • Community Engagement
               </p>
 
             </div>
@@ -142,7 +142,7 @@ export default function Experience() {
               </p>
 
               <p className="text-xs opacity-50">
-                Teaching · Mathematics · Academic Support · Leadership · Communication
+              Mathematics · Instruction · Problem Solving · Mentorship · Communication
               </p>
 
             </div>

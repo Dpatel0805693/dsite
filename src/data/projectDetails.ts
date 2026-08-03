@@ -17,7 +17,7 @@ export interface Project {
   }[];
 }
 
-export const projectDetails = {
+export const projectDetails: Record<string, Project> = {
     "Self Portrait": {
       type: "Illustration",
   
