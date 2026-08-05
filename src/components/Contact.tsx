@@ -44,7 +44,7 @@ export default function Contact() {
         </div>
   
         {/* FOOTER */}
-        <div className="absolute bottom-20 left-32 right-10 font-mono text-sm">
+        <div className="absolute bottom-40 left-32 right-10 font-mono text-sm">
   
           <div className="flex items-center gap-6 opacity-70">
   
