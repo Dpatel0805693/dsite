@@ -74,7 +74,7 @@ export default function Home() {
               !isDark ? "opacity-100" : "opacity-40"
             }`}
           >
-            Editorial
+           Fashion
           </span>
 
           <button
@@ -97,7 +97,7 @@ export default function Home() {
               isDark ? "opacity-100" : "opacity-40"
             }`}
           >
-            Technical
+            Tech
           </span>
         </div>
       </div>

@@ -7,8 +7,6 @@ import { projectDetails } from "../data/projectDetails";
 import { projects } from "../data/projects";
 
 export default function Work() {
-  const [selectedCategory, setSelectedCategory] = useState<keyof typeof projects | "">("");
-
   const [selectedProject, setSelectedProject] = useState<string>("");
 
   const currentProject: Project | null =
@@ -26,75 +24,86 @@ export default function Work() {
 
         <div className="grid grid-cols-[260px_1fr] gap-16">
 
-          {/* LEFT SIDE */}
-          <div>
+{/* LEFT SIDE */}
+<div>
 
-          {(Object.keys(projects) as (keyof typeof projects)[]).map((category) => (
-              <div key={category} className="mb-6">
+  {(Object.keys(projects) as (keyof typeof projects)[]).map(
+    (category) => (
+      <div
+        key={category}
+        className="group py-4"
+      >
 
-                <button
-                  onClick={() => {
-                    if (selectedCategory === category) {
-                      setSelectedCategory("");
-                      setSelectedProject("");
-                    } else {
-                      setSelectedCategory(category);
-                      setSelectedProject("");
-                    }
-                  }}
-                  className={`text-left text-lg transition ${
-                    selectedCategory === category
-                      ? "opacity-100"
-                      : "opacity-50 hover:opacity-100"
-                  }`}
-                >
-                  {category}
-                </button>
+        {/* CATEGORY NAME */}
+        <div className="flex items-center">
 
-                {selectedCategory === category && (
-                  <div className="mt-3 ml-4 border-l border-white/20 pl-4 space-y-2">
+          <h3
+            className="
+              text-lg
+              transition-opacity
+              duration-300
+              opacity-50
+              group-hover:opacity-100
+            "
+          >
+            {category}
+          </h3>
 
-                    {projects[category].map((project) => (
-                      <motion.button
-  key={project}
-  onClick={() => setSelectedProject(project)}
-  whileHover={{ x: 10 }}
-  transition={{
-    type: "spring",
-    stiffness: 350,
-    damping: 25,
-  }}
-  className={`group flex w-full items-center justify-between text-left py-1 ${
-    selectedProject === project
-      ? "opacity-100"
-      : "opacity-40 hover:opacity-100"
-  }`}
->
-  <span className="text-sm">
-    {project}
-  </span>
+        </div>
 
-  <motion.span
-    initial={{ opacity: 0, x: -8 }}
-    whileHover={{
-      opacity: 1,
-      x: 0,
-    }}
-    transition={{ duration: 0.2 }}
-    className="text-xs opacity-60"
-  >
-    →
-  </motion.span>
-</motion.button>
-                    ))}
+        {/* PROJECTS — OPENS ON HOVER */}
+        <div
+          className="
+            max-h-0
+            overflow-hidden
+            transition-all
+            duration-500
+            group-hover:max-h-96
+          "
+        >
 
-                  </div>
-                )}
+          <div className="pt-3 ml-4 border-l border-white/20 pl-4 space-y-2">
 
-              </div>
+            {projects[category].map((project) => (
+
+              <motion.button
+                key={project}
+                onClick={() => setSelectedProject(project)}
+                whileHover={{ x: 8 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 350,
+                  damping: 25,
+                }}
+                className={`group/project flex w-full items-center justify-between text-left py-1 ${
+                  selectedProject === project
+                    ? "opacity-100"
+                    : "opacity-40 hover:opacity-100"
+                }`}
+              >
+
+                <span className="text-sm">
+                  {project}
+                </span>
+
+                <span className="text-xs opacity-60">
+                  →
+                </span>
+
+              </motion.button>
+
             ))}
 
           </div>
+
+        </div>
+
+      </div>
+    )
+  )}
+
+</div>
+         
 
           {/* RIGHT SIDE */}
           <div>
