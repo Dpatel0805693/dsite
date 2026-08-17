@@ -57,65 +57,86 @@ export default function Home() {
 
   return (
     <main
-      className={`relative min-h-screen transition-colors duration-900 ${
+      className={`relative min-h-screen overflow-x-hidden transition-colors duration-900 ${
         isDark
           ? "bg-black text-white"
           : "bg-[#F8F6F2] text-black"
       }`}
     >
+
       {/* Blueprint Cursor */}
       {isDark && <BlueprintCursor />}
 
-      {/* Toggle */}
-      <div className="fixed top-10 left-1/2 -translate-x-1/2 z-50">
-        <div className="flex items-center gap-4">
+
+      {/* TOGGLE */}
+      <div className="fixed top-6 sm:top-10 left-1/2 -translate-x-1/2 z-50">
+        <div className="flex items-center gap-2 sm:gap-4">
+
           <span
-            className={`text-xs uppercase tracking-[0.3em] ${
+            className={`text-[9px] sm:text-xs uppercase tracking-[0.2em] sm:tracking-[0.3em] ${
               !isDark ? "opacity-100" : "opacity-40"
             }`}
           >
-           Fashion
+            Fashion
           </span>
+
 
           <button
             onClick={() => setIsDark(!isDark)}
-            className={`relative h-10 w-20 rounded-full border ${
+            className={`relative h-8 w-16 sm:h-10 sm:w-20 rounded-full border ${
               isDark ? "border-white" : "border-black"
             }`}
           >
+
             <div
-              className={`absolute top-1 h-8 w-8 rounded-full transition-all duration-500 ${
+              className={`absolute top-1 h-6 w-6 sm:h-8 sm:w-8 rounded-full transition-all duration-500 ${
                 isDark
-                  ? "left-10 bg-white"
+                  ? "left-8 sm:left-10 bg-white"
                   : "left-1 bg-black"
               }`}
             />
+
           </button>
 
+
           <span
-            className={`text-xs uppercase tracking-[0.3em] ${
+            className={`text-[9px] sm:text-xs uppercase tracking-[0.2em] sm:tracking-[0.3em] ${
               isDark ? "opacity-100" : "opacity-40"
             }`}
           >
             Tech
           </span>
+
         </div>
       </div>
 
+
       {isDark ? (
         <>
+
           {/* HERO */}
           <section
             id="hero"
-            className="min-h-screen flex flex-col items-center justify-center"
+            className="
+              min-h-screen
+              w-full
+              flex
+              flex-col
+              items-center
+              justify-center
+              px-6
+              sm:px-10
+            "
           >
-            
+
             <HeroTypewriter />
-          
+
           </section>
 
+
           {/* CONTENT */}
-          <div className="relative">
+          <div className="relative w-full">
+
             {showSidebar && (
               <Sidebar activeSection={activeSection} />
             )}
@@ -125,11 +146,16 @@ export default function Home() {
             <Experience />
             <Skills />
             <Contact />
+
           </div>
+
         </>
       ) : (
+
         <Editorial />
+
       )}
+
     </main>
   );
 }
