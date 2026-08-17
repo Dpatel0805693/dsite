@@ -29,13 +29,39 @@ export default function Work() {
     >
       <div className="w-full max-w-6xl px-6 sm:px-10 font-mono">
 
+        {/* ================================================= */}
+        {/* MOBILE PROJECT HEADER */}
+        {/* ================================================= */}
+
+        <div className="md:hidden mb-10">
+
+          <h2 className="text-3xl mb-3">
+            Projects
+          </h2>
+
+          <p className="max-w-md text-sm opacity-60 leading-8">
+            Designed. Developed. Deployed.
+          </p>
+
+        </div>
+
+
+        {/* ================================================= */}
+        {/* MAIN GRID */}
+        {/* ================================================= */}
+
         <div className="grid grid-cols-1 md:grid-cols-[260px_1fr] gap-12 md:gap-16">
 
-          {/* LEFT SIDE */}
+
+          {/* ================================================= */}
+          {/* LEFT SIDE — PROJECT CATEGORIES */}
+          {/* ================================================= */}
+
           <div>
 
             {(Object.keys(projects) as (keyof typeof projects)[]).map(
               (category) => (
+
                 <div
                   key={category}
                   tabIndex={0}
@@ -43,6 +69,7 @@ export default function Work() {
                 >
 
                   {/* CATEGORY NAME */}
+
                   <div className="flex items-center">
 
                     <h3
@@ -62,7 +89,8 @@ export default function Work() {
                   </div>
 
 
-                  {/* PROJECTS */}
+                  {/* PROJECTS — OPEN ON HOVER */}
+
                   <div
                     className="
                       max-h-0
@@ -74,7 +102,18 @@ export default function Work() {
                     "
                   >
 
-                    <div className="pt-3 ml-3 sm:ml-4 border-l border-white/20 pl-3 sm:pl-4 space-y-2">
+                    <div
+                      className="
+                        pt-3
+                        ml-3
+                        sm:ml-4
+                        border-l
+                        border-white/20
+                        pl-3
+                        sm:pl-4
+                        space-y-2
+                      "
+                    >
 
                       {projects[category].map((project) => (
 
@@ -87,11 +126,20 @@ export default function Work() {
                             stiffness: 350,
                             damping: 25,
                           }}
-                          className={`group/project flex w-full items-center justify-between text-left py-1 ${
-                            selectedProject === project
-                              ? "opacity-100"
-                              : "opacity-40 hover:opacity-100"
-                          }`}
+                          className={`
+                            group/project
+                            flex
+                            w-full
+                            items-center
+                            justify-between
+                            text-left
+                            py-1
+                            ${
+                              selectedProject === project
+                                ? "opacity-100"
+                                : "opacity-40 hover:opacity-100"
+                            }
+                          `}
                         >
 
                           <span className="text-xs sm:text-sm">
@@ -111,18 +159,28 @@ export default function Work() {
                   </div>
 
                 </div>
+
               )
             )}
 
           </div>
 
 
-          {/* RIGHT SIDE */}
+          {/* ================================================= */}
+          {/* RIGHT SIDE — PROJECT DETAILS */}
+          {/* ================================================= */}
+
           <div className="min-w-0">
+
+
+            {/* ================================================= */}
+            {/* DESKTOP PROJECT HEADER */}
+            {/* ================================================= */}
 
             {!selectedProject ? (
 
-              <>
+              <div className="hidden md:block">
+
                 <h2 className="text-3xl sm:text-4xl mb-3">
                   Projects
                 </h2>
@@ -132,7 +190,8 @@ export default function Work() {
                   <br />
                   <br />
                 </p>
-              </>
+
+              </div>
 
             ) : (
 
@@ -148,6 +207,10 @@ export default function Work() {
 
             )}
 
+
+            {/* ================================================= */}
+            {/* SELECTED PROJECT */}
+            {/* ================================================= */}
 
             {selectedProject && (
 
@@ -171,11 +234,16 @@ export default function Work() {
                 }}
               >
 
+
+                {/* ================================================= */}
                 {/* MEDIA */}
+                {/* ================================================= */}
+
                 <div className="flex flex-col gap-6 sm:gap-10 mt-8 sm:mt-10 w-full">
 
 
                   {/* TAMPA CITY BALLET */}
+
                   {selectedProject === "Tampa City Ballet" &&
                   currentProject &&
                   "links" in currentProject ? (
@@ -183,6 +251,7 @@ export default function Work() {
                     <div className="flex flex-col gap-3 w-full max-w-[500px]">
 
                       {currentProject.links!.map((link) => (
+
                         <a
                           key={link.title}
                           href={link.url}
@@ -200,6 +269,7 @@ export default function Work() {
                         >
                           {link.title} ↗
                         </a>
+
                       ))}
 
                     </div>
@@ -208,6 +278,9 @@ export default function Work() {
                   ) : selectedProject === "Stranger Things" &&
                     currentProject &&
                     "images" in currentProject ? (
+
+
+                    /* STRANGER THINGS */
 
                     <div className="grid grid-cols-1 sm:grid-cols-[1fr_1fr] gap-4 w-full max-w-[500px]">
 
@@ -259,9 +332,13 @@ export default function Work() {
                   ) : currentProject &&
                     "images" in currentProject ? (
 
+
+                    /* IMAGE PROJECTS */
+
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-[600px]">
 
                       {currentProject.images!.map((image) => (
+
                         <img
                           key={image}
                           src={image}
@@ -275,6 +352,7 @@ export default function Work() {
                             border-white/20
                           "
                         />
+
                       ))}
 
                     </div>
@@ -282,6 +360,9 @@ export default function Work() {
 
                   ) : currentProject &&
                     "gif" in currentProject ? (
+
+
+                    /* GIF PROJECTS */
 
                     <img
                       src={currentProject.gif}
@@ -298,6 +379,9 @@ export default function Work() {
 
 
                   ) : currentProject?.video ? (
+
+
+                    /* VIDEO PROJECTS */
 
                     <video
                       src={currentProject.video}
@@ -355,35 +439,55 @@ export default function Work() {
                 </div>
 
 
+                {/* ================================================= */}
                 {/* LINKS */}
+                {/* ================================================= */}
+
                 {currentProject?.github && (
+
                   <div className="mt-6 flex flex-wrap gap-6 sm:gap-8">
 
                     {selectedProject === "Open Spot" && (
+
                       <a
                         href="https://www.canva.com/design/DAHIKmuaeOE/3MMok8gMN3CDcSp_-C_I-w/edit"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm opacity-70 hover:opacity-100 underline"
+                        className="
+                          text-sm
+                          opacity-70
+                          hover:opacity-100
+                          underline
+                        "
                       >
                         Project Report↗
                       </a>
+
                     )}
 
                     <a
                       href={currentProject.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm opacity-70 hover:opacity-100 underline"
+                      className="
+                        text-sm
+                        opacity-70
+                        hover:opacity-100
+                        underline
+                      "
                     >
                       GitHub↗
                     </a>
 
                   </div>
+
                 )}
 
 
-                {/* INFO */}
+                {/* ================================================= */}
+                {/* PROJECT INFORMATION */}
+                {/* ================================================= */}
+
                 <div
                   className={`
                     grid
@@ -401,7 +505,9 @@ export default function Work() {
                   `}
                 >
 
+
                   {/* OVERVIEW */}
+
                   <div className="max-w-none lg:max-w-[260px]">
 
                     <p className="text-xs uppercase tracking-[0.3em] opacity-50 mb-2">
@@ -416,6 +522,7 @@ export default function Work() {
 
 
                   {/* TOOLS */}
+
                   <div>
 
                     <p className="text-xs uppercase tracking-[0.3em] opacity-50 mb-2">
@@ -430,6 +537,7 @@ export default function Work() {
 
 
                   {/* PROCESS */}
+
                   <div className="max-w-none lg:max-w-[220px]">
 
                     <p className="text-xs uppercase tracking-[0.3em] opacity-50 mb-2">
@@ -444,6 +552,7 @@ export default function Work() {
 
 
                   {/* OUTCOME */}
+
                   <div className="max-w-none lg:max-w-[220px]">
 
                     <p className="text-xs uppercase tracking-[0.3em] opacity-50 mb-2">

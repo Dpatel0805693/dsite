@@ -2,27 +2,56 @@ export default function Experience() {
   return (
     <section
       id="experience"
-      className="min-h-screen ml-[500px] flex items-center"
+      className="
+        min-h-screen
+        ml-0
+        md:ml-[500px]
+        flex
+        items-center
+        w-full
+      "
     >
-      <div className="max-w-3xl px-20 font-mono">
+      <div
+        className="
+          w-full
+          max-w-3xl
+          px-6
+          sm:px-10
+          md:px-20
+          font-mono
+        "
+      >
 
         {/* 01 */}
         <div className="group py-4">
 
-          <div className="flex items-center gap-8">
-            <p className="text-xs opacity-50">
+          <div className="flex items-start gap-4 sm:gap-8">
+
+            <p className="text-xs opacity-50 pt-1 shrink-0">
               01
             </p>
 
-            <h3 className="text-xl uppercase tracking-wide">
+            <h3 className="text-base sm:text-xl uppercase tracking-wide">
               Junior Web Developer & Designer
             </h3>
+
           </div>
 
-          <div className="max-h-0 overflow-hidden transition-all duration-500 group-hover:max-h-48">
-            <div className="pt-4 pl-12">
 
-              <p className="mb-2 text-sm opacity-60">
+          <div
+            className="
+              max-h-0
+              overflow-hidden
+              transition-all
+              duration-500
+              group-hover:max-h-48
+              group-focus-within:max-h-48
+            "
+          >
+
+            <div className="pt-4 pl-8 sm:pl-12">
+
+              <p className="mb-2 text-xs sm:text-sm opacity-60">
                 University of Tampa · Dec 2024 — Present
               </p>
 
@@ -33,32 +62,47 @@ export default function Experience() {
                 student engagement and communication.
               </p>
 
-              <p className="text-xs opacity-50">
-              AEM • Quality Assurance • Web Accessibility • UX
+              <p className="text-[10px] sm:text-xs opacity-50">
+                AEM • Quality Assurance • Web Accessibility • UX
               </p>
 
             </div>
+
           </div>
 
         </div>
 
+
         {/* 02 */}
         <div className="group py-4">
 
-          <div className="flex items-center gap-8">
-            <p className="text-xs opacity-50">
+          <div className="flex items-start gap-4 sm:gap-8">
+
+            <p className="text-xs opacity-50 pt-1 shrink-0">
               02
             </p>
 
-            <h3 className="text-xl uppercase tracking-wide">
+            <h3 className="text-base sm:text-xl uppercase tracking-wide">
               Math & Computer Science Peer Tutor
             </h3>
+
           </div>
 
-          <div className="max-h-0 overflow-hidden transition-all duration-500 group-hover:max-h-48">
-            <div className="pt-4 pl-12">
 
-              <p className="mb-2 text-sm opacity-60">
+          <div
+            className="
+              max-h-0
+              overflow-hidden
+              transition-all
+              duration-500
+              group-hover:max-h-48
+              group-focus-within:max-h-48
+            "
+          >
+
+            <div className="pt-4 pl-8 sm:pl-12">
+
+              <p className="mb-2 text-xs sm:text-sm opacity-60">
                 UTampa Center for Mathematics · University of Tampa · Jan 2024 — Present
               </p>
 
@@ -69,32 +113,47 @@ export default function Experience() {
                 abilities, and academic success.
               </p>
 
-              <p className="text-xs opacity-50">
-              Problem Solving • Debugging • Technical Communication • Analytical Thinking
+              <p className="text-[10px] sm:text-xs opacity-50">
+                Problem Solving • Debugging • Technical Communication • Analytical Thinking
               </p>
 
             </div>
+
           </div>
 
         </div>
 
+
         {/* 03 */}
         <div className="group py-4">
 
-          <div className="flex items-center gap-8">
-            <p className="text-xs opacity-50">
+          <div className="flex items-start gap-4 sm:gap-8">
+
+            <p className="text-xs opacity-50 pt-1 shrink-0">
               03
             </p>
 
-            <h3 className="text-xl uppercase tracking-wide">
-              Social Media Manager 
+            <h3 className="text-base sm:text-xl uppercase tracking-wide">
+              Social Media Manager
             </h3>
+
           </div>
 
-          <div className="max-h-0 overflow-hidden transition-all duration-500 group-hover:max-h-48">
-            <div className="pt-4 pl-12">
 
-              <p className="mb-2 text-sm opacity-60">
+          <div
+            className="
+              max-h-0
+              overflow-hidden
+              transition-all
+              duration-500
+              group-hover:max-h-48
+              group-focus-within:max-h-48
+            "
+          >
+
+            <div className="pt-4 pl-8 sm:pl-12">
+
+              <p className="mb-2 text-xs sm:text-sm opacity-60">
                 Girls Who Code · Aug 2024 — Present
               </p>
 
@@ -105,32 +164,47 @@ export default function Experience() {
                 metrics to strengthen content strategy and community growth.
               </p>
 
-              <p className="text-xs opacity-50">
-              Content Strategy • Graphic Design • Digital Marketing • Community Engagement
+              <p className="text-[10px] sm:text-xs opacity-50">
+                Content Strategy • Graphic Design • Digital Marketing • Community Engagement
               </p>
 
             </div>
+
           </div>
 
         </div>
 
+
         {/* 04 */}
         <div className="group py-4">
 
-          <div className="flex items-center gap-8">
-            <p className="text-xs opacity-50">
+          <div className="flex items-start gap-4 sm:gap-8">
+
+            <p className="text-xs opacity-50 pt-1 shrink-0">
               04
             </p>
 
-            <h3 className="text-xl uppercase tracking-wide">
+            <h3 className="text-base sm:text-xl uppercase tracking-wide">
               Supplemental Instructor
             </h3>
+
           </div>
 
-          <div className="max-h-0 overflow-hidden transition-all duration-500 group-hover:max-h-48">
-            <div className="pt-4 pl-12">
 
-              <p className="mb-2 text-sm opacity-60">
+          <div
+            className="
+              max-h-0
+              overflow-hidden
+              transition-all
+              duration-500
+              group-hover:max-h-48
+              group-focus-within:max-h-48
+            "
+          >
+
+            <div className="pt-4 pl-8 sm:pl-12">
+
+              <p className="mb-2 text-xs sm:text-sm opacity-60">
                 UTampa College of Social Sciences, Mathematics & Education · Jan 2024 — May 2024
               </p>
 
@@ -141,11 +215,12 @@ export default function Experience() {
                 key mathematical concepts.
               </p>
 
-              <p className="text-xs opacity-50">
-              Mathematics · Instruction · Problem Solving · Mentorship · Communication
+              <p className="text-[10px] sm:text-xs opacity-50">
+                Mathematics · Instruction · Problem Solving · Mentorship · Communication
               </p>
 
             </div>
+
           </div>
 
         </div>
