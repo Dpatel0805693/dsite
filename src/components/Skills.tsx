@@ -105,7 +105,7 @@ export default function Skills() {
             <p>English</p>
             <p>Hindi</p>
             <p>Gujarati</p>
-            <p>Spanish (Learning)</p>
+           
 
           </div>
 
