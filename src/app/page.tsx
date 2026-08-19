@@ -77,7 +77,7 @@ export default function Home() {
               !isDark ? "opacity-100" : "opacity-40"
             }`}
           >
-            Fashion
+            Creative
           </span>
 
 
