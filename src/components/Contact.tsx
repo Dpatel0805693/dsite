@@ -11,9 +11,7 @@ export default function Contact() {
         w-full
       "
     >
-
       <div className="min-h-screen flex items-center">
-
         <div
           className="
             w-full
@@ -24,61 +22,48 @@ export default function Contact() {
             font-mono
           "
         >
-
           {/* MAIN CONTENT */}
           <div
             className="
               grid
               grid-cols-1
-              md:grid-cols-[320px_320px]
+              md:grid-cols-[320px_270px]
               gap-10
               md:gap-12
               items-center
               justify-center
             "
           >
-
             {/* TEXT */}
             <div>
-
               <h2 className="text-xl sm:text-2xl mb-2 tracking-wide">
                 Dhwani Patel
               </h2>
 
               <div className="text-sm opacity-70 leading-relaxed space-y-1">
-
                 <p>B.S. Computer Science & New Media</p>
                 <p>University of Tampa</p>
-
               </div>
-
             </div>
-
 
             {/* IMAGE */}
             <div className="flex justify-start md:justify-center">
-
               <img
-                src="/contact.jpg"
+                src="/images/headshot.jpg"
                 alt="Dhwani Patel"
                 className="
                   w-full
-                  max-w-[280px]
-                  sm:max-w-[320px]
+                  max-w-[240px]
+                  sm:max-w-[270px]
                   h-auto
                   aspect-[320/420]
                   object-cover
                 "
               />
-
             </div>
-
           </div>
-
         </div>
-
       </div>
-
 
       {/* FOOTER / LINKS */}
       <div
@@ -95,7 +80,6 @@ export default function Contact() {
           text-sm
         "
       >
-
         <div
           className="
             flex
@@ -106,7 +90,6 @@ export default function Contact() {
             opacity-70
           "
         >
-
           <a
             href="mailto:dhwanipatel7788@gmail.com"
             className="
@@ -120,7 +103,6 @@ export default function Contact() {
           >
             dhwanipatel7788@gmail.com
           </a>
-
 
           <a
             href="https://www.linkedin.com/in/dhwanipatel08"
@@ -138,7 +120,6 @@ export default function Contact() {
             LinkedIn
           </a>
 
-
           <a
             href="https://www.instagram.com/patel.dhwanii"
             target="_blank"
@@ -154,11 +135,8 @@ export default function Contact() {
           >
             Instagram
           </a>
-
         </div>
-
       </div>
-
     </section>
   );
 }

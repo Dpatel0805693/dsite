@@ -43,7 +43,7 @@ export const projectDetails: Record<string, Project> = {
     type: "GIF",
 
     overview:
-        "A pixel-style heart animation inspired by one of my favorite recurring visual motifs",
+        "A pixel-style heart animation inspired by one of my favorite recurring visual motifs.",
 
     tools:
         "Adobe Photoshop",
@@ -233,7 +233,7 @@ export const projectDetails: Record<string, Project> = {
     "Python, Mesa, HTML5, JavaScript, Data Visualization",
 
   process:
-    "Designed and developed an interactive simulation model with adjustable variables representing celebrity traits, fan characteristics, and environmental influences. .",
+    "Designed and developed an interactive simulation model with adjustable variables representing celebrity traits, fan characteristics, and environmental influences.",
 
   outcome:
     "The project was presented as a research study and supported by quantitative simulation results.",
