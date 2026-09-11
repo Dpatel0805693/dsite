@@ -5,8 +5,8 @@ import BlueprintCursor from "../components/BlueprintCursor";
 import Contact from "../components/Contact";
 import Editorial from "../components/Editorial";
 import Experience from "../components/Experience";
-import HeroTypewriter from "../components/HeroTypewriter";
 import Intro from "../components/Intro";
+import ParticleLogo from "../components/ParticleLogo";
 import Sidebar from "../components/Sidebar";
 import Skills from "../components/Skills";
 import Work from "../components/Work";
@@ -129,7 +129,7 @@ export default function Home() {
             "
           >
 
-            <HeroTypewriter />
+<ParticleLogo />
 
           </section>
 
