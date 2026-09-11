@@ -5,59 +5,83 @@ import { useEffect, useRef } from "react";
 type Particle = {
   x: number;
   y: number;
+
   homeX: number;
   homeY: number;
+
   vx: number;
   vy: number;
+
+  size: number;
   seed: number;
 };
 
-const MAX_PARTICLES = 5000;
+const MAX_PARTICLES = 3500;
 
 export default function ParticleLogo() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const canvasRef =
+    useRef<HTMLCanvasElement>(null);
 
   const mouse = useRef({
     x: -9999,
     y: -9999,
   });
 
-  const scroll = useRef(0);
+  const scroll =
+    useRef(0);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
+    const canvas =
+      canvasRef.current;
 
     if (!canvas) return;
 
-    const ctx = canvas.getContext("2d");
+    const ctx =
+      canvas.getContext("2d", {
+        alpha: true,
+      });
 
     if (!ctx) return;
 
-    let width = window.innerWidth;
-    let height = window.innerHeight;
+    let width =
+      window.innerWidth;
+
+    let height =
+      window.innerHeight;
 
     let particles: Particle[] = [];
+
     let animationFrame = 0;
 
     /*
-     * --------------------------------------------------
-     * CREATE PARTICLE TEXT
-     * --------------------------------------------------
+     * ======================================================
+     * CREATE PARTICLES
+     * ======================================================
      */
 
     const createParticles = () => {
-      const source = document.createElement("canvas");
+      const source =
+        document.createElement(
+          "canvas"
+        );
 
       const sourceCtx =
         source.getContext("2d");
 
       if (!sourceCtx) return;
 
-      const sourceWidth = 1600;
-      const sourceHeight = 500;
+      /*
+       * Internal text canvas.
+       */
 
-      source.width = sourceWidth;
-      source.height = sourceHeight;
+      const sourceWidth = 1600;
+      const sourceHeight = 400;
+
+      source.width =
+        sourceWidth;
+
+      source.height =
+        sourceHeight;
 
       sourceCtx.clearRect(
         0,
@@ -67,44 +91,42 @@ export default function ParticleLogo() {
       );
 
       /*
+       * ====================================================
        * DHWANI PATEL
+       * ====================================================
+       *
+       * Smaller and centered.
+       *
+       * More empty space on left/right.
        */
 
-      const titleSize = Math.min(
-        170,
-        width * 0.12
-      );
+      const titleSize =
+        Math.min(
+          145,
+          width * 0.10
+        );
 
       sourceCtx.font =
-        `600 ${titleSize}px "Courier New", monospace`;
+        `700 ${titleSize}px "Courier New", monospace`;
 
-      sourceCtx.textAlign = "center";
-      sourceCtx.textBaseline = "middle";
-      sourceCtx.fillStyle = "white";
+      sourceCtx.textAlign =
+        "center";
+
+      sourceCtx.textBaseline =
+        "middle";
+
+      sourceCtx.fillStyle =
+        "white";
 
       sourceCtx.fillText(
         "DHWANI PATEL",
         sourceWidth / 2,
-        180
+        sourceHeight / 2
       );
 
       /*
-       * CREATIVE DEVELOPER...
+       * Convert text into a mask.
        */
-
-      const subtitleSize = Math.min(
-        46,
-        width * 0.033
-      );
-
-      sourceCtx.font =
-        `500 ${subtitleSize}px "Courier New", monospace`;
-
-      sourceCtx.fillText(
-        "CREATIVE DEVELOPER & DIGITAL DESIGNER",
-        sourceWidth / 2,
-        315
-      );
 
       const image =
         sourceCtx.getImageData(
@@ -115,86 +137,167 @@ export default function ParticleLogo() {
         );
 
       /*
-       * Larger gap = fewer particles.
-       * This is intentionally conservative
-       * for performance.
+       * ====================================================
+       * FIND PARTICLE LOCATIONS
+       * ====================================================
        */
 
-      const gap = 9;
+      const candidates: {
+        x: number;
+        y: number;
+      }[] = [];
 
-      const nextParticles: Particle[] = [];
+      /*
+       * 5px sampling.
+       *
+       * Dense enough to look good,
+       * but safer for performance.
+       */
+
+      const sampleGap = 5;
 
       for (
         let y = 0;
         y < sourceHeight;
-        y += gap
+        y += sampleGap
       ) {
         for (
           let x = 0;
           x < sourceWidth;
-          x += gap
+          x += sampleGap
         ) {
-          if (
-            nextParticles.length >=
-            MAX_PARTICLES
-          ) {
-            break;
-          }
-
           const index =
-            (y * sourceWidth + x) * 4;
+            (y * sourceWidth + x) *
+            4;
 
           const alpha =
-            image.data[index + 3];
+            image.data[
+              index + 3
+            ];
 
-          if (alpha > 150) {
-            nextParticles.push({
-              x:
-                x -
-                sourceWidth / 2,
-
-              y:
-                y -
-                sourceHeight / 2,
-
-              homeX:
-                x -
-                sourceWidth / 2,
-
-              homeY:
-                y -
-                sourceHeight / 2,
-
-              vx: 0,
-              vy: 0,
-
-              seed:
-                Math.random(),
+          if (
+            alpha > 120
+          ) {
+            candidates.push({
+              x,
+              y,
             });
           }
-        }
-
-        if (
-          nextParticles.length >=
-          MAX_PARTICLES
-        ) {
-          break;
         }
       }
 
       /*
-       * If particle count changes after resize,
-       * start them at their correct locations.
+       * ====================================================
+       * RANDOMIZE
+       * ====================================================
        */
+
+      for (
+        let i =
+          candidates.length - 1;
+        i > 0;
+        i--
+      ) {
+        const j =
+          Math.floor(
+            Math.random() *
+              (i + 1)
+          );
+
+        const temp =
+          candidates[i];
+
+        candidates[i] =
+          candidates[j];
+
+        candidates[j] =
+          temp;
+      }
+
+      /*
+       * ====================================================
+       * CREATE PARTICLES
+       * ====================================================
+       */
+
+      const count =
+        Math.min(
+          MAX_PARTICLES,
+          candidates.length
+        );
+
+      const nextParticles:
+        Particle[] = [];
+
+      for (
+        let i = 0;
+        i < count;
+        i++
+      ) {
+        const point =
+          candidates[i];
+
+        /*
+         * Small organic randomness.
+         */
+
+        const randomness = 3.2;
+
+        const randomX =
+          (Math.random() - 0.5) *
+          randomness;
+
+        const randomY =
+          (Math.random() - 0.5) *
+          randomness;
+
+        /*
+         * Small square pixels.
+         */
+
+        const size =
+          2.3 +
+          Math.random() * 1.4;
+
+        nextParticles.push({
+          x:
+            point.x -
+            sourceWidth / 2 +
+            randomX,
+
+          y:
+            point.y -
+            sourceHeight / 2 +
+            randomY,
+
+          homeX:
+            point.x -
+            sourceWidth / 2 +
+            randomX,
+
+          homeY:
+            point.y -
+            sourceHeight / 2 +
+            randomY,
+
+          vx: 0,
+          vy: 0,
+
+          size,
+
+          seed:
+            Math.random(),
+        });
+      }
 
       particles =
         nextParticles;
     };
 
     /*
-     * --------------------------------------------------
+     * ======================================================
      * RESIZE
-     * --------------------------------------------------
+     * ======================================================
      */
 
     const resize = () => {
@@ -204,10 +307,19 @@ export default function ParticleLogo() {
       height =
         window.innerHeight;
 
-      const dpr = Math.min(
-        window.devicePixelRatio || 1,
-        2
-      );
+      /*
+       * Cap DPR at 1.5.
+       *
+       * This dramatically reduces GPU/CPU load
+       * on high-resolution displays.
+       */
+
+      const dpr =
+        Math.min(
+          window.devicePixelRatio ||
+            1,
+          1.5
+        );
 
       canvas.width =
         width * dpr;
@@ -234,9 +346,9 @@ export default function ParticleLogo() {
     };
 
     /*
-     * --------------------------------------------------
+     * ======================================================
      * MOUSE
-     * --------------------------------------------------
+     * ======================================================
      */
 
     const handleMouseMove = (
@@ -247,13 +359,11 @@ export default function ParticleLogo() {
 
       mouse.current.x =
         event.clientX -
-        rect.left -
-        width / 2;
+        rect.left;
 
       mouse.current.y =
         event.clientY -
-        rect.top -
-        height / 2;
+        rect.top;
     };
 
     const handleMouseLeave = () => {
@@ -265,37 +375,40 @@ export default function ParticleLogo() {
     };
 
     /*
-     * --------------------------------------------------
+     * ======================================================
      * SCROLL
-     * --------------------------------------------------
+     * ======================================================
      */
 
     const handleScroll = () => {
-      /*
-       * Hero is approximately one viewport.
-       *
-       * 0 = intact
-       * 1 = completely scattered
-       */
+      const heroHeight =
+        window.innerHeight;
 
       const progress =
         window.scrollY /
-        (window.innerHeight * 0.85);
+        (heroHeight * 0.85);
 
       scroll.current =
         Math.max(
           0,
-          Math.min(1, progress)
+          Math.min(
+            1,
+            progress
+          )
         );
     };
 
     /*
-     * --------------------------------------------------
+     * ======================================================
      * ANIMATION
-     * --------------------------------------------------
+     * ======================================================
      */
 
     const animate = () => {
+      /*
+       * Clear screen.
+       */
+
       ctx.clearRect(
         0,
         0,
@@ -310,32 +423,38 @@ export default function ParticleLogo() {
         height / 2;
 
       /*
-       * Responsive scale
+       * ====================================================
+       * LOGO SIZE
+       * ====================================================
+       *
+       * Smaller logo with more space on
+       * the left and right.
        */
 
-      const scale = Math.min(
-        width / 1500,
-        height / 650
-      );
+      const scale =
+        Math.min(
+          width / 1750,
+          height / 700
+        );
 
       const scatter =
         scroll.current;
 
       /*
-       * Fade begins near the end
-       * of the hero transition.
+       * ====================================================
+       * FADE
+       * ====================================================
        */
 
       const fade =
-        scatter < 0.68
+        scatter < 0.62
           ? 1
-          : 1 -
-            (scatter - 0.68) /
-              0.32;
-
-      /*
-       * Mouse settings
-       */
+          : Math.max(
+              0,
+              1 -
+                (scatter - 0.62) /
+                  0.38
+            );
 
       const mouseX =
         mouse.current.x;
@@ -343,13 +462,23 @@ export default function ParticleLogo() {
       const mouseY =
         mouse.current.y;
 
-      const mouseRadius = 190;
+      /*
+       * ====================================================
+       * PARTICLES
+       * ====================================================
+       */
+
+      const rippleRadius =
+        210;
 
       particles.forEach(
-        (particle) => {
+        (
+          particle,
+          index
+        ) => {
           /*
            * ------------------------------------------------
-           * TARGET POSITION
+           * HOME POSITION
            * ------------------------------------------------
            */
 
@@ -365,22 +494,29 @@ export default function ParticleLogo() {
 
           /*
            * ------------------------------------------------
-           * SCATTER POSITION
+           * SCATTER
            * ------------------------------------------------
            *
-           * Each particle gets its own
-           * stable direction.
+           * Random but stable direction.
            */
 
           const angle =
-            particle.seed *
+            Math.sin(
+              index * 13.17 +
+                particle.seed * 20
+            ) *
             Math.PI *
             2;
 
           const distance =
-            300 +
-            particle.seed *
-              500;
+            160 +
+            Math.abs(
+              Math.sin(
+                index * 4.21 +
+                  particle.seed
+              )
+            ) *
+              420;
 
           const scatterX =
             Math.cos(angle) *
@@ -390,18 +526,15 @@ export default function ParticleLogo() {
             Math.sin(angle) *
             distance;
 
-          /*
-           * Smoothly interpolate
-           * between text and scattered position.
-           */
-
           const desiredX =
             targetX +
-            scatterX * scatter;
+            scatterX *
+              scatter;
 
           const desiredY =
             targetY +
-            scatterY * scatter;
+            scatterY *
+              scatter;
 
           /*
            * ------------------------------------------------
@@ -409,19 +542,13 @@ export default function ParticleLogo() {
            * ------------------------------------------------
            */
 
-          const currentX =
-            particle.x;
-
-          const currentY =
-            particle.y;
-
           const dx =
-            currentX -
-            (mouseX + centerX);
+            particle.x -
+            mouseX;
 
           const dy =
-            currentY -
-            (mouseY + centerY);
+            particle.y -
+            mouseY;
 
           const distanceToMouse =
             Math.sqrt(
@@ -431,13 +558,13 @@ export default function ParticleLogo() {
 
           if (
             distanceToMouse <
-              mouseRadius &&
-            scatter < 0.35
+              rippleRadius &&
+            scatter < 0.45
           ) {
             const strength =
               1 -
               distanceToMouse /
-                mouseRadius;
+                rippleRadius;
 
             const angleToMouse =
               Math.atan2(
@@ -446,11 +573,11 @@ export default function ParticleLogo() {
               );
 
             /*
-             * Strong outward push
+             * Outward water ripple.
              */
 
             const force =
-              strength * 8;
+              strength * 7;
 
             particle.vx +=
               Math.cos(
@@ -465,12 +592,11 @@ export default function ParticleLogo() {
               force;
 
             /*
-             * Small tangential movement
-             * creates the water-like swirl.
+             * Slight swirl.
              */
 
             const swirl =
-              strength * 2.5;
+              strength * 1.8;
 
             particle.vx +=
               -Math.sin(
@@ -487,27 +613,22 @@ export default function ParticleLogo() {
 
           /*
            * ------------------------------------------------
-           * RETURN / SCATTER PHYSICS
+           * RETURN TO FORM
            * ------------------------------------------------
            */
-
-          const spring =
-            scatter > 0.01
-              ? 0.018
-              : 0.014;
 
           particle.vx +=
             (desiredX -
               particle.x) *
-            spring;
+            0.018;
 
           particle.vy +=
             (desiredY -
               particle.y) *
-            spring;
+            0.018;
 
           /*
-           * Damping
+           * Damping.
            */
 
           particle.vx *=
@@ -515,6 +636,10 @@ export default function ParticleLogo() {
 
           particle.vy *=
             0.84;
+
+          /*
+           * Update position.
+           */
 
           particle.x +=
             particle.vx;
@@ -526,45 +651,264 @@ export default function ParticleLogo() {
            * ------------------------------------------------
            * DRAW
            * ------------------------------------------------
+           *
+           * NO FILTER.
+           * NO BLUR.
+           * NO SECOND LOOP.
+           *
+           * The "blur" feeling comes from making
+           * scattered particles slightly larger
+           * and more transparent.
            */
 
           const size =
-            4 -
-            scatter * 1.2;
-
-          /*
-           * Instead of using expensive
-           * per-particle blur, we create
-           * softness by reducing opacity
-           * and slightly enlarging the
-           * particle during scattering.
-           */
-
-          const softSize =
-            size +
+            particle.size +
             scatter * 2;
 
+          /*
+           * Reduce opacity as particles
+           * move farther away.
+           */
+
+          const particleAlpha =
+            fade *
+            (1 -
+              scatter * 0.35);
+
           ctx.globalAlpha =
-            Math.max(
-              0,
-              fade
-            );
+            particleAlpha;
 
           ctx.fillStyle =
             "white";
 
           ctx.fillRect(
             particle.x -
-              softSize / 2,
+              size / 2,
             particle.y -
-              softSize / 2,
-            softSize,
-            softSize
+              size / 2,
+            size,
+            size
           );
         }
       );
 
+      /*
+       * ====================================================
+       * SUBTITLE
+       * ====================================================
+       *
+       * Completely STATIC by default.
+       *
+       * It only ripples when the mouse
+       * is actually near it.
+       */
+
+      const subtitleSize =
+        Math.min(
+          30,
+          width * 0.025
+        );
+
+      const subtitle =
+        "CREATIVE DEVELOPER & DIGITAL DESIGNER";
+
+      ctx.save();
+
+      ctx.font =
+        `700 ${subtitleSize}px "Courier New", monospace`;
+
+      ctx.textAlign =
+        "center";
+
+      ctx.textBaseline =
+        "middle";
+
+      const subtitleBaseY =
+        centerY + 100;
+
+      /*
+       * ====================================================
+       * SUBTITLE MOUSE DISTANCE
+       * ====================================================
+       */
+
+      const subtitleDx =
+        mouseX -
+        centerX;
+
+      const subtitleDy =
+        mouseY -
+        subtitleBaseY;
+
+      const subtitleDistance =
+        Math.sqrt(
+          subtitleDx *
+              subtitleDx +
+            subtitleDy *
+              subtitleDy
+        );
+
+      const subtitleRadius =
+        180;
+
+      let rippleStrength =
+        0;
+
+      /*
+       * Ripple is completely OFF
+       * unless mouse is close.
+       */
+
+      if (
+        subtitleDistance <
+        subtitleRadius
+      ) {
+        rippleStrength =
+          1 -
+          subtitleDistance /
+            subtitleRadius;
+      }
+
+      /*
+       * ====================================================
+       * MEASURE CHARACTERS
+       * ====================================================
+       */
+
+      const characterWidths =
+        subtitle
+          .split("")
+          .map(
+            (character) =>
+              ctx.measureText(
+                character
+              ).width
+          );
+
+      const totalWidth =
+        characterWidths.reduce(
+          (
+            sum,
+            value
+          ) =>
+            sum + value,
+          0
+        );
+
+      let currentX =
+        centerX -
+        totalWidth / 2;
+
+      /*
+       * ====================================================
+       * DRAW SUBTITLE
+       * ====================================================
+       */
+
+      subtitle
+        .split("")
+        .forEach(
+          (
+            character,
+            index
+          ) => {
+            const characterWidth =
+              characterWidths[
+                index
+              ];
+
+            const characterCenter =
+              currentX +
+              characterWidth /
+                2;
+
+            /*
+             * Distance between mouse
+             * and this character.
+             */
+
+            const distanceFromMouse =
+              Math.abs(
+                characterCenter -
+                  mouseX
+              );
+
+            /*
+             * Only nearby characters
+             * participate in the ripple.
+             */
+
+            const localStrength =
+              Math.max(
+                0,
+                1 -
+                  distanceFromMouse /
+                    120
+              ) *
+              rippleStrength;
+
+            /*
+             * Static wave pattern.
+             *
+             * IMPORTANT:
+             * There is NO time component.
+             *
+             * Therefore this does not float.
+             */
+
+            const wave =
+              Math.sin(
+                index * 0.9
+              );
+
+            /*
+             * Vertical displacement.
+             */
+
+            const rippleY =
+              wave *
+              localStrength *
+              8;
+
+            /*
+             * Horizontal displacement.
+             */
+
+            const rippleX =
+              Math.cos(
+                index * 0.9
+              ) *
+              localStrength *
+              3;
+
+            ctx.globalAlpha =
+              fade;
+
+            ctx.fillStyle =
+              "white";
+
+            ctx.fillText(
+              character,
+              characterCenter +
+                rippleX,
+              subtitleBaseY +
+                rippleY
+            );
+
+            currentX +=
+              characterWidth;
+          }
+        );
+
+      ctx.restore();
+
       ctx.globalAlpha = 1;
+
+      /*
+       * ====================================================
+       * NEXT FRAME
+       * ====================================================
+       */
 
       animationFrame =
         requestAnimationFrame(
@@ -573,9 +917,9 @@ export default function ParticleLogo() {
     };
 
     /*
-     * --------------------------------------------------
+     * ======================================================
      * EVENTS
-     * --------------------------------------------------
+     * ======================================================
      */
 
     window.addEventListener(
@@ -601,6 +945,12 @@ export default function ParticleLogo() {
       }
     );
 
+    /*
+     * ======================================================
+     * START
+     * ======================================================
+     */
+
     resize();
 
     handleScroll();
@@ -608,9 +958,9 @@ export default function ParticleLogo() {
     animate();
 
     /*
-     * --------------------------------------------------
+     * ======================================================
      * CLEANUP
-     * --------------------------------------------------
+     * ======================================================
      */
 
     return () => {
