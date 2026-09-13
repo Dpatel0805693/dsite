@@ -6,25 +6,18 @@ export default function Intro() {
     >
       <div className="max-w-xl">
 
-        <p
-          className="
-            mb-8
-            text-[10px]
-            uppercase
-            tracking-[0.4em]
-            opacity-40
-          "
-        >
-          01 / Introduction
-        </p>
+        {/* MAIN STATEMENT */}
 
         <h1
           className="
-            text-2xl
-            sm:text-4xl
+            text-1xl
+            sm:text-2xl
+            lg:text-[3.2rem]
             leading-[1.08]
-            tracking-tight
-            mb-10
+            tracking-[-0.02em]
+            font-medium
+            text-white
+            mb-12
           "
         >
           Creating has always been
@@ -33,60 +26,77 @@ export default function Intro() {
           ideas.
         </h1>
 
+
+        {/* DIVIDER */}
+
         <div
           className="
             h-px
             w-full
             bg-white/20
-            mb-8
+            mb-10
           "
         />
 
-        <p
-          className="
-            text-xs
-            sm:text-sm
-            leading-7
-            opacity-65
-            max-w-lg
-          "
-        >
-          Somewhere between creativity
-          and technology is where I do
-          my best work—turning ideas
-          into things I can design,
-          build, and bring to life.
-        </p>
 
-        <p
-          className="
-            mt-8
-            text-xs
-            sm:text-sm
-            leading-7
-            opacity-65
-            max-w-lg
-          "
-        >
-          This portfolio, from design
-          to development and everything
-          within it, was built by me
-          from scratch.
-        </p>
+        {/* DESCRIPTION */}
 
         <div
           className="
-            mt-12
+            max-w-lg
+            space-y-9
+          "
+        >
+
+          <p
+            className="
+              text-sm
+              sm:text-base
+              leading-[2]
+              font-normal
+              text-white/70
+            "
+          >
+            Somewhere between creativity
+            and technology is where I do
+            my best work—turning ideas
+            into things I can design,
+            build, and bring to life.
+          </p>
+
+
+          <p
+            className="
+              text-sm
+              sm:text-base
+              leading-[2]
+              font-normal
+              text-white/70
+            "
+          >
+            This portfolio, from design
+            to development and everything
+            within it, was built by me
+            from scratch.
+          </p>
+
+        </div>
+
+
+        {/* BOTTOM INFORMATION */}
+
+        <div
+          className="
+            mt-16
             text-[10px]
             uppercase
             tracking-[0.3em]
-            opacity-40
-            space-y-2
+            font-normal
+            text-white/35
+            space-y-3
           "
         >
-          <p>Computer Science</p>
-          <p>New Media</p>
-          <p>Creative Development</p>
+          
         </div>
 
       </div>

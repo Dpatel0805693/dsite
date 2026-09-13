@@ -97,7 +97,7 @@ export default function HoverTargets({
               left-0
               whitespace-nowrap
               font-mono
-              text-[9px]
+              text-[13px]
               uppercase
               tracking-[0.3em]
               text-yellow-400
@@ -151,7 +151,7 @@ export default function HoverTargets({
               left-0
               whitespace-nowrap
               font-mono
-              text-[9px]
+              text-[13px]
               uppercase
               tracking-[0.3em]
               text-yellow-400
@@ -205,7 +205,7 @@ export default function HoverTargets({
               left-0
               whitespace-nowrap
               font-mono
-              text-[9px]
+              text-[13px]
               uppercase
               tracking-[0.3em]
               text-yellow-400
