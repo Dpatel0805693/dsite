@@ -62,7 +62,7 @@ export default function HoverTargets({
       >
 
         {/* ================================================= */}
-        {/* FACE → INTRODUCTION */}
+        {/* FACE → INTRO */}
         {/* ================================================= */}
 
         <div
@@ -89,7 +89,31 @@ export default function HoverTargets({
                 : "border-transparent opacity-0"
             }
           `}
-        />
+        >
+          <span
+            className={`
+              absolute
+              -top-7
+              left-0
+              whitespace-nowrap
+              font-mono
+              text-[9px]
+              uppercase
+              tracking-[0.3em]
+              text-yellow-400
+              transition-all
+              duration-200
+              ${
+                activeTarget === "face"
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-1"
+              }
+            `}
+          >
+            INTRO
+          </span>
+        </div>
+
 
         {/* ================================================= */}
         {/* BAG → WORK */}
@@ -119,7 +143,31 @@ export default function HoverTargets({
                 : "border-transparent opacity-0"
             }
           `}
-        />
+        >
+          <span
+            className={`
+              absolute
+              -top-7
+              left-0
+              whitespace-nowrap
+              font-mono
+              text-[9px]
+              uppercase
+              tracking-[0.3em]
+              text-yellow-400
+              transition-all
+              duration-200
+              ${
+                activeTarget === "bag"
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-1"
+              }
+            `}
+          >
+            WORK
+          </span>
+        </div>
+
 
         {/* ================================================= */}
         {/* LEFT HAND → EXPERIENCE */}
@@ -149,7 +197,31 @@ export default function HoverTargets({
                 : "border-transparent opacity-0"
             }
           `}
-        />
+        >
+          <span
+            className={`
+              absolute
+              -top-7
+              left-0
+              whitespace-nowrap
+              font-mono
+              text-[9px]
+              uppercase
+              tracking-[0.3em]
+              text-yellow-400
+              transition-all
+              duration-200
+              ${
+                activeTarget === "experience"
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-1"
+              }
+            `}
+          >
+            EXPERIENCE
+          </span>
+        </div>
+
 
         {/* ================================================= */}
         {/* RIGHT HAND → SKILLS */}
@@ -179,7 +251,31 @@ export default function HoverTargets({
                 : "border-transparent opacity-0"
             }
           `}
-        />
+        >
+          <span
+            className={`
+              absolute
+              -top-7
+              left-0
+              whitespace-nowrap
+              font-mono
+              text-[9px]
+              uppercase
+              tracking-[0.3em]
+              text-yellow-400
+              transition-all
+              duration-200
+              ${
+                activeTarget === "skills"
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-1"
+              }
+            `}
+          >
+            SKILLS
+          </span>
+        </div>
+
 
         {/* ================================================= */}
         {/* SLIPPERS → CONTACT */}
@@ -209,7 +305,30 @@ export default function HoverTargets({
                 : "border-transparent opacity-0"
             }
           `}
-        />
+        >
+          <span
+            className={`
+              absolute
+              -top-7
+              left-0
+              whitespace-nowrap
+              font-mono
+              text-[9px]
+              uppercase
+              tracking-[0.3em]
+              text-yellow-400
+              transition-all
+              duration-200
+              ${
+                activeTarget === "contact"
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-1"
+              }
+            `}
+          >
+            CONTACT
+          </span>
+        </div>
 
       </div>
 
