@@ -1,112 +1,120 @@
 export default function Skills() {
+  const sections = [
+    {
+      title: "Design",
+      skills: [
+        "Adobe Creative Suite",
+        "Figma",
+        "Canva",
+        "UI Design & Analysis",
+        "Wireframing",
+        "Prototyping",
+      ],
+    },
+    {
+      title: "Development",
+      skills: [
+        "HTML5 / CSS3",
+        "JavaScript",
+        "Python",
+        "Java",
+        "React",
+        "Next.js",
+        "GitHub",
+      ],
+    },
+    {
+      title: "Creative Technology",
+      skills: [
+        "User Research",
+        "3D Modeling",
+        "2D Animation",
+        "Interactive Media",
+        "Motion Design",
+        "Creative Coding",
+      ],
+    },
+    {
+      title: "Languages",
+      skills: [
+        "English",
+        "Hindi",
+        "Gujarati",
+      ],
+    },
+  ];
+
   return (
     <section
       id="skills"
-      className="
-        ml-0
-        md:ml-[500px]
-        py-10
-        scroll-mt-32
-        w-full
-      "
+      className="w-full"
     >
-      <div
-        className="
-          w-full
-          max-w-2xl
-          px-6
-          sm:px-10
-          md:px-20
-          font-mono
-        "
-      >
+      <div className="max-w-xl">
 
-        {/* DESIGN */}
-        <div className="mb-8">
+        <p
+          className="
+            mb-8
+            text-[10px]
+            uppercase
+            tracking-[0.4em]
+            opacity-40
+          "
+        >
+          04 / Skills
+        </p>
 
-          <p className="mb-3 text-xs uppercase tracking-[0.4em] opacity-50">
-            Design
-          </p>
+        <div className="space-y-10">
 
-          <div className="h-px bg-white/20 mb-4" />
+          {sections.map((section) => (
+            <div key={section.title}>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 text-sm">
+              <div
+                className="
+                  flex
+                  items-center
+                  justify-between
+                  mb-4
+                "
+              >
+                <p
+                  className="
+                    text-xs
+                    uppercase
+                    tracking-[0.3em]
+                    opacity-50
+                  "
+                >
+                  {section.title}
+                </p>
 
-            <p>Adobe Creative Suite</p>
-            <p>Figma</p>
-            <p>Canva</p>
-            <p>UI Design & Analysis</p>
-            <p>Wireframing</p>
-            <p>Prototyping</p>
+                <div
+                  className="
+                    h-px
+                    flex-1
+                    bg-white/15
+                    ml-5
+                  "
+                />
+              </div>
 
-          </div>
+              <div
+                className="
+                  grid
+                  grid-cols-2
+                  gap-y-3
+                  text-sm
+                  opacity-75
+                "
+              >
+                {section.skills.map((skill) => (
+                  <p key={skill}>
+                    {skill}
+                  </p>
+                ))}
+              </div>
 
-        </div>
-
-
-        {/* DEVELOPMENT */}
-        <div className="mb-8">
-
-          <p className="mb-3 text-xs uppercase tracking-[0.4em] opacity-50">
-            Development
-          </p>
-
-          <div className="h-px bg-white/20 mb-4" />
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-2 text-sm">
-
-            <p>HTML5 / CSS3</p>
-            <p>JavaScript</p>
-            <p>Python</p>
-            <p>Java</p>
-            <p>React</p>
-            <p>Next.js</p>
-            <p>GitHub</p>
-
-          </div>
-
-        </div>
-
-
-        {/* CREATIVE TECHNOLOGY */}
-        <div className="mb-8">
-
-          <p className="mb-3 text-xs uppercase tracking-[0.4em] opacity-50">
-            Creative Technology
-          </p>
-
-          <div className="h-px bg-white/20 mb-4" />
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 text-sm">
-
-            <p>User Research</p>
-            <p>3D Modeling</p>
-            <p>2D Animation</p>
-            <p>Interactive Media</p>
-            <p>Motion Design</p>
-            <p>Creative Coding</p>
-
-          </div>
-
-        </div>
-
-
-        {/* LANGUAGES */}
-        <div>
-
-          <p className="mb-3 text-xs uppercase tracking-[0.4em] opacity-50">
-            Languages
-          </p>
-
-          <div className="h-px bg-white/20 mb-4" />
-
-          <div className="space-y-2 text-sm">
-
-            <p>English</p>
-            <p>Hindi</p>
-            <p>Gujarati</p>
-
-          </div>
+            </div>
+          ))}
 
         </div>
 

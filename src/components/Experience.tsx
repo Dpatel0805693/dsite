@@ -1,227 +1,146 @@
 export default function Experience() {
+  const experiences = [
+    {
+      number: "01",
+      title: "Junior Web Developer & Designer",
+      company:
+        "University of Tampa · Dec 2024 — Present",
+      description:
+        "Updated and maintained university website content to improve clarity, accessibility, and user experience. Collaborated with cross-functional teams to deliver digital content that enhances student engagement and communication.",
+      skills:
+        "AEM • Quality Assurance • Web Accessibility • UX",
+    },
+    {
+      number: "02",
+      title: "Math & Computer Science Peer Tutor",
+      company:
+        "UTampa Center for Mathematics · University of Tampa · Jan 2024 — Present",
+      description:
+        "Provided individual and group tutoring in mathematics and computer science courses. Simplified complex concepts and supported students in developing confidence, problem-solving abilities, and academic success.",
+      skills:
+        "Problem Solving • Debugging • Technical Communication • Analytical Thinking",
+    },
+    {
+      number: "03",
+      title: "Social Media Manager",
+      company:
+        "Girls Who Code · Aug 2024 — Present",
+      description:
+        "Created and managed social media content and marketing campaigns to promote events and increase student engagement. Collaborated on outreach initiatives and analyzed engagement metrics to strengthen content strategy and community growth.",
+      skills:
+        "Content Strategy • Graphic Design • Digital Marketing • Community Engagement",
+    },
+    {
+      number: "04",
+      title: "Supplemental Instructor",
+      company:
+        "UTampa College of Social Sciences, Mathematics & Education · Jan 2024 — May 2024",
+      description:
+        "Assisted the professor during College Algebra classes, supported students through personalized guidance and test corrections, and facilitated academic success by reinforcing key mathematical concepts.",
+      skills:
+        "Mathematics • Instruction • Problem Solving • Mentorship • Communication",
+    },
+  ];
+
   return (
     <section
       id="experience"
-      className="
-        min-h-screen
-        ml-0
-        md:ml-[500px]
-        flex
-        items-center
-        w-full
-      "
+      className="w-full"
     >
-      <div
-        className="
-          w-full
-          max-w-3xl
-          px-6
-          sm:px-10
-          md:px-20
-          font-mono
-        "
-      >
+      <div className="max-w-2xl">
 
-        {/* 01 */}
-        <div className="group py-4">
+        <p
+          className="
+            mb-8
+            text-[10px]
+            uppercase
+            tracking-[0.4em]
+            opacity-40
+          "
+        >
+          03 / Experience
+        </p>
 
-          <div className="flex items-start gap-4 sm:gap-8">
+        <div className="space-y-8">
 
-            <p className="text-xs opacity-50 pt-1 shrink-0">
-              01
-            </p>
+          {experiences.map((experience) => (
+            <div
+              key={experience.number}
+              className="
+                border-b
+                border-white/15
+                pb-8
+              "
+            >
 
-            <h3 className="text-base sm:text-xl uppercase tracking-wide">
-              Junior Web Developer & Designer
-            </h3>
+              <div className="flex gap-5">
 
-          </div>
+                <span
+                  className="
+                    text-[10px]
+                    opacity-40
+                    pt-1
+                  "
+                >
+                  {experience.number}
+                </span>
 
+                <div>
 
-          <div
-            className="
-              max-h-0
-              overflow-hidden
-              transition-all
-              duration-500
-              group-hover:max-h-48
-              group-focus-within:max-h-48
-            "
-          >
+                  <h2
+                    className="
+                      text-lg
+                      sm:text-xl
+                      uppercase
+                      tracking-wide
+                    "
+                  >
+                    {experience.title}
+                  </h2>
 
-            <div className="pt-4 pl-8 sm:pl-12">
+                  <p
+                    className="
+                      mt-2
+                      text-[10px]
+                      uppercase
+                      tracking-[0.2em]
+                      opacity-40
+                      leading-5
+                    "
+                  >
+                    {experience.company}
+                  </p>
 
-              <p className="mb-2 text-xs sm:text-sm opacity-60">
-                University of Tampa · Dec 2024 — Present
-              </p>
+                  <p
+                    className="
+                      mt-5
+                      text-sm
+                      leading-7
+                      opacity-70
+                    "
+                  >
+                    {experience.description}
+                  </p>
 
-              <p className="mb-4 text-sm leading-relaxed opacity-80">
-                Updated and maintained university website content to improve
-                clarity, accessibility, and user experience. Collaborated with
-                cross-functional teams to deliver digital content that enhances
-                student engagement and communication.
-              </p>
+                  <p
+                    className="
+                      mt-4
+                      text-[9px]
+                      uppercase
+                      tracking-[0.2em]
+                      opacity-40
+                      leading-5
+                    "
+                  >
+                    {experience.skills}
+                  </p>
 
-              <p className="text-[10px] sm:text-xs opacity-50">
-                AEM • Quality Assurance • Web Accessibility • UX
-              </p>
+                </div>
 
-            </div>
-
-          </div>
-
-        </div>
-
-
-        {/* 02 */}
-        <div className="group py-4">
-
-          <div className="flex items-start gap-4 sm:gap-8">
-
-            <p className="text-xs opacity-50 pt-1 shrink-0">
-              02
-            </p>
-
-            <h3 className="text-base sm:text-xl uppercase tracking-wide">
-              Math & Computer Science Peer Tutor
-            </h3>
-
-          </div>
-
-
-          <div
-            className="
-              max-h-0
-              overflow-hidden
-              transition-all
-              duration-500
-              group-hover:max-h-48
-              group-focus-within:max-h-48
-            "
-          >
-
-            <div className="pt-4 pl-8 sm:pl-12">
-
-              <p className="mb-2 text-xs sm:text-sm opacity-60">
-                UTampa Center for Mathematics · University of Tampa · Jan 2024 — Present
-              </p>
-
-              <p className="mb-4 text-sm leading-relaxed opacity-80">
-                Provided individual and group tutoring in mathematics and
-                computer science courses. Simplified complex concepts and
-                supported students in developing confidence, problem-solving
-                abilities, and academic success.
-              </p>
-
-              <p className="text-[10px] sm:text-xs opacity-50">
-                Problem Solving • Debugging • Technical Communication • Analytical Thinking
-              </p>
+              </div>
 
             </div>
-
-          </div>
-
-        </div>
-
-
-        {/* 03 */}
-        <div className="group py-4">
-
-          <div className="flex items-start gap-4 sm:gap-8">
-
-            <p className="text-xs opacity-50 pt-1 shrink-0">
-              03
-            </p>
-
-            <h3 className="text-base sm:text-xl uppercase tracking-wide">
-              Social Media Manager
-            </h3>
-
-          </div>
-
-
-          <div
-            className="
-              max-h-0
-              overflow-hidden
-              transition-all
-              duration-500
-              group-hover:max-h-48
-              group-focus-within:max-h-48
-            "
-          >
-
-            <div className="pt-4 pl-8 sm:pl-12">
-
-              <p className="mb-2 text-xs sm:text-sm opacity-60">
-                Girls Who Code · Aug 2024 — Present
-              </p>
-
-              <p className="mb-4 text-sm leading-relaxed opacity-80">
-                Created and managed social media content and marketing
-                campaigns to promote events and increase student engagement.
-                Collaborated on outreach initiatives and analyzed engagement
-                metrics to strengthen content strategy and community growth.
-              </p>
-
-              <p className="text-[10px] sm:text-xs opacity-50">
-                Content Strategy • Graphic Design • Digital Marketing • Community Engagement
-              </p>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-        {/* 04 */}
-        <div className="group py-4">
-
-          <div className="flex items-start gap-4 sm:gap-8">
-
-            <p className="text-xs opacity-50 pt-1 shrink-0">
-              04
-            </p>
-
-            <h3 className="text-base sm:text-xl uppercase tracking-wide">
-              Supplemental Instructor
-            </h3>
-
-          </div>
-
-
-          <div
-            className="
-              max-h-0
-              overflow-hidden
-              transition-all
-              duration-500
-              group-hover:max-h-48
-              group-focus-within:max-h-48
-            "
-          >
-
-            <div className="pt-4 pl-8 sm:pl-12">
-
-              <p className="mb-2 text-xs sm:text-sm opacity-60">
-                UTampa College of Social Sciences, Mathematics & Education · Jan 2024 — May 2024
-              </p>
-
-              <p className="mb-4 text-sm leading-relaxed opacity-80">
-                Assisted the professor during College Algebra classes,
-                supported students through personalized guidance and test
-                corrections, and facilitated academic success by reinforcing
-                key mathematical concepts.
-              </p>
-
-              <p className="text-[10px] sm:text-xs opacity-50">
-                Mathematics · Instruction · Problem Solving · Mentorship · Communication
-              </p>
-
-            </div>
-
-          </div>
+          ))}
 
         </div>
 

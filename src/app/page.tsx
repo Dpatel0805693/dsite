@@ -1,25 +1,13 @@
-// page.tsx
-
 "use client";
 
 import { useEffect, useState } from "react";
 import BlueprintCursor from "../components/BlueprintCursor";
-import Contact from "../components/Contact";
 import Editorial from "../components/Editorial";
-import Experience from "../components/Experience";
 import HoverTargets from "../components/HoverTargets";
-import Intro from "../components/Intro";
 import ParticleLogo from "../components/ParticleLogo";
-import Sidebar from "../components/Sidebar";
-import Skills from "../components/Skills";
-import Work from "../components/Work";
 
 export default function Home() {
   const [isDark, setIsDark] = useState(true);
-  const [showSidebar, setShowSidebar] = useState(false);
-  const [activeSection, setActiveSection] =
-    useState("intro");
-
   const [showManBackground, setShowManBackground] =
     useState(false);
 
@@ -33,36 +21,6 @@ export default function Home() {
       setShowManBackground(
         scrollY > heroHeight * 0.5
       );
-
-      setShowSidebar(
-        scrollY > heroHeight * 0.8
-      );
-
-      const sections = [
-        "intro",
-        "work",
-        "experience",
-        "skills",
-        "contact",
-      ];
-
-      for (const section of sections) {
-        const element =
-          document.getElementById(section);
-
-        if (!element) continue;
-
-        const rect =
-          element.getBoundingClientRect();
-
-        if (
-          rect.top <= window.innerHeight * 0.35 &&
-          rect.bottom >= window.innerHeight * 0.35
-        ) {
-          setActiveSection(section);
-          break;
-        }
-      }
     };
 
     window.addEventListener(
@@ -85,7 +43,7 @@ export default function Home() {
     <main
       className={`
         relative
-        min-h-screen
+        min-h-[200vh]
         overflow-x-hidden
         ${
           isDark
@@ -190,7 +148,7 @@ export default function Home() {
           sm:top-10
           left-1/2
           -translate-x-1/2
-          z-[100]
+          z-[200]
         "
       >
         <div
@@ -238,7 +196,6 @@ export default function Home() {
               }
             `}
           >
-
             <div
               className={`
                 absolute
@@ -257,7 +214,6 @@ export default function Home() {
                 }
               `}
             />
-
           </button>
 
           <span
@@ -303,8 +259,6 @@ export default function Home() {
             "
           >
 
-            {/* PARTICLE LOGO */}
-
             <div
               className="
                 absolute
@@ -321,7 +275,7 @@ export default function Home() {
 
 
           {/* ================================================= */}
-          {/* HOVER TARGETS */}
+          {/* INTERACTIVE IMAGE NAVIGATION */}
           {/* ================================================= */}
 
           <HoverTargets
@@ -330,37 +284,31 @@ export default function Home() {
 
 
           {/* ================================================= */}
-          {/* CONTENT */}
+          {/* DP / LAST UPDATED */}
           {/* ================================================= */}
 
           <div
             className="
-              relative
-              z-20
-              w-full
+              fixed
+              left-6
+              bottom-6
+              z-[120]
+              font-mono
+              text-[9px]
+              uppercase
+              tracking-[0.25em]
+              opacity-50
+              pointer-events-none
             "
           >
+            <div>D.P</div>
 
-            {showSidebar && (
-              <Sidebar
-                activeSection={activeSection}
-              />
-            )}
-
-            <Intro />
-
-            <Work />
-
-            <Experience />
-
-            <Skills />
-
-            <Contact />
-
+            <div className="mt-2">
+              Last Updated
+            </div>
           </div>
 
         </>
-
       ) : (
 
         <Editorial />

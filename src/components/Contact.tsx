@@ -2,106 +2,88 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="
-        min-h-screen
-        ml-0
-        md:ml-[380px]
-        relative
-        scroll-mt-32
-        w-full
-      "
+      className="w-full"
     >
-      <div className="min-h-screen flex items-center">
-        <div
+      <div className="max-w-xl">
+
+        <p
           className="
-            w-full
-            max-w-5xl
-            px-6
-            sm:px-10
-            md:px-10
-            font-mono
+            mb-8
+            text-[10px]
+            uppercase
+            tracking-[0.4em]
+            opacity-40
           "
         >
-          {/* MAIN CONTENT */}
-          <div
-            className="
-              grid
-              grid-cols-1
-              md:grid-cols-[320px_270px]
-              gap-10
-              md:gap-12
-              items-center
-              justify-center
-            "
-          >
-            {/* TEXT */}
-            <div>
-              <h2 className="text-xl sm:text-2xl mb-2 tracking-wide">
-                Dhwani Patel
-              </h2>
+          05 / Contact
+        </p>
 
-              <div className="text-sm opacity-70 leading-relaxed space-y-1">
-                <p>B.S. Computer Science & New Media</p>
-                <p>University of Tampa</p>
-              </div>
-            </div>
+        <h2
+          className="
+            text-4xl
+            sm:text-6xl
+            leading-none
+            tracking-tight
+            mb-10
+          "
+        >
+          Let's make
+          <br />
+          something.
+        </h2>
 
-            {/* IMAGE */}
-            <div className="flex justify-start md:justify-center">
-              <img
-                src="/images/headshot.jpg"
-                alt="Dhwani Patel"
-                className="
-                  w-full
-                  max-w-[240px]
-                  sm:max-w-[270px]
-                  h-auto
-                  aspect-[320/420]
-                  object-cover
-                "
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* FOOTER / LINKS */}
-      <div
-        className="
-          absolute
-          bottom-10
-          md:bottom-40
-          left-6
-          sm:left-10
-          md:left-32
-          right-6
-          sm:right-10
-          font-mono
-          text-sm
-        "
-      >
         <div
           className="
-            flex
-            flex-wrap
-            items-center
-            gap-x-6
-            gap-y-3
+            h-px
+            w-full
+            bg-white/20
+            mb-8
+          "
+        />
+
+        <div
+          className="
+            space-y-3
+            text-sm
             opacity-70
           "
         >
+
+          <p>
+            Dhwani Patel
+          </p>
+
+          <p>
+            B.S. Computer Science & New Media
+          </p>
+
+          <p>
+            University of Tampa
+          </p>
+
+        </div>
+
+        <div
+          className="
+            mt-12
+            flex
+            flex-col
+            gap-4
+            text-sm
+          "
+        >
+
           <a
             href="mailto:dhwanipatel7788@gmail.com"
             className="
-              transition-all
-              duration-300
+              w-fit
+              opacity-60
               hover:opacity-100
-              hover:text-white
-              hover:-translate-y-0.5
-              hover:drop-shadow-[0_0_6px_rgba(255,255,255,0.5)]
+              transition-opacity
+              duration-300
             "
           >
-            dhwanipatel7788@gmail.com
+            dhwanipatel7788@gmail.com ↗
           </a>
 
           <a
@@ -109,15 +91,14 @@ export default function Contact() {
             target="_blank"
             rel="noopener noreferrer"
             className="
-              transition-all
-              duration-300
+              w-fit
+              opacity-60
               hover:opacity-100
-              hover:text-white
-              hover:-translate-y-0.5
-              hover:drop-shadow-[0_0_6px_rgba(255,255,255,0.5)]
+              transition-opacity
+              duration-300
             "
           >
-            LinkedIn
+            LinkedIn ↗
           </a>
 
           <a
@@ -125,17 +106,18 @@ export default function Contact() {
             target="_blank"
             rel="noopener noreferrer"
             className="
-              transition-all
-              duration-300
+              w-fit
+              opacity-60
               hover:opacity-100
-              hover:text-white
-              hover:-translate-y-0.5
-              hover:drop-shadow-[0_0_6px_rgba(255,255,255,0.5)]
+              transition-opacity
+              duration-300
             "
           >
-            Instagram
+            Instagram ↗
           </a>
+
         </div>
+
       </div>
     </section>
   );
