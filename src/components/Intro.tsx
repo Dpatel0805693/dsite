@@ -54,7 +54,7 @@ export default function Intro() {
               sm:text-base
               leading-[2]
               font-normal
-              text-white/70
+              text-yellow-400
             "
           >
             Somewhere between creativity
@@ -71,7 +71,7 @@ export default function Intro() {
               sm:text-base
               leading-[2]
               font-normal
-              text-white/70
+              text-yellow-400
             "
           >
             This portfolio, from design

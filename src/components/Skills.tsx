@@ -60,7 +60,6 @@ export default function Skills() {
             opacity-40
           "
         >
-          04 / Skills
         </p>
 
         <div className="space-y-10">
@@ -81,7 +80,7 @@ export default function Skills() {
                     text-xs
                     uppercase
                     tracking-[0.3em]
-                    opacity-50
+                    text-yellow-400
                   "
                 >
                   {section.title}

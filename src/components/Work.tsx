@@ -1,484 +1,1010 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useState } from "react";
-
-import type { Project } from "../data/projectDetails";
+import { useEffect, useRef, useState } from "react";
 import { projectDetails } from "../data/projectDetails";
-import { projects } from "../data/projects";
 
-export default function Work() {
-  const [selectedProject, setSelectedProject] =
-    useState<string>("");
+type Project = {
+  type: string;
+  overview: string;
+  tools: string;
+  process: string;
+  outcome: string;
+  images?: string[];
+  video?: string;
+  gif?: string;
+  github?: string;
+  links?: {
+    title: string;
+    url: string;
+  }[];
+};
 
-  const currentProject: Project | null =
-    selectedProject &&
-    selectedProject in projectDetails
-      ? projectDetails[
-          selectedProject as keyof typeof projectDetails
-        ]
-      : null;
+type GalleryProject = {
+  title: string;
+  image?: string;
+  gif?: string;
+  video?: string;
+};
 
-  const ProjectMedia = () => {
-    if (!currentProject) return null;
+const projectGroups: {
+  title: string;
+  projects: GalleryProject[];
+}[] = [
+  {
+    title: "Adobe Creative Suite",
+    projects: [
+      {
+        title: "Self Portrait",
+        image: "/images/SelfPortrait1.jpg",
+      },
+      {
+        title: "Heart",
+        gif: "/videos/GIFHeart.gif",
+      },
+      {
+        title: "Stranger Things",
+        image: "/images/StrangerThings1.jpg",
+      },
+      {
+        title: "The Wave",
+        video: "/videos/Thewave.mp4",
+      },
+      {
+        title: "SHE",
+        video: "/videos/TheFeelingOfBeingShe.mp4",
+      },
+    ],
+  },
 
-    const autoPlay =
-      selectedProject === "Northern Lights" ||
-      selectedProject === "Vector Mandala" ||
-      selectedProject === "Sanskrit" ||
-      selectedProject === "Brain vs Heart" ||
-      selectedProject === "Catch some Butterflies" ||
-      selectedProject === "When Fans Get Too Attached";
+  {
+    title: "HTML5",
+    projects: [
+      {
+        title: "Northern Lights",
+        video: "/videos/NorthernLights.mov",
+      },
+      {
+        title: "Vector Mandala",
+        video: "/videos/VectorMandala.mov",
+      },
+      {
+        title: "Sanskrit",
+        video: "/videos/Sanskrit.mov",
+      },
+      {
+        title: "Brain vs Heart",
+        video: "/videos/BrainHeart.mov",
+      },
+      {
+        title: "Catch some Butterflies",
+        video: "/videos/ButterflyGame.mov",
+      },
+      {
+        title: "Typography",
+        video: "/videos/Typography.mov",
+      },
+    ],
+  },
 
-    const loop =
-      selectedProject === "Northern Lights" ||
-      selectedProject === "Vector Mandala" ||
-      selectedProject === "Sanskrit" ||
-      selectedProject === "Brain vs Heart" ||
-      selectedProject === "Catch some Butterflies";
+  {
+    title: "Research / Development",
+    projects: [
+      {
+        title: "When Fans Get Too Attached",
+        video: "/videos/Research.mov",
+      },
+      {
+        title: "Tampa City Ballet",
+      },
+      {
+        title: "Open Spot",
+        video: "/videos/Parking.mp4",
+      },
+    ],
+  },
+];
 
-    const controls =
-      selectedProject !== "Northern Lights" &&
-      selectedProject !== "Vector Mandala" &&
-      selectedProject !== "Sanskrit" &&
-      selectedProject !== "Brain vs Heart" &&
-      selectedProject !== "Catch some Butterflies";
+/* =====================================================
+   PROJECT ROW
+===================================================== */
 
-    if (
-      selectedProject === "Tampa City Ballet" &&
-      "links" in currentProject
-    ) {
-      return (
-        <div className="flex flex-col gap-3">
-          {currentProject.links!.map((link) => (
-            <a
-              key={link.title}
-              href={link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="
-                text-sm
-                opacity-60
-                hover:opacity-100
-                hover:translate-x-2
-                transition-all
-                duration-300
-              "
-            >
-              {link.title} ↗
-            </a>
-          ))}
-        </div>
-      );
-    }
-
-    if (
-      selectedProject === "Stranger Things" &&
-      "images" in currentProject
-    ) {
-      return (
-        <div className="grid grid-cols-2 gap-2 max-w-[420px]">
-          {currentProject.images!.map((image) => (
-            <img
-              key={image}
-              src={image}
-              alt=""
-              className="
-                w-full
-                h-auto
-                object-cover
-                border
-                border-white/15
-              "
-            />
-          ))}
-        </div>
-      );
-    }
-
-    if ("images" in currentProject) {
-      return (
-        <div className="grid grid-cols-2 gap-3 max-w-[500px]">
-          {currentProject.images!.map((image) => (
-            <img
-              key={image}
-              src={image}
-              alt={selectedProject}
-              className="
-                w-full
-                h-auto
-                object-cover
-                border
-                border-white/15
-              "
-            />
-          ))}
-        </div>
-      );
-    }
-
-    if ("gif" in currentProject) {
-      return (
-        <img
-          src={currentProject.gif}
-          alt={selectedProject}
-          className="
-            w-full
-            max-w-[500px]
-            h-auto
-            border
-            border-white/15
-          "
-        />
-      );
-    }
-
-    if (currentProject.video) {
-      return (
-        <video
-          src={currentProject.video}
-          autoPlay={autoPlay}
-          loop={loop}
-          muted
-          playsInline
-          controls={controls}
-          className="
-            w-full
-            max-w-[500px]
-            h-auto
-            border
-            border-white/15
-          "
-        />
-      );
-    }
-
-    return null;
+function ProjectRow({
+  group,
+  onSelect,
+}: {
+  group: {
+    title: string;
+    projects: GalleryProject[];
   };
+  onSelect: (title: string) => void;
+}) {
+  const scrollRef = useRef<HTMLDivElement>(null);
 
-  const ProjectLinks = () => {
-    if (!currentProject?.github) return null;
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
 
-    return (
-      <div className="mt-5 flex flex-wrap gap-6">
+  const updateScrollState = () => {
+    const element = scrollRef.current;
 
-        {selectedProject === "Open Spot" && (
-          <a
-            href="https://www.canva.com/design/DAHIKmuaeOE/3MMok8gMN3CDcSp_-C_I-w/edit"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="
-              text-xs
-              opacity-60
-              hover:opacity-100
-              underline
-              transition-opacity
-            "
-          >
-            Project Report ↗
-          </a>
-        )}
+    if (!element) return;
 
-        <a
-          href={currentProject.github}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="
-            text-xs
-            opacity-60
-            hover:opacity-100
-            underline
-            transition-opacity
-          "
-        >
-          GitHub ↗
-        </a>
+    setCanScrollLeft(element.scrollLeft > 5);
 
-      </div>
+    setCanScrollRight(
+      element.scrollLeft + element.clientWidth <
+        element.scrollWidth - 5
     );
   };
 
-  const ProjectInfo = () => {
-    if (!currentProject) return null;
+  useEffect(() => {
+    updateScrollState();
 
-    return (
-      <div
-        className="
-          grid
-          grid-cols-2
-          gap-x-8
-          gap-y-7
-          mt-8
-        "
-      >
+    const element = scrollRef.current;
 
-        <div>
-          <p className="text-[9px] uppercase tracking-[0.3em] opacity-40 mb-2">
-            Overview
-          </p>
+    if (!element) return;
 
-          <p className="text-xs leading-6 opacity-70">
-            {currentProject.overview}
-          </p>
-        </div>
+    element.addEventListener("scroll", updateScrollState);
+    window.addEventListener("resize", updateScrollState);
 
-        <div>
-          <p className="text-[9px] uppercase tracking-[0.3em] opacity-40 mb-2">
-            Tools
-          </p>
+    return () => {
+      element.removeEventListener("scroll", updateScrollState);
+      window.removeEventListener("resize", updateScrollState);
+    };
+  }, []);
 
-          <p className="text-xs leading-6 opacity-70">
-            {currentProject.tools}
-          </p>
-        </div>
+  const scroll = (direction: "left" | "right") => {
+    const element = scrollRef.current;
 
-        <div>
-          <p className="text-[9px] uppercase tracking-[0.3em] opacity-40 mb-2">
-            Process
-          </p>
+    if (!element) return;
 
-          <p className="text-xs leading-6 opacity-70">
-            {currentProject.process}
-          </p>
-        </div>
-
-        <div>
-          <p className="text-[9px] uppercase tracking-[0.3em] opacity-40 mb-2">
-            Outcome
-          </p>
-
-          <p className="text-xs leading-6 opacity-70">
-            {currentProject.outcome}
-          </p>
-        </div>
-
-      </div>
-    );
+    element.scrollBy({
+      left: direction === "left" ? -220 : 220,
+      behavior: "smooth",
+    });
   };
 
   return (
-    <section
-      id="work"
-      className="w-full"
+    <div>
+      {/* CATEGORY HEADING */}
+
+      <div className="flex items-center justify-between mb-4">
+        <p
+          className="
+            text-[9px]
+            uppercase
+            tracking-[0.35em]
+            font-bold
+            text-yellow-400
+          "
+        >
+          {group.title}
+        </p>
+
+        <p
+          className="
+            text-[8px]
+            font-mono
+            text-white/25
+          "
+        >
+          {String(group.projects.length).padStart(2, "0")}
+        </p>
+      </div>
+
+      {/* PROJECT SCROLL AREA */}
+
+      <div className="relative">
+        {/* LEFT ARROW */}
+
+        <button
+          type="button"
+          onClick={() => scroll("left")}
+          disabled={!canScrollLeft}
+          aria-label="Scroll projects left"
+          className={`
+            absolute
+            left-[-14px]
+            top-[43%]
+            z-20
+            -translate-y-1/2
+            flex
+            h-7
+            w-7
+            items-center
+            justify-center
+            border
+            border-white/15
+            bg-black/70
+            backdrop-blur-sm
+            text-sm
+            transition-all
+            duration-300
+            ${
+              canScrollLeft
+                ? "text-white/60 hover:border-yellow-400 hover:text-yellow-400"
+                : "pointer-events-none opacity-0"
+            }
+          `}
+        >
+          ←
+        </button>
+
+        {/* PROJECTS */}
+
+        <div
+          ref={scrollRef}
+          className="
+            flex
+            gap-3
+            overflow-x-auto
+            pb-3
+            snap-x
+            scroll-smooth
+            [scrollbar-width:thin]
+          "
+        >
+          {group.projects.map((project) => (
+            <button
+              key={project.title}
+              type="button"
+              onClick={() => onSelect(project.title)}
+              className="
+                group
+                shrink-0
+                w-[105px]
+                sm:w-[115px]
+                text-left
+                snap-start
+              "
+            >
+              {/* THUMBNAIL */}
+
+              <div
+                className="
+                  relative
+                  aspect-square
+                  w-full
+                  overflow-hidden
+                  border
+                  border-white/10
+                  bg-black/50
+                  cursor-pointer
+                  transition-all
+                  duration-300
+                  group-hover:border-yellow-400
+                "
+              >
+                {/* IMAGE */}
+
+                {project.image && (
+                  <img
+                    src={project.image}
+                    alt=""
+                    className="
+                      h-full
+                      w-full
+                      object-cover
+                      grayscale
+                      opacity-65
+                      transition-all
+                      duration-500
+                      group-hover:grayscale-0
+                      group-hover:opacity-80
+                      group-hover:scale-[1.02]
+                      group-hover:blur-[2px]
+                    "
+                  />
+                )}
+
+                {/* GIF */}
+
+                {project.gif && (
+                  <img
+                    src={project.gif}
+                    alt=""
+                    className="
+                      h-full
+                      w-full
+                      object-cover
+                      grayscale
+                      opacity-65
+                      transition-all
+                      duration-500
+                      group-hover:grayscale-0
+                      group-hover:opacity-80
+                      group-hover:scale-[1.02]
+                      group-hover:blur-[2px]
+                    "
+                  />
+                )}
+
+                {/* VIDEO */}
+
+                {project.video && (
+                  <video
+                    src={project.video}
+                    muted
+                    autoPlay
+                    loop
+                    playsInline
+                    className="
+                      h-full
+                      w-full
+                      object-cover
+                      grayscale
+                      opacity-65
+                      transition-all
+                      duration-500
+                      group-hover:grayscale-0
+                      group-hover:opacity-80
+                      group-hover:scale-[1.02]
+                      group-hover:blur-[2px]
+                    "
+                  />
+                )}
+
+                {/* DARK HOVER */}
+
+                <div
+                  className="
+                    absolute
+                    inset-0
+                    bg-black/20
+                    opacity-0
+                    transition-opacity
+                    duration-300
+                    group-hover:opacity-100
+                  "
+                />
+
+                {/* VIEW PROJECT */}
+
+                <div
+                  className="
+                    absolute
+                    inset-0
+                    flex
+                    items-center
+                    justify-center
+                    opacity-0
+                    transition-opacity
+                    duration-300
+                    group-hover:opacity-100
+                  "
+                >
+                  <span
+                    className="
+                      font-mono
+                      text-[8px]
+                      uppercase
+                      tracking-[0.25em]
+                      text-yellow-400
+                    "
+                  >
+                    View Project ↗
+                  </span>
+                </div>
+              </div>
+
+              {/* PROJECT NAME */}
+
+              <p
+                className="
+                  mt-2
+                  text-[9px]
+                  uppercase
+                  tracking-[0.08em]
+                  leading-4
+                  font-semibold
+                  text-white/70
+                  transition-opacity
+                  duration-300
+                  group-hover:text-white
+                "
+              >
+                {project.title}
+              </p>
+            </button>
+          ))}
+        </div>
+
+        {/* RIGHT ARROW */}
+
+        <button
+          type="button"
+          onClick={() => scroll("right")}
+          disabled={!canScrollRight}
+          aria-label="Scroll projects right"
+          className={`
+            absolute
+            right-[-14px]
+            top-[43%]
+            z-20
+            -translate-y-1/2
+            flex
+            h-7
+            w-7
+            items-center
+            justify-center
+            border
+            border-white/15
+            bg-black/70
+            backdrop-blur-sm
+            text-sm
+            transition-all
+            duration-300
+            ${
+              canScrollRight
+                ? "text-white/60 hover:border-yellow-400 hover:text-yellow-400"
+                : "pointer-events-none opacity-0"
+            }
+          `}
+        >
+          →
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* =====================================================
+   PROJECT DETAIL MEDIA
+===================================================== */
+
+function ProjectMedia({
+  project,
+}: {
+  project: Project;
+}) {
+  const media: {
+    type: "image" | "gif" | "video";
+    src: string;
+  }[] = [];
+
+  /* IMAGES */
+
+  if (project.images) {
+    project.images.forEach((image) => {
+      media.push({
+        type: "image",
+        src: image,
+      });
+    });
+  }
+
+  /* GIF */
+
+  if (project.gif) {
+    media.push({
+      type: "gif",
+      src: project.gif,
+    });
+  }
+
+  /* VIDEO */
+
+  if (project.video) {
+    media.push({
+      type: "video",
+      src: project.video,
+    });
+  }
+
+  if (media.length === 0) {
+    return null;
+  }
+
+  return (
+    <div
+      className="
+        mt-6
+        flex
+        flex-wrap
+        items-start
+        gap-4
+      "
     >
-      <div className="w-full">
+      {media.map((item, index) => {
+        /* VIDEO */
 
-        {/* ================================================= */}
-        {/* HEADER */}
-        {/* ================================================= */}
+        if (item.type === "video") {
+          return (
+            <div
+              key={`${item.src}-${index}`}
+              className="
+                w-full
+                sm:w-[calc(50%-8px)]
+                border
+                border-white/10
+                bg-black/20
+                overflow-hidden
+              "
+            >
+              <video
+                src={item.src}
+                controls
+                playsInline
+                className="
+                  block
+                  w-full
+                  h-auto
+                  object-contain
+                "
+              />
+            </div>
+          );
+        }
 
-        <div className="mb-10">
+        /* IMAGE / GIF */
+
+        return (
+          <div
+            key={`${item.src}-${index}`}
+            className="
+              w-full
+              sm:w-[calc(50%-8px)]
+              border
+              border-white/10
+              bg-black/20
+              overflow-hidden
+            "
+          >
+            <img
+              src={item.src}
+              alt=""
+              className="
+                block
+                w-full
+                h-auto
+                object-contain
+              "
+            />
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+/* =====================================================
+   WORK
+===================================================== */
+
+export default function Work() {
+  const [selectedProject, setSelectedProject] =
+    useState<string | null>(null);
+
+  const selectedData = selectedProject
+    ? (projectDetails[selectedProject] as Project)
+    : null;
+
+  /* ===================================================
+     PROJECT DETAIL
+  =================================================== */
+
+  if (selectedProject && selectedData) {
+    return (
+      <section
+        id="work"
+        className="w-full"
+      >
+        <div className="max-w-3xl">
+          {/* BACK */}
+
+          <button
+            type="button"
+            onClick={() => setSelectedProject(null)}
+            className="
+              group
+              mb-6
+              flex
+              items-center
+              gap-2
+              text-[9px]
+              uppercase
+              tracking-[0.25em]
+              text-white/45
+              transition-colors
+              duration-300
+              hover:text-white
+            "
+          >
+            <span
+              className="
+                transition-transform
+                duration-300
+                group-hover:-translate-x-1
+              "
+            >
+              ←
+            </span>
+
+            Back to Work
+          </button>
+
+          {/* TYPE — YELLOW */}
 
           <p
             className="
-              mb-6
-              text-[10px]
+              mb-3
+              text-[9px]
               uppercase
-              tracking-[0.4em]
-              opacity-40
+              tracking-[0.3em]
+              font-bold
+              text-yellow-400
             "
           >
-            02 / Work
+            {selectedData.type}
           </p>
 
-          <h2
+          {/* MAIN PROJECT HEADING */}
+
+          <h1
             className="
-              text-4xl
-              sm:text-5xl
-              tracking-tight
-              mb-4
+              text-2xl
+              sm:text-3xl
+              lg:text-[2.5rem]
+              leading-none
+              tracking-[-0.035em]
+              font-medium
+              text-white
             "
           >
-            Selected Work
-          </h2>
+            {selectedProject}
+          </h1>
 
-          <p className="text-sm opacity-50">
-            Designed. Developed. Deployed.
-          </p>
+          {/* MEDIA */}
 
-        </div>
+          <ProjectMedia
+            project={selectedData}
+          />
 
+          {/* PROJECT INFORMATION */}
 
-        {/* ================================================= */}
-        {/* PROJECT LIST */}
-        {/* ================================================= */}
+          <div
+            className="
+              mt-7
+              grid
+              grid-cols-1
+              sm:grid-cols-2
+              gap-x-10
+              gap-y-6
+            "
+          >
+            {/* OVERVIEW */}
 
-        <div className="space-y-1">
+            <div className="sm:col-span-2">
+              <p
+                className="
+                  mb-2
+                  text-[9px]
+                  uppercase
+                  tracking-[0.3em]
+                  font-bold
+                  text-yellow-400
+                "
+              >
+                Overview
+              </p>
 
-          {(
-            Object.keys(projects) as
-              (keyof typeof projects)[]
-          ).map((category) => (
+              <p
+                className="
+                  max-w-3xl
+                  text-xs
+                  sm:text-[13px]
+                  leading-6
+                  text-white/65
+                "
+              >
+                {selectedData.overview}
+              </p>
+            </div>
 
+            {/* TOOLS */}
+
+            <div>
+              <p
+                className="
+                  mb-2
+                  text-[9px]
+                  uppercase
+                  tracking-[0.3em]
+                  font-bold
+                  text-yellow-400
+                "
+              >
+                Tools
+              </p>
+
+              <p
+                className="
+                  text-xs
+                  sm:text-[13px]
+                  leading-6
+                  text-white/65
+                "
+              >
+                {selectedData.tools}
+              </p>
+            </div>
+
+            {/* PROCESS */}
+
+            <div>
+              <p
+                className="
+                  mb-2
+                  text-[9px]
+                  uppercase
+                  tracking-[0.3em]
+                  font-bold
+                  text-yellow-400
+                "
+              >
+                Process
+              </p>
+
+              <p
+                className="
+                  text-xs
+                  sm:text-[13px]
+                  leading-6
+                  text-white/65
+                "
+              >
+                {selectedData.process}
+              </p>
+            </div>
+
+            {/* OUTCOME */}
+
+            <div className="sm:col-span-2">
+              <p
+                className="
+                  mb-2
+                  text-[9px]
+                  uppercase
+                  tracking-[0.3em]
+                  font-bold
+                  text-yellow-400
+                "
+              >
+                Outcome
+              </p>
+
+              <p
+                className="
+                  max-w-3xl
+                  text-xs
+                  sm:text-[13px]
+                  leading-6
+                  text-white/65
+                "
+              >
+                {selectedData.outcome}
+              </p>
+            </div>
+          </div>
+
+          {/* LINKS */}
+
+          {(selectedData.github ||
+            selectedData.links) && (
             <div
-              key={category}
               className="
+                mt-7
                 border-t
-                border-white/15
-                py-5
+                border-white/10
+                pt-5
               "
             >
-
               <p
                 className="
                   mb-4
                   text-[9px]
                   uppercase
                   tracking-[0.3em]
-                  opacity-40
+                  font-bold
+                  text-yellow-400
                 "
               >
-                {category}
+                Links
               </p>
 
-              <div className="space-y-2">
+              <div
+                className="
+                  grid
+                  grid-cols-1
+                  sm:grid-cols-2
+                  gap-x-10
+                  gap-y-2
+                "
+              >
+                {/* GITHUB */}
 
-                {projects[category].map(
-                  (project) => (
+                {selectedData.github && (
+                  <a
+                    href={selectedData.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="
+                      group
+                      flex
+                      items-center
+                      justify-between
+                      border-b
+                      border-white/10
+                      pb-2
+                      text-xs
+                      text-white/55
+                      transition-colors
+                      hover:text-white
+                    "
+                  >
+                    <span>
+                      GitHub
+                    </span>
 
-                    <div
-                      key={project}
+                    <span
+                      className="
+                        transition-transform
+                        duration-300
+                        group-hover:translate-x-1
+                      "
                     >
-
-                      <motion.button
-                        onClick={() =>
-                          setSelectedProject(
-                            selectedProject === project
-                              ? ""
-                              : project
-                          )
-                        }
-                        whileHover={{
-                          x: 8,
-                        }}
-                        transition={{
-                          type: "spring",
-                          stiffness: 350,
-                          damping: 25,
-                        }}
-                        className={`
-                          flex
-                          w-full
-                          items-center
-                          justify-between
-                          text-left
-                          py-1
-                          ${
-                            selectedProject === project
-                              ? "opacity-100"
-                              : "opacity-50 hover:opacity-100"
-                          }
-                        `}
-                      >
-
-                        <span
-                          className="
-                            text-sm
-                            sm:text-base
-                          "
-                        >
-                          {project}
-                        </span>
-
-                        <span
-                          className={`
-                            text-xs
-                            transition-transform
-                            duration-300
-                            ${
-                              selectedProject === project
-                                ? "rotate-90"
-                                : ""
-                            }
-                          `}
-                        >
-                          →
-                        </span>
-
-                      </motion.button>
-
-                    </div>
-
-                  )
+                      ↗
+                    </span>
+                  </a>
                 )}
 
+                {/* OTHER LINKS */}
+
+                {selectedData.links?.map(
+                  (link) => (
+                    <a
+                      key={link.url}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="
+                        group
+                        flex
+                        items-center
+                        justify-between
+                        border-b
+                        border-white/10
+                        pb-2
+                        text-xs
+                        text-white/55
+                        transition-colors
+                        hover:text-white
+                      "
+                    >
+                      <span>
+                        {link.title}
+                      </span>
+
+                      <span
+                        className="
+                          transition-transform
+                          duration-300
+                          group-hover:translate-x-1
+                        "
+                      >
+                        ↗
+                      </span>
+                    </a>
+                  )
+                )}
               </div>
-
             </div>
+          )}
 
-          ))}
+          {/* BACK */}
 
-        </div>
-
-
-        {/* ================================================= */}
-        {/* SELECTED PROJECT */}
-        {/* ================================================= */}
-
-        {selectedProject && currentProject && (
-
-          <motion.div
-            initial={{
-              opacity: 0,
-              y: 20,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              duration: 0.4,
-            }}
+          <button
+            type="button"
+            onClick={() => setSelectedProject(null)}
             className="
-              mt-10
-              pt-8
-              border-t
-              border-white/20
+              group
+              mt-8
+              mb-6
+              flex
+              items-center
+              gap-2
+              text-[9px]
+              uppercase
+              tracking-[0.25em]
+              text-white/35
+              transition-colors
+              hover:text-white
             "
           >
-
-            <h3
+            <span
               className="
-                text-2xl
-                tracking-wide
+                transition-transform
+                duration-300
+                group-hover:-translate-x-1
               "
             >
-              {selectedProject}
-            </h3>
+              ←
+            </span>
 
-            <p
-              className="
-                mt-2
-                text-[9px]
-                uppercase
-                tracking-[0.35em]
-                opacity-40
-              "
-            >
-              {currentProject.type}
-            </p>
+            Back to Work
+          </button>
+        </div>
+      </section>
+    );
+  }
 
+  /* ===================================================
+     PROJECT GALLERY
+  =================================================== */
 
-            {/* MEDIA */}
+  return (
+    <section
+      id="work"
+      className="w-full"
+    >
+      <div className="max-w-3xl">
+        {/* PROJECTS HEADING */}
 
-            <div className="mt-8">
-              <ProjectMedia />
-            </div>
+        <h1
+          className="
+            text-4xl
+            sm:text-5xl
+            lg:text-[4rem]
+            leading-none
+            tracking-[-0.04em]
+            font-medium
+            text-white
+          "
+        >
+          Projects
+        </h1>
 
+        {/* SUBTITLE */}
 
-            {/* LINKS */}
+        <p
+          className="
+            mt-3
+            text-xs
+            sm:text-sm
+            font-mono
+            text-white/45
+          "
+        >
+          Designed. Developed. Deployed.
+        </p>
 
-            <ProjectLinks />
+        {/* PROJECT GROUPS */}
 
-
-            {/* INFO */}
-
-            <ProjectInfo />
-
-          </motion.div>
-
-        )}
-
+        <div
+          className="
+            mt-8
+            space-y-8
+          "
+        >
+          {projectGroups.map(
+            (group, index) => (
+              <div
+                key={group.title}
+                className={
+                  index !== 0
+                    ? "border-t border-white/15 pt-7"
+                    : ""
+                }
+              >
+                <ProjectRow
+                  group={group}
+                  onSelect={(title) =>
+                    setSelectedProject(title)
+                  }
+                />
+              </div>
+            )
+          )}
+        </div>
       </div>
     </section>
   );

@@ -180,10 +180,10 @@ export default function HoverTargets({
           onMouseLeave={closeTarget}
           className={`
             absolute
-            left-[24%]
+            left-[30%]
             top-[55%]
-            w-[5vw]
-            h-[10vw]
+            w-[10vw]
+            h-[12vw]
             min-w-[90px]
             min-h-[120px]
             border-2
@@ -234,12 +234,12 @@ export default function HoverTargets({
           onMouseLeave={closeTarget}
           className={`
             absolute
-            left-[51%]
-            top-[52%]
-            w-[11vw]
-            h-[17vw]
-            min-w-[90px]
-            min-h-[120px]
+            left-[5%]
+            top-[59%]
+            w-[10vw]
+            h-[10vw]
+            min-w-[50px]
+            min-h-[50px]
             border-2
             pointer-events-auto
             cursor-pointer
