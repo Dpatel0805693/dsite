@@ -89,7 +89,7 @@ export default function Home() {
               object-cover
               object-center
               scale-[1.03]
-              blur-[6px]
+              blur-[3px]
               transition-opacity
               duration-1000
               ${
