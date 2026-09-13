@@ -334,6 +334,54 @@ export default function HoverTargets({
 
 
       {/* ================================================= */}
+      {/* BOTTOM RIGHT CONTACT INFO */}
+      {/* ================================================= */}
+
+      <div
+        className={`
+          fixed
+          right-6
+          bottom-6
+          z-[120]
+          font-mono
+          text-[9px]
+          uppercase
+          tracking-[0.25em]
+          text-right
+          pointer-events-none
+          transition-all
+          duration-500
+          ease-out
+          ${
+            activeTarget
+              ? "opacity-0 translate-y-2"
+              : "opacity-100 translate-y-0"
+          }
+        `}
+      >
+        <div className="space-y-2 text-white/70">
+
+          <div>
+            EMAIL
+          </div>
+
+          <div>
+            LINKEDIN
+          </div>
+
+          <div>
+            GITHUB
+          </div>
+
+          <div>
+            PORTFOLIO
+          </div>
+
+        </div>
+      </div>
+
+
+      {/* ================================================= */}
       {/* RIGHT SIDE CONTENT */}
       {/* ================================================= */}
 
