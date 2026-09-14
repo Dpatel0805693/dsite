@@ -1,7 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
-
+import { useEffect, useRef, useState } from "react";
 import Contact from "./Contact";
 import Experience from "./Experience";
 import Intro from "./Intro";
@@ -32,19 +31,19 @@ export default function HoverTargets({
     ReturnType<typeof setTimeout> | null
   >(null);
 
+  useEffect(() => {
+    onHoverChange(activeTarget !== null);
+  }, [activeTarget, onHoverChange]);
+
   const openTarget = (target: Target) => {
     if (closeTimer.current) {
       clearTimeout(closeTimer.current);
     }
 
     setActiveTarget(target);
-
-    onHoverChange(true);
   };
 
   const closeTarget = () => {
-    onHoverChange(false);
-
     closeTimer.current = setTimeout(() => {
       setActiveTarget(null);
     }, 180);
@@ -141,9 +140,7 @@ export default function HoverTargets({
 
         <button
           type="button"
-          onClick={() =>
-            openTarget("contact")
-          }
+          onClick={() => openTarget("contact")}
           aria-label="Contact"
           className="
             group
@@ -463,9 +460,7 @@ export default function HoverTargets({
         `}
         onMouseEnter={() => {
           if (closeTimer.current) {
-            clearTimeout(
-              closeTimer.current
-            );
+            clearTimeout(closeTimer.current);
           }
         }}
         onMouseLeave={closeTarget}

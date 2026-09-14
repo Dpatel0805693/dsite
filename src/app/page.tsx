@@ -252,9 +252,7 @@ export default function Home() {
 
           <HoverTargets
             enabled={true}
-            onHoverChange={
-              setHideParticleLogo
-            }
+            onHoverChange={setHideParticleLogo}
           />
 
         </>
