@@ -10,6 +10,7 @@ import Work from "./Work";
 
 interface HoverTargetsProps {
   enabled: boolean;
+  onHoverChange: (hovering: boolean) => void;
 }
 
 type Target =
@@ -22,6 +23,7 @@ type Target =
 
 export default function HoverTargets({
   enabled,
+  onHoverChange,
 }: HoverTargetsProps) {
   const [activeTarget, setActiveTarget] =
     useState<Target>(null);
@@ -36,9 +38,13 @@ export default function HoverTargets({
     }
 
     setActiveTarget(target);
+
+    onHoverChange(true);
   };
 
   const closeTarget = () => {
+    onHoverChange(false);
+
     closeTimer.current = setTimeout(() => {
       setActiveTarget(null);
     }, 180);
@@ -135,7 +141,9 @@ export default function HoverTargets({
 
         <button
           type="button"
-          onClick={() => openTarget("contact")}
+          onClick={() =>
+            openTarget("contact")
+          }
           aria-label="Contact"
           className="
             group
@@ -455,7 +463,9 @@ export default function HoverTargets({
         `}
         onMouseEnter={() => {
           if (closeTimer.current) {
-            clearTimeout(closeTimer.current);
+            clearTimeout(
+              closeTimer.current
+            );
           }
         }}
         onMouseLeave={closeTarget}

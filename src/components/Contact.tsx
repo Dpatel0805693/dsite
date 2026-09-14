@@ -15,22 +15,9 @@ export default function Contact() {
             opacity-40
           "
         >
-          05 / Contact
         </p>
 
-        <h2
-          className="
-            text-4xl
-            sm:text-6xl
-            leading-none
-            tracking-tight
-            mb-10
-          "
-        >
-          Let's make
-          <br />
-          something.
-        </h2>
+        
 
         <div
           className="

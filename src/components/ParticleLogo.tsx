@@ -459,7 +459,7 @@ export default function ParticleLogo() {
 
       const logoCenterX =
         centerX -
-        width * 0.035;
+        width * 0.001;
 
       const logoCenterY =
         centerY -

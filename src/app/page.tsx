@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import BlueprintCursor from "../components/BlueprintCursor";
 import Editorial from "../components/Editorial";
 import HoverTargets from "../components/HoverTargets";
@@ -9,43 +9,16 @@ import Sidebar from "../components/Sidebar";
 
 export default function Home() {
   const [isDark, setIsDark] = useState(true);
-  const [showManBackground, setShowManBackground] =
+
+  const [hideParticleLogo, setHideParticleLogo] =
     useState(false);
-
-  useEffect(() => {
-    if (!isDark) return;
-
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const heroHeight = window.innerHeight;
-
-      setShowManBackground(
-        scrollY > heroHeight * 0.5
-      );
-    };
-
-    window.addEventListener(
-      "scroll",
-      handleScroll,
-      { passive: true }
-    );
-
-    handleScroll();
-
-    return () => {
-      window.removeEventListener(
-        "scroll",
-        handleScroll
-      );
-    };
-  }, [isDark]);
 
   return (
     <main
       className={`
         relative
-        min-h-[200vh]
-        overflow-x-hidden
+        min-h-screen
+        overflow-hidden
         ${
           isDark
             ? "bg-black text-white"
@@ -76,13 +49,13 @@ export default function Home() {
           "
         >
 
-          {/* BLURRED MAN */}
+          {/* MAN */}
 
           <img
             src="/images/man.png"
             alt=""
             aria-hidden="true"
-            className={`
+            className="
               absolute
               inset-0
               w-full
@@ -90,39 +63,7 @@ export default function Home() {
               object-cover
               object-center
               scale-[1.03]
-              blur-[3px]
-              transition-opacity
-              duration-1000
-              ${
-                showManBackground
-                  ? "opacity-0"
-                  : "opacity-100"
-              }
-            `}
-          />
-
-
-          {/* SHARP MAN */}
-
-          <img
-            src="/images/man.png"
-            alt=""
-            aria-hidden="true"
-            className={`
-              absolute
-              inset-0
-              w-full
-              h-full
-              object-cover
-              object-center
-              transition-opacity
-              duration-1000
-              ${
-                showManBackground
-                  ? "opacity-100"
-                  : "opacity-0"
-              }
-            `}
+            "
           />
 
 
@@ -283,13 +224,21 @@ export default function Home() {
           >
 
             <div
-              className="
+              className={`
                 absolute
                 inset-0
                 z-10
                 translate-x-[18vw]
                 scale-[0.85]
-              "
+                transition-opacity
+                duration-300
+                ease-out
+                ${
+                  hideParticleLogo
+                    ? "opacity-0"
+                    : "opacity-100"
+                }
+              `}
             >
               <ParticleLogo />
             </div>
@@ -302,7 +251,10 @@ export default function Home() {
           {/* ================================================= */}
 
           <HoverTargets
-            enabled={showManBackground}
+            enabled={true}
+            onHoverChange={
+              setHideParticleLogo
+            }
           />
 
         </>
