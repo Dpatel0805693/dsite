@@ -74,6 +74,109 @@ export default function Home() {
 
 
       {/* ================================================= */}
+      {/* TOP RIGHT PROJECT INFO */}
+      {/* ================================================= */}
+
+      <div
+        className={`
+          fixed
+          top-8
+          right-8
+          sm:top-10
+          sm:right-12
+          z-[150]
+          font-mono
+          text-white
+          transition-opacity
+          duration-300
+          ease-out
+          ${
+            hideParticleLogo
+              ? "opacity-0"
+              : "opacity-100"
+          }
+        `}
+      >
+
+        {/* YELLOW ACCENT LINE */}
+
+        <div
+          className="
+            mb-3
+            ml-auto
+            h-[2px]
+            w-16
+            bg-[#D4A900]
+          "
+        />
+
+
+        {/* INFO */}
+
+        <div
+          className="
+            border-l
+            border-white/30
+            pl-4
+            sm:pl-5
+          "
+        >
+
+          {/* MAIN LABEL */}
+
+          <p
+            className="
+              text-[13px]
+              sm:text-[15px]
+              uppercase
+              tracking-[0.12em]
+              text-white
+            "
+          >
+            CREATIVE DEVELOPER
+          </p>
+
+
+          {/* YELLOW CATEGORY */}
+
+          <p
+            className="
+              mt-1
+              text-[10px]
+              sm:text-[11px]
+              uppercase
+              tracking-[0.18em]
+              text-[#D4A900]
+            "
+          >
+            Computer Science × New Media
+          </p>
+
+
+          
+
+
+          {/* DATE */}
+
+          <p
+  className="
+    mt-1
+    text-[10px]
+    sm:text-[11px]
+    uppercase
+    tracking-[0.16em]
+    text-white/65
+  "
+>
+  NYC / NY · 2026
+</p>
+
+        </div>
+
+      </div>
+
+
+      {/* ================================================= */}
       {/* SIDEBAR */}
       {/* ================================================= */}
 
