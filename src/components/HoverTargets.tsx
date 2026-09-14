@@ -53,18 +53,18 @@ export default function HoverTargets({
       <div
         className="
           fixed
-          left-20
+          left-30
           bottom-20
           z-[200]
           flex
           items-center
-          gap-
+          gap-1
         "
       >
 
-        {/* =============================================== */}
+        {/* ================================================= */}
         {/* RESUME */}
-        {/* =============================================== */}
+        {/* ================================================= */}
 
         <a
           href="https://canva.link/lyqomyc283nk5x5"
@@ -72,58 +72,126 @@ export default function HoverTargets({
           rel="noopener noreferrer"
           aria-label="Resume"
           className="
-            block
+            group
+            relative
+            flex
+            items-center
+            justify-center
             w-[80px]
-            h-[90px]
+            h-[80px]
             shrink-0
             cursor-pointer
-            transition-transform
-            duration-300
-            hover:scale-105
+            transition-all
+            duration-200
+            hover:-translate-y-1
+            active:translate-y-0
+            active:scale-95
           "
         >
+
           <img
             src="/images/resume.png"
             alt="Resume"
             className="
-              block
               w-full
               h-full
               object-contain
+              transition-all
+              duration-200
+              group-hover:drop-shadow-[4px_5px_3px_rgba(0,0,0,0.9)]
+              group-active:drop-shadow-[2px_3px_2px_rgba(0,0,0,0.9)]
             "
           />
+
+          <span
+            className="
+              absolute
+              left-1/2
+              -translate-x-1/2
+              -bottom-6
+              whitespace-nowrap
+              font-mono
+              text-[10px]
+              uppercase
+              tracking-[0.25em]
+              text-yellow-400
+              opacity-0
+              translate-y-1
+              transition-all
+              duration-200
+              group-hover:opacity-100
+              group-hover:translate-y-0
+            "
+          >
+            RESUME
+          </span>
+
         </a>
 
 
-        {/* =============================================== */}
+        {/* ================================================= */}
         {/* CONTACT */}
-        {/* =============================================== */}
+        {/* ================================================= */}
 
         <button
           type="button"
           onClick={() => openTarget("contact")}
           aria-label="Contact"
           className="
-            block
+            group
+            relative
+            flex
+            items-center
+            justify-center
             w-[70px]
             h-[60px]
             shrink-0
             cursor-pointer
-            transition-transform
-            duration-300
-            hover:scale-105
+            transition-all
+            duration-200
+            hover:-translate-y-1
+            active:translate-y-0
+            active:scale-95
           "
         >
+
           <img
             src="/images/contact.png"
             alt="Contact"
             className="
-              block
               w-full
               h-full
               object-contain
+              transition-all
+              duration-200
+              group-hover:drop-shadow-[4px_5px_3px_rgba(0,0,0,0.9)]
+              group-active:drop-shadow-[2px_3px_2px_rgba(0,0,0,0.9)]
             "
           />
+
+          <span
+            className="
+              absolute
+              left-1/2
+              -translate-x-1/2
+              -bottom-6
+              whitespace-nowrap
+              font-mono
+              text-[10px]
+              uppercase
+              tracking-[0.25em]
+              text-yellow-400
+              opacity-0
+              translate-y-1
+              transition-all
+              duration-200
+              group-hover:opacity-100
+              group-hover:translate-y-0
+            "
+          >
+            CONTACT
+          </span>
+
         </button>
 
       </div>
@@ -165,7 +233,6 @@ export default function HoverTargets({
               cursor-pointer
               transition-all
               duration-200
-
               ${
                 activeTarget === "face"
                   ? "border-yellow-400 opacity-100"
@@ -173,7 +240,6 @@ export default function HoverTargets({
               }
             `}
           >
-
             <span
               className={`
                 absolute
@@ -187,7 +253,6 @@ export default function HoverTargets({
                 text-yellow-400
                 transition-all
                 duration-200
-
                 ${
                   activeTarget === "face"
                     ? "opacity-100 translate-y-0"
@@ -197,7 +262,6 @@ export default function HoverTargets({
             >
               INTRO
             </span>
-
           </div>
 
 
@@ -214,16 +278,15 @@ export default function HoverTargets({
               absolute
               left-[23%]
               top-[28%]
-              w-[8vw]
-              h-[10vw]
-              min-w-[150px]
-              min-h-[200px]
+              w-[10vw]
+              h-[12vw]
+              min-w-[120px]
+              min-h-[150px]
               border-2
               pointer-events-auto
               cursor-pointer
               transition-all
               duration-200
-
               ${
                 activeTarget === "bag"
                   ? "border-yellow-400 opacity-100"
@@ -231,7 +294,6 @@ export default function HoverTargets({
               }
             `}
           >
-
             <span
               className={`
                 absolute
@@ -245,7 +307,6 @@ export default function HoverTargets({
                 text-yellow-400
                 transition-all
                 duration-200
-
                 ${
                   activeTarget === "bag"
                     ? "opacity-100 translate-y-0"
@@ -255,7 +316,6 @@ export default function HoverTargets({
             >
               WORK
             </span>
-
           </div>
 
 
@@ -271,7 +331,7 @@ export default function HoverTargets({
             className={`
               absolute
               left-[30%]
-              top-[55%]
+              top-[75%]
               w-[10vw]
               h-[12vw]
               min-w-[90px]
@@ -281,7 +341,6 @@ export default function HoverTargets({
               cursor-pointer
               transition-all
               duration-200
-
               ${
                 activeTarget === "experience"
                   ? "border-yellow-400 opacity-100"
@@ -289,7 +348,6 @@ export default function HoverTargets({
               }
             `}
           >
-
             <span
               className={`
                 absolute
@@ -303,7 +361,6 @@ export default function HoverTargets({
                 text-yellow-400
                 transition-all
                 duration-200
-
                 ${
                   activeTarget === "experience"
                     ? "opacity-100 translate-y-0"
@@ -313,7 +370,6 @@ export default function HoverTargets({
             >
               EXPERIENCE
             </span>
-
           </div>
 
 
@@ -328,10 +384,10 @@ export default function HoverTargets({
             onMouseLeave={closeTarget}
             className={`
               absolute
-              left-[5%]
-              top-[59%]
-              w-[10vw]
-              h-[10vw]
+              left-[30%]
+              top-[52%]
+              w-[13vw]
+              h-[8vw]
               min-w-[50px]
               min-h-[50px]
               border-2
@@ -339,7 +395,6 @@ export default function HoverTargets({
               cursor-pointer
               transition-all
               duration-200
-
               ${
                 activeTarget === "skills"
                   ? "border-yellow-400 opacity-100"
@@ -347,7 +402,6 @@ export default function HoverTargets({
               }
             `}
           >
-
             <span
               className={`
                 absolute
@@ -355,13 +409,12 @@ export default function HoverTargets({
                 left-0
                 whitespace-nowrap
                 font-mono
-                text-[9px]
+                text-[13px]
                 uppercase
                 tracking-[0.3em]
                 text-yellow-400
                 transition-all
                 duration-200
-
                 ${
                   activeTarget === "skills"
                     ? "opacity-100 translate-y-0"
@@ -371,11 +424,7 @@ export default function HoverTargets({
             >
               SKILLS
             </span>
-
           </div>
-
-
-          
 
         </div>
       )}
@@ -398,7 +447,6 @@ export default function HoverTargets({
           transition-all
           duration-500
           ease-out
-
           ${
             activeTarget
               ? "translate-x-0 opacity-100"
