@@ -14,6 +14,7 @@ type Particle = {
 
   size: number;
   seed: number;
+  color: string;
 };
 
 const MAX_PARTICLES = 3500;
@@ -76,7 +77,7 @@ export default function ParticleLogo() {
        */
 
       const sourceWidth = 1600;
-      const sourceHeight = 400;
+      const sourceHeight = 500;
 
       source.width =
         sourceWidth;
@@ -97,15 +98,15 @@ export default function ParticleLogo() {
        * DHWANI PATEL
        * ====================================================
        *
-       * Smaller and centered.
-       * The actual position is adjusted
-       * during rendering below.
+       * Tall, stacked, and dense so the name feels
+       * embedded in the asphalt rather than floating
+       * above the photograph.
        */
 
       const titleSize =
         Math.min(
-          116,
-          width * 0.08
+          150,
+          width * 0.095
         );
 
       sourceCtx.font =
@@ -117,13 +118,28 @@ export default function ParticleLogo() {
       sourceCtx.textBaseline =
         "middle";
 
+      /*
+       * DHWANI — muted road-marking yellow.
+       */
       sourceCtx.fillStyle =
-        "white";
+        "#D4A900";
 
       sourceCtx.fillText(
-        "DHWANI PATEL",
+        "DHWANI",
         sourceWidth / 2,
-        sourceHeight / 2
+        185
+      );
+
+      /*
+       * PATEL — weathered light gray.
+       */
+      sourceCtx.fillStyle =
+        "#CFCFCF";
+
+      sourceCtx.fillText(
+        "PATEL",
+        sourceWidth / 2,
+        345
       );
 
 
@@ -149,6 +165,7 @@ export default function ParticleLogo() {
       const candidates: {
         x: number;
         y: number;
+        color: string;
       }[] = [];
 
 
@@ -183,9 +200,26 @@ export default function ParticleLogo() {
           if (
             alpha > 120
           ) {
+            const red =
+              image.data[index];
+
+            const green =
+              image.data[index + 1];
+
+            const blue =
+              image.data[index + 2];
+
+            const color =
+              red > 200 &&
+              green > 200 &&
+              blue > 200
+                ? "#CFCFCF"
+                : "#D4A900";
+
             candidates.push({
               x,
               y,
+              color,
             });
           }
         }
@@ -263,8 +297,8 @@ export default function ParticleLogo() {
          */
 
         const size =
-          2.3 +
-          Math.random() * 1.4;
+          1.8 +
+          Math.random() * 1.15;
 
         nextParticles.push({
           x:
@@ -294,6 +328,9 @@ export default function ParticleLogo() {
 
           seed:
             Math.random(),
+
+          color:
+            point.color,
         });
       }
 
@@ -698,7 +735,7 @@ export default function ParticleLogo() {
             particleAlpha;
 
           ctx.fillStyle =
-            "white";
+            particle.color;
 
           ctx.fillRect(
             particle.x -
@@ -725,7 +762,7 @@ export default function ParticleLogo() {
         );
 
       const subtitle =
-        "CREATIVE DEVELOPER & DIGITAL DESIGNER";
+        "";
 
       ctx.save();
 
@@ -746,7 +783,7 @@ export default function ParticleLogo() {
 
       const subtitleBaseY =
         logoCenterY +
-        82;
+        255;
 
 
       /*
