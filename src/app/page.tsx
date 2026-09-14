@@ -205,7 +205,7 @@ export default function Home() {
           {/* SIDEBAR */}
           {/* ================================================= */}
 
-          <Sidebar activeSection={null} />
+          <Sidebar activeSection="" />
 
 
           {/* ================================================= */}
