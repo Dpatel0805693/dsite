@@ -5,6 +5,7 @@ import BlueprintCursor from "../components/BlueprintCursor";
 import Editorial from "../components/Editorial";
 import HoverTargets from "../components/HoverTargets";
 import ParticleLogo from "../components/ParticleLogo";
+import Sidebar from "../components/Sidebar";
 
 export default function Home() {
   const [isDark, setIsDark] = useState(true);
@@ -100,6 +101,7 @@ export default function Home() {
             `}
           />
 
+
           {/* SHARP MAN */}
 
           <img
@@ -122,6 +124,7 @@ export default function Home() {
               }
             `}
           />
+
 
           {/* DARK OVERLAY */}
 
@@ -151,6 +154,7 @@ export default function Home() {
           z-[200]
         "
       >
+
         <div
           className="
             flex
@@ -159,6 +163,8 @@ export default function Home() {
             sm:gap-4
           "
         >
+
+          {/* CREATIVE */}
 
           <span
             className={`
@@ -176,6 +182,9 @@ export default function Home() {
           >
             Creative
           </span>
+
+
+          {/* TOGGLE */}
 
           <button
             onClick={() =>
@@ -196,6 +205,7 @@ export default function Home() {
               }
             `}
           >
+
             <div
               className={`
                 absolute
@@ -214,7 +224,11 @@ export default function Home() {
                 }
               `}
             />
+
           </button>
+
+
+          {/* TECH */}
 
           <span
             className={`
@@ -234,6 +248,7 @@ export default function Home() {
           </span>
 
         </div>
+
       </div>
 
 
@@ -242,7 +257,15 @@ export default function Home() {
       {/* ================================================= */}
 
       {isDark ? (
+
         <>
+
+          {/* ================================================= */}
+          {/* SIDEBAR */}
+          {/* ================================================= */}
+
+          <Sidebar />
+
 
           {/* ================================================= */}
           {/* HERO */}
@@ -282,34 +305,13 @@ export default function Home() {
             enabled={showManBackground}
           />
 
-
-          {/* ================================================= */}
-          {/* DP / LAST UPDATED */}
-          {/* ================================================= */}
-
-          <div
-            className="
-              fixed
-              left-6
-              bottom-6
-              z-[120]
-              font-mono
-              text-[9px]
-              uppercase
-              tracking-[0.25em]
-              opacity-50
-              pointer-events-none
-            "
-          >
-            <div>D.P</div>
-
-            <div className="mt-2">
-              Last Updated
-            </div>
-          </div>
-
         </>
+
       ) : (
+
+        /* ================================================= */
+        /* CREATIVE MODE */
+        /* ================================================= */
 
         <Editorial />
 

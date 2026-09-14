@@ -165,9 +165,13 @@ function ProjectRow({
 
   return (
     <div>
+
+      {/* ================================================= */}
       {/* CATEGORY HEADING */}
+      {/* ================================================= */}
 
       <div className="flex items-center justify-between mb-4">
+
         <p
           className="
             text-[9px]
@@ -189,11 +193,16 @@ function ProjectRow({
         >
           {String(group.projects.length).padStart(2, "0")}
         </p>
+
       </div>
 
+
+      {/* ================================================= */}
       {/* PROJECT SCROLL AREA */}
+      {/* ================================================= */}
 
       <div className="relative">
+
         {/* LEFT ARROW */}
 
         <button
@@ -219,6 +228,7 @@ function ProjectRow({
             text-sm
             transition-all
             duration-300
+
             ${
               canScrollLeft
                 ? "text-white/60 hover:border-yellow-400 hover:text-yellow-400"
@@ -228,6 +238,7 @@ function ProjectRow({
         >
           ←
         </button>
+
 
         {/* PROJECTS */}
 
@@ -243,7 +254,9 @@ function ProjectRow({
             [scrollbar-width:thin]
           "
         >
+
           {group.projects.map((project) => (
+
             <button
               key={project.title}
               type="button"
@@ -257,7 +270,10 @@ function ProjectRow({
                 snap-start
               "
             >
+
+              {/* ================================================= */}
               {/* THUMBNAIL */}
+              {/* ================================================= */}
 
               <div
                 className="
@@ -274,6 +290,7 @@ function ProjectRow({
                   group-hover:border-yellow-400
                 "
               >
+
                 {/* IMAGE */}
 
                 {project.image && (
@@ -296,6 +313,7 @@ function ProjectRow({
                   />
                 )}
 
+
                 {/* GIF */}
 
                 {project.gif && (
@@ -317,6 +335,7 @@ function ProjectRow({
                     "
                   />
                 )}
+
 
                 {/* VIDEO */}
 
@@ -343,6 +362,7 @@ function ProjectRow({
                   />
                 )}
 
+
                 {/* DARK HOVER */}
 
                 <div
@@ -356,6 +376,7 @@ function ProjectRow({
                     group-hover:opacity-100
                   "
                 />
+
 
                 {/* VIEW PROJECT */}
 
@@ -372,6 +393,7 @@ function ProjectRow({
                     group-hover:opacity-100
                   "
                 >
+
                   <span
                     className="
                       font-mono
@@ -383,30 +405,39 @@ function ProjectRow({
                   >
                     View Project ↗
                   </span>
+
                 </div>
+
               </div>
 
-              {/* PROJECT NAME */}
+
+              {/* ================================================= */}
+              {/* PROJECT NAME — SMALLER */}
+              {/* ================================================= */}
 
               <p
                 className="
                   mt-2
-                  text-[9px]
+                  text-[7px]
                   uppercase
-                  tracking-[0.08em]
-                  leading-4
-                  font-semibold
-                  text-white/70
-                  transition-opacity
+                  tracking-[0.12em]
+                  leading-3
+                  font-medium
+                  text-white/60
+                  transition-colors
                   duration-300
                   group-hover:text-white
                 "
               >
                 {project.title}
               </p>
+
             </button>
+
           ))}
+
         </div>
+
 
         {/* RIGHT ARROW */}
 
@@ -433,6 +464,7 @@ function ProjectRow({
             text-sm
             transition-all
             duration-300
+
             ${
               canScrollRight
                 ? "text-white/60 hover:border-yellow-400 hover:text-yellow-400"
@@ -442,10 +474,13 @@ function ProjectRow({
         >
           →
         </button>
+
       </div>
+
     </div>
   );
 }
+
 
 /* =====================================================
    PROJECT DETAIL MEDIA
@@ -456,10 +491,12 @@ function ProjectMedia({
 }: {
   project: Project;
 }) {
+
   const media: {
     type: "image" | "gif" | "video";
     src: string;
   }[] = [];
+
 
   /* IMAGES */
 
@@ -472,6 +509,7 @@ function ProjectMedia({
     });
   }
 
+
   /* GIF */
 
   if (project.gif) {
@@ -480,6 +518,7 @@ function ProjectMedia({
       src: project.gif,
     });
   }
+
 
   /* VIDEO */
 
@@ -490,9 +529,11 @@ function ProjectMedia({
     });
   }
 
+
   if (media.length === 0) {
     return null;
   }
+
 
   return (
     <div
@@ -504,7 +545,9 @@ function ProjectMedia({
         gap-4
       "
     >
+
       {media.map((item, index) => {
+
         /* VIDEO */
 
         if (item.type === "video") {
@@ -520,6 +563,7 @@ function ProjectMedia({
                 overflow-hidden
               "
             >
+
               <video
                 src={item.src}
                 controls
@@ -531,9 +575,11 @@ function ProjectMedia({
                   object-contain
                 "
               />
+
             </div>
           );
         }
+
 
         /* IMAGE / GIF */
 
@@ -549,6 +595,7 @@ function ProjectMedia({
               overflow-hidden
             "
           >
+
             <img
               src={item.src}
               alt=""
@@ -559,36 +606,46 @@ function ProjectMedia({
                 object-contain
               "
             />
+
           </div>
         );
+
       })}
+
     </div>
   );
 }
+
 
 /* =====================================================
    WORK
 ===================================================== */
 
 export default function Work() {
+
   const [selectedProject, setSelectedProject] =
     useState<string | null>(null);
+
 
   const selectedData = selectedProject
     ? (projectDetails[selectedProject] as Project)
     : null;
+
 
   /* ===================================================
      PROJECT DETAIL
   =================================================== */
 
   if (selectedProject && selectedData) {
+
     return (
       <section
         id="work"
         className="w-full"
       >
+
         <div className="max-w-3xl">
+
           {/* BACK */}
 
           <button
@@ -609,6 +666,7 @@ export default function Work() {
               hover:text-white
             "
           >
+
             <span
               className="
                 transition-transform
@@ -620,7 +678,9 @@ export default function Work() {
             </span>
 
             Back to Work
+
           </button>
+
 
           {/* TYPE — YELLOW */}
 
@@ -636,6 +696,7 @@ export default function Work() {
           >
             {selectedData.type}
           </p>
+
 
           {/* MAIN PROJECT HEADING */}
 
@@ -653,11 +714,13 @@ export default function Work() {
             {selectedProject}
           </h1>
 
+
           {/* MEDIA */}
 
           <ProjectMedia
             project={selectedData}
           />
+
 
           {/* PROJECT INFORMATION */}
 
@@ -671,9 +734,11 @@ export default function Work() {
               gap-y-6
             "
           >
+
             {/* OVERVIEW */}
 
             <div className="sm:col-span-2">
+
               <p
                 className="
                   mb-2
@@ -698,11 +763,14 @@ export default function Work() {
               >
                 {selectedData.overview}
               </p>
+
             </div>
+
 
             {/* TOOLS */}
 
             <div>
+
               <p
                 className="
                   mb-2
@@ -726,11 +794,14 @@ export default function Work() {
               >
                 {selectedData.tools}
               </p>
+
             </div>
+
 
             {/* PROCESS */}
 
             <div>
+
               <p
                 className="
                   mb-2
@@ -754,11 +825,14 @@ export default function Work() {
               >
                 {selectedData.process}
               </p>
+
             </div>
+
 
             {/* OUTCOME */}
 
             <div className="sm:col-span-2">
+
               <p
                 className="
                   mb-2
@@ -783,13 +857,17 @@ export default function Work() {
               >
                 {selectedData.outcome}
               </p>
+
             </div>
+
           </div>
+
 
           {/* LINKS */}
 
           {(selectedData.github ||
             selectedData.links) && (
+
             <div
               className="
                 mt-7
@@ -798,6 +876,7 @@ export default function Work() {
                 pt-5
               "
             >
+
               <p
                 className="
                   mb-4
@@ -811,6 +890,7 @@ export default function Work() {
                 Links
               </p>
 
+
               <div
                 className="
                   grid
@@ -820,9 +900,11 @@ export default function Work() {
                   gap-y-2
                 "
               >
+
                 {/* GITHUB */}
 
                 {selectedData.github && (
+
                   <a
                     href={selectedData.github}
                     target="_blank"
@@ -841,6 +923,7 @@ export default function Work() {
                       hover:text-white
                     "
                   >
+
                     <span>
                       GitHub
                     </span>
@@ -854,13 +937,17 @@ export default function Work() {
                     >
                       ↗
                     </span>
+
                   </a>
+
                 )}
+
 
                 {/* OTHER LINKS */}
 
                 {selectedData.links?.map(
                   (link) => (
+
                     <a
                       key={link.url}
                       href={link.url}
@@ -880,6 +967,7 @@ export default function Work() {
                         hover:text-white
                       "
                     >
+
                       <span>
                         {link.title}
                       </span>
@@ -893,12 +981,18 @@ export default function Work() {
                       >
                         ↗
                       </span>
+
                     </a>
+
                   )
                 )}
+
               </div>
+
             </div>
+
           )}
+
 
           {/* BACK */}
 
@@ -920,6 +1014,7 @@ export default function Work() {
               hover:text-white
             "
           >
+
             <span
               className="
                 transition-transform
@@ -931,29 +1026,36 @@ export default function Work() {
             </span>
 
             Back to Work
+
           </button>
+
         </div>
+
       </section>
     );
   }
+
 
   /* ===================================================
      PROJECT GALLERY
   =================================================== */
 
   return (
+
     <section
       id="work"
       className="w-full"
     >
+
       <div className="max-w-3xl">
+
         {/* PROJECTS HEADING */}
 
         <h1
           className="
-            text-4xl
-            sm:text-5xl
-            lg:text-[4rem]
+            text-3xl
+            sm:text-4xl
+            lg:text-[3rem]
             leading-none
             tracking-[-0.04em]
             font-medium
@@ -963,13 +1065,14 @@ export default function Work() {
           Projects
         </h1>
 
+
         {/* SUBTITLE */}
 
         <p
           className="
             mt-3
-            text-xs
-            sm:text-sm
+            text-[10px]
+            sm:text-xs
             font-mono
             text-white/45
           "
@@ -977,35 +1080,45 @@ export default function Work() {
           Designed. Developed. Deployed.
         </p>
 
+
         {/* PROJECT GROUPS */}
 
         <div
           className="
-            mt-8
-            space-y-8
+            mt-7
+            space-y-7
           "
         >
+
           {projectGroups.map(
             (group, index) => (
+
               <div
                 key={group.title}
                 className={
                   index !== 0
-                    ? "border-t border-white/15 pt-7"
+                    ? "border-t border-white/15 pt-6"
                     : ""
                 }
               >
+
                 <ProjectRow
                   group={group}
                   onSelect={(title) =>
                     setSelectedProject(title)
                   }
                 />
+
               </div>
+
             )
           )}
+
         </div>
+
       </div>
+
     </section>
+
   );
 }

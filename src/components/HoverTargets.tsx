@@ -44,341 +44,341 @@ export default function HoverTargets({
     }, 180);
   };
 
-  if (!enabled) return null;
-
   return (
     <>
       {/* ================================================= */}
-      {/* IMAGE HOTSPOTS */}
+      {/* RESUME + CONTACT BUTTONS */}
       {/* ================================================= */}
 
       <div
         className="
           fixed
-          inset-0
-          z-[90]
-          pointer-events-none
+          left-20
+          bottom-20
+          z-[200]
+          flex
+          items-center
+          gap-
         "
       >
 
-        {/* ================================================= */}
-        {/* FACE → INTRO */}
-        {/* ================================================= */}
+        {/* =============================================== */}
+        {/* RESUME */}
+        {/* =============================================== */}
 
-        <div
-          onMouseEnter={() =>
-            openTarget("face")
-          }
-          onMouseLeave={closeTarget}
-          className={`
-            absolute
-            left-[35%]
-            top-[15%]
-            w-[10vw]
-            h-[10vw]
-            min-w-[90px]
-            min-h-[90px]
-            border-2
-            pointer-events-auto
+        <a
+          href="https://canva.link/lyqomyc283nk5x5"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Resume"
+          className="
+            block
+            w-[80px]
+            h-[90px]
+            shrink-0
             cursor-pointer
-            transition-all
-            duration-200
-            ${
-              activeTarget === "face"
-                ? "border-yellow-400 opacity-100"
-                : "border-transparent opacity-0"
-            }
-          `}
+            transition-transform
+            duration-300
+            hover:scale-105
+          "
         >
-          <span
+          <img
+            src="/images/resume.png"
+            alt="Resume"
+            className="
+              block
+              w-full
+              h-full
+              object-contain
+            "
+          />
+        </a>
+
+
+        {/* =============================================== */}
+        {/* CONTACT */}
+        {/* =============================================== */}
+
+        <button
+          type="button"
+          onClick={() => openTarget("contact")}
+          aria-label="Contact"
+          className="
+            block
+            w-[70px]
+            h-[60px]
+            shrink-0
+            cursor-pointer
+            transition-transform
+            duration-300
+            hover:scale-105
+          "
+        >
+          <img
+            src="/images/contact.png"
+            alt="Contact"
+            className="
+              block
+              w-full
+              h-full
+              object-contain
+            "
+          />
+        </button>
+
+      </div>
+
+
+      {/* ================================================= */}
+      {/* IMAGE HOTSPOTS */}
+      {/* ================================================= */}
+
+      {enabled && (
+        <div
+          className="
+            fixed
+            inset-0
+            z-[90]
+            pointer-events-none
+          "
+        >
+
+          {/* ================================================= */}
+          {/* FACE → INTRO */}
+          {/* ================================================= */}
+
+          <div
+            onMouseEnter={() =>
+              openTarget("face")
+            }
+            onMouseLeave={closeTarget}
             className={`
               absolute
-              -top-7
-              left-0
-              whitespace-nowrap
-              font-mono
-              text-[13px]
-              uppercase
-              tracking-[0.3em]
-              text-yellow-400
+              left-[35%]
+              top-[15%]
+              w-[10vw]
+              h-[10vw]
+              min-w-[90px]
+              min-h-[90px]
+              border-2
+              pointer-events-auto
+              cursor-pointer
               transition-all
               duration-200
+
               ${
                 activeTarget === "face"
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-1"
+                  ? "border-yellow-400 opacity-100"
+                  : "border-transparent opacity-0"
               }
             `}
           >
-            INTRO
-          </span>
-        </div>
+
+            <span
+              className={`
+                absolute
+                -top-7
+                left-0
+                whitespace-nowrap
+                font-mono
+                text-[13px]
+                uppercase
+                tracking-[0.3em]
+                text-yellow-400
+                transition-all
+                duration-200
+
+                ${
+                  activeTarget === "face"
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-1"
+                }
+              `}
+            >
+              INTRO
+            </span>
+
+          </div>
 
 
-        {/* ================================================= */}
-        {/* BAG → WORK */}
-        {/* ================================================= */}
+          {/* ================================================= */}
+          {/* BAG → WORK */}
+          {/* ================================================= */}
 
-        <div
-          onMouseEnter={() =>
-            openTarget("bag")
-          }
-          onMouseLeave={closeTarget}
-          className={`
-            absolute
-            left-[23%]
-            top-[28%]
-            w-[8vw]
-            h-[10vw]
-            min-w-[150px]
-            min-h-[200px]
-            border-2
-            pointer-events-auto
-            cursor-pointer
-            transition-all
-            duration-200
-            ${
-              activeTarget === "bag"
-                ? "border-yellow-400 opacity-100"
-                : "border-transparent opacity-0"
+          <div
+            onMouseEnter={() =>
+              openTarget("bag")
             }
-          `}
-        >
-          <span
+            onMouseLeave={closeTarget}
             className={`
               absolute
-              -top-7
-              left-0
-              whitespace-nowrap
-              font-mono
-              text-[13px]
-              uppercase
-              tracking-[0.3em]
-              text-yellow-400
+              left-[23%]
+              top-[28%]
+              w-[8vw]
+              h-[10vw]
+              min-w-[150px]
+              min-h-[200px]
+              border-2
+              pointer-events-auto
+              cursor-pointer
               transition-all
               duration-200
+
               ${
                 activeTarget === "bag"
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-1"
+                  ? "border-yellow-400 opacity-100"
+                  : "border-transparent opacity-0"
               }
             `}
           >
-            WORK
-          </span>
-        </div>
+
+            <span
+              className={`
+                absolute
+                -top-7
+                left-0
+                whitespace-nowrap
+                font-mono
+                text-[13px]
+                uppercase
+                tracking-[0.3em]
+                text-yellow-400
+                transition-all
+                duration-200
+
+                ${
+                  activeTarget === "bag"
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-1"
+                }
+              `}
+            >
+              WORK
+            </span>
+
+          </div>
 
 
-        {/* ================================================= */}
-        {/* LEFT HAND → EXPERIENCE */}
-        {/* ================================================= */}
+          {/* ================================================= */}
+          {/* LEFT HAND → EXPERIENCE */}
+          {/* ================================================= */}
 
-        <div
-          onMouseEnter={() =>
-            openTarget("experience")
-          }
-          onMouseLeave={closeTarget}
-          className={`
-            absolute
-            left-[30%]
-            top-[55%]
-            w-[10vw]
-            h-[12vw]
-            min-w-[90px]
-            min-h-[120px]
-            border-2
-            pointer-events-auto
-            cursor-pointer
-            transition-all
-            duration-200
-            ${
-              activeTarget === "experience"
-                ? "border-yellow-400 opacity-100"
-                : "border-transparent opacity-0"
+          <div
+            onMouseEnter={() =>
+              openTarget("experience")
             }
-          `}
-        >
-          <span
+            onMouseLeave={closeTarget}
             className={`
               absolute
-              -top-7
-              left-0
-              whitespace-nowrap
-              font-mono
-              text-[13px]
-              uppercase
-              tracking-[0.3em]
-              text-yellow-400
+              left-[30%]
+              top-[55%]
+              w-[10vw]
+              h-[12vw]
+              min-w-[90px]
+              min-h-[120px]
+              border-2
+              pointer-events-auto
+              cursor-pointer
               transition-all
               duration-200
+
               ${
                 activeTarget === "experience"
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-1"
+                  ? "border-yellow-400 opacity-100"
+                  : "border-transparent opacity-0"
               }
             `}
           >
-            EXPERIENCE
-          </span>
-        </div>
+
+            <span
+              className={`
+                absolute
+                -top-7
+                left-0
+                whitespace-nowrap
+                font-mono
+                text-[13px]
+                uppercase
+                tracking-[0.3em]
+                text-yellow-400
+                transition-all
+                duration-200
+
+                ${
+                  activeTarget === "experience"
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-1"
+                }
+              `}
+            >
+              EXPERIENCE
+            </span>
+
+          </div>
 
 
-        {/* ================================================= */}
-        {/* RIGHT HAND → SKILLS */}
-        {/* ================================================= */}
+          {/* ================================================= */}
+          {/* RIGHT HAND → SKILLS */}
+          {/* ================================================= */}
 
-        <div
-          onMouseEnter={() =>
-            openTarget("skills")
-          }
-          onMouseLeave={closeTarget}
-          className={`
-            absolute
-            left-[5%]
-            top-[59%]
-            w-[10vw]
-            h-[10vw]
-            min-w-[50px]
-            min-h-[50px]
-            border-2
-            pointer-events-auto
-            cursor-pointer
-            transition-all
-            duration-200
-            ${
-              activeTarget === "skills"
-                ? "border-yellow-400 opacity-100"
-                : "border-transparent opacity-0"
+          <div
+            onMouseEnter={() =>
+              openTarget("skills")
             }
-          `}
-        >
-          <span
+            onMouseLeave={closeTarget}
             className={`
               absolute
-              -top-7
-              left-0
-              whitespace-nowrap
-              font-mono
-              text-[9px]
-              uppercase
-              tracking-[0.3em]
-              text-yellow-400
+              left-[5%]
+              top-[59%]
+              w-[10vw]
+              h-[10vw]
+              min-w-[50px]
+              min-h-[50px]
+              border-2
+              pointer-events-auto
+              cursor-pointer
               transition-all
               duration-200
+
               ${
                 activeTarget === "skills"
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-1"
+                  ? "border-yellow-400 opacity-100"
+                  : "border-transparent opacity-0"
               }
             `}
           >
-            SKILLS
-          </span>
-        </div>
 
+            <span
+              className={`
+                absolute
+                -top-7
+                left-0
+                whitespace-nowrap
+                font-mono
+                text-[9px]
+                uppercase
+                tracking-[0.3em]
+                text-yellow-400
+                transition-all
+                duration-200
 
-        {/* ================================================= */}
-        {/* SLIPPERS → CONTACT */}
-        {/* ================================================= */}
+                ${
+                  activeTarget === "skills"
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-1"
+                }
+              `}
+            >
+              SKILLS
+            </span>
 
-        <div
-          onMouseEnter={() =>
-            openTarget("contact")
-          }
-          onMouseLeave={closeTarget}
-          className={`
-            absolute
-            left-[18%]
-            top-[78%]
-            w-[22vw]
-            h-[15vw]
-            min-w-[150px]
-            min-h-[100px]
-            border-2
-            pointer-events-auto
-            cursor-pointer
-            transition-all
-            duration-200
-            ${
-              activeTarget === "contact"
-                ? "border-yellow-400 opacity-100"
-                : "border-transparent opacity-0"
-            }
-          `}
-        >
-          <span
-            className={`
-              absolute
-              -top-7
-              left-0
-              whitespace-nowrap
-              font-mono
-              text-[9px]
-              uppercase
-              tracking-[0.3em]
-              text-yellow-400
-              transition-all
-              duration-200
-              ${
-                activeTarget === "contact"
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-1"
-              }
-            `}
-          >
-            CONTACT
-          </span>
-        </div>
-
-      </div>
-
-
-      {/* ================================================= */}
-      {/* BOTTOM RIGHT CONTACT INFO */}
-      {/* ================================================= */}
-
-      <div
-        className={`
-          fixed
-          right-6
-          bottom-6
-          z-[120]
-          font-mono
-          text-[9px]
-          uppercase
-          tracking-[0.25em]
-          text-right
-          pointer-events-none
-          transition-all
-          duration-500
-          ease-out
-          ${
-            activeTarget
-              ? "opacity-0 translate-y-2"
-              : "opacity-100 translate-y-0"
-          }
-        `}
-      >
-        <div className="space-y-2 text-white/70">
-
-          <div>
-            EMAIL
           </div>
 
-          <div>
-            LINKEDIN
-          </div>
 
-          <div>
-            GITHUB
-          </div>
-
-          <div>
-            PORTFOLIO
-          </div>
+          
 
         </div>
-      </div>
+      )}
 
 
       {/* ================================================= */}
@@ -390,7 +390,7 @@ export default function HoverTargets({
           fixed
           right-0
           top-0
-          z-[80]
+          z-[150]
           h-screen
           w-[48vw]
           max-w-[800px]
@@ -398,6 +398,7 @@ export default function HoverTargets({
           transition-all
           duration-500
           ease-out
+
           ${
             activeTarget
               ? "translate-x-0 opacity-100"
@@ -413,7 +414,7 @@ export default function HoverTargets({
       >
 
         {/* ================================================= */}
-        {/* SUBTLE READING / BLUR LAYER */}
+        {/* READING / BLUR LAYER */}
         {/* ================================================= */}
 
         <div
@@ -448,7 +449,7 @@ export default function HoverTargets({
         >
 
           {/* ================================================= */}
-          {/* INTRODUCTION */}
+          {/* INTRO */}
           {/* ================================================= */}
 
           {activeTarget === "face" && (
