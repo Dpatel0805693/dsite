@@ -297,8 +297,8 @@ export default function ParticleLogo() {
          */
 
         const size =
-          1.8 +
-          Math.random() * 1.15;
+        3.0 +
+        Math.random() * 1.5;
 
         nextParticles.push({
           x:
