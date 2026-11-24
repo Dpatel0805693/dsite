@@ -6,17 +6,22 @@ export default function Experience() {
   const [openExperience, setOpenExperience] = useState<string | null>(null);
 
   const experiences = [
+
     {
       number: "01",
       title: "Junior Web Developer & Designer",
       company: "University of Tampa · Dec 2024 — Present",
       description: [
-        "Updated and maintained university website content to improve clarity, accessibility, and user experience.",
-        "Collaborated with cross-functional teams to deliver digital content that enhances student engagement and communication.",
+        "Develop and optimize websites for 15+ university departments using HTML5, CSS3, Adobe Creative Cloud, and Adobe Experience Manager (AEM), supporting frontend development, content management, and website performance.",
+        "Design and implement webpages and Formstack digital forms, improving UI/UX, navigation, and information architecture.",
+        "Use Salesforce Experience Cloud to manage and update digital content, maintain consistent branding, and support user-friendly experiences across university web platforms.",
+        "Support website migrations and quality assurance (QA) through content restructuring, functional testing, broken-link audits, and troubleshooting.",
+        "Contribute to digital marketing and communications by managing branded web content, developing promotional pages, and maintaining consistent messaging across university websites.",
       ],
       skills:
-        "AEM • Quality Assurance • Web Accessibility • UX",
+        "HTML5 • CSS3 • Adobe Experience Manager (AEM) • Salesforce Experience Cloud • Formstack • UI/UX • QA • Digital Marketing",
     },
+    
     {
       number: "02",
       title: "Math & Computer Science Peer Tutor",
