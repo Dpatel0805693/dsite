@@ -5,1036 +5,242 @@ import { useEffect, useRef } from "react";
 type Particle = {
   x: number;
   y: number;
-
-  homeX: number;
-  homeY: number;
-
   vx: number;
   vy: number;
-
+  homeX: number;
+  homeY: number;
   size: number;
   seed: number;
   color: string;
 };
 
-const MAX_PARTICLES = 3500;
+const MASK_WIDTH = 1600;
+const MASK_HEIGHT = 500;
+const DESKTOP_PARTICLES = 3500;
+const MOBILE_PARTICLES = 1300;
 
 export default function ParticleLogo() {
-  const canvasRef =
-    useRef<HTMLCanvasElement>(null);
-
-  const mouse = useRef({
-    x: -9999,
-    y: -9999,
-  });
-
-  const scroll =
-    useRef(0);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const canvas =
-      canvasRef.current;
-
+    const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx =
-      canvas.getContext("2d", {
-        alpha: true,
-      });
+    const context = canvas.getContext("2d", { alpha: true });
+    if (!context) return;
 
-    if (!ctx) return;
+    const ctx = context;
+    const parent = canvas.parentElement;
+    if (!parent) return;
 
-    let width =
-      window.innerWidth;
-
-    let height =
-      window.innerHeight;
-
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const pointer = { x: -9999, y: -9999 };
     let particles: Particle[] = [];
-
+    let width = 1;
+    let height = 1;
+    let progress = 0;
     let animationFrame = 0;
+    let isVisible = true;
 
-
-    /*
-     * ======================================================
-     * CREATE PARTICLES
-     * ======================================================
-     */
-
-    const createParticles = () => {
-      const source =
-        document.createElement(
-          "canvas"
-        );
-
-      const sourceCtx =
-        source.getContext("2d");
-
+    // The mask uses fixed typography. The rendered logo is scaled to the
+    // available container instead of depending on the browser window size.
+    const makeParticles = () => {
+      const source = document.createElement("canvas");
+      source.width = MASK_WIDTH;
+      source.height = MASK_HEIGHT;
+      const sourceCtx = source.getContext("2d", { willReadFrequently: true });
       if (!sourceCtx) return;
 
-      /*
-       * Internal text canvas.
-       */
+      sourceCtx.font = '700 160px "Courier New", monospace';
+      sourceCtx.textAlign = "center";
+      sourceCtx.textBaseline = "middle";
+      sourceCtx.fillStyle = "#D4A900";
+      sourceCtx.fillText("DHWANI", MASK_WIDTH / 2, 185);
+      sourceCtx.fillStyle = "#CFCFCF";
+      sourceCtx.fillText("PATEL", MASK_WIDTH / 2, 345);
 
-      const sourceWidth = 1600;
-      const sourceHeight = 500;
+      const pixelData = sourceCtx.getImageData(0, 0, MASK_WIDTH, MASK_HEIGHT).data;
+      const candidates: Array<{ x: number; y: number; color: string }> = [];
 
-      source.width =
-        sourceWidth;
-
-      source.height =
-        sourceHeight;
-
-      sourceCtx.clearRect(
-        0,
-        0,
-        sourceWidth,
-        sourceHeight
-      );
-
-
-      /*
-       * ====================================================
-       * DHWANI PATEL
-       * ====================================================
-       *
-       * Tall, stacked, and dense so the name feels
-       * embedded in the asphalt rather than floating
-       * above the photograph.
-       */
-
-      const titleSize =
-        Math.min(
-          150,
-          width * 0.095
-        );
-
-      sourceCtx.font =
-        `700 ${titleSize}px "Courier New", monospace`;
-
-      sourceCtx.textAlign =
-        "center";
-
-      sourceCtx.textBaseline =
-        "middle";
-
-      /*
-       * DHWANI — muted road-marking yellow.
-       */
-      sourceCtx.fillStyle =
-        "#D4A900";
-
-      sourceCtx.fillText(
-        "DHWANI",
-        sourceWidth / 2,
-        185
-      );
-
-      /*
-       * PATEL — weathered light gray.
-       */
-      sourceCtx.fillStyle =
-        "#CFCFCF";
-
-      sourceCtx.fillText(
-        "PATEL",
-        sourceWidth / 2,
-        345
-      );
-
-
-      /*
-       * Convert text into a mask.
-       */
-
-      const image =
-        sourceCtx.getImageData(
-          0,
-          0,
-          sourceWidth,
-          sourceHeight
-        );
-
-
-      /*
-       * ====================================================
-       * FIND PARTICLE LOCATIONS
-       * ====================================================
-       */
-
-      const candidates: {
-        x: number;
-        y: number;
-        color: string;
-      }[] = [];
-
-
-      /*
-       * 5px sampling.
-       *
-       * Dense enough to look good,
-       * but safer for performance.
-       */
-
-      const sampleGap = 5;
-
-      for (
-        let y = 0;
-        y < sourceHeight;
-        y += sampleGap
-      ) {
-        for (
-          let x = 0;
-          x < sourceWidth;
-          x += sampleGap
-        ) {
-          const index =
-            (y * sourceWidth + x) *
-            4;
-
-          const alpha =
-            image.data[
-              index + 3
-            ];
-
-          if (
-            alpha > 120
-          ) {
-            const red =
-              image.data[index];
-
-            const green =
-              image.data[index + 1];
-
-            const blue =
-              image.data[index + 2];
-
-            const color =
-              red > 200 &&
-              green > 200 &&
-              blue > 200
-                ? "#CFCFCF"
-                : "#D4A900";
-
-            candidates.push({
-              x,
-              y,
-              color,
-            });
-          }
+      for (let y = 0; y < MASK_HEIGHT; y += 5) {
+        for (let x = 0; x < MASK_WIDTH; x += 5) {
+          const index = (y * MASK_WIDTH + x) * 4;
+          if (pixelData[index + 3] < 120) continue;
+          candidates.push({
+            x: x - MASK_WIDTH / 2,
+            y: y - MASK_HEIGHT / 2,
+            color: y < 265 ? "#D4A900" : "#CFCFCF",
+          });
         }
       }
 
-
-      /*
-       * ====================================================
-       * RANDOMIZE
-       * ====================================================
-       */
-
-      for (
-        let i =
-          candidates.length - 1;
-        i > 0;
-        i--
-      ) {
-        const j =
-          Math.floor(
-            Math.random() *
-              (i + 1)
-          );
-
-        const temp =
-          candidates[i];
-
-        candidates[i] =
-          candidates[j];
-
-        candidates[j] =
-          temp;
+      // Scatter candidate selection so the text stays uniformly filled.
+      for (let i = candidates.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [candidates[i], candidates[j]] = [candidates[j], candidates[i]];
       }
 
+      const limit = width < 640 ? MOBILE_PARTICLES : DESKTOP_PARTICLES;
+      particles = candidates.slice(0, limit).map(({ x, y, color }) => ({
+        x: 0,
+        y: 0,
+        vx: 0,
+        vy: 0,
+        homeX: x + (Math.random() - 0.5) * 3,
+        homeY: y + (Math.random() - 0.5) * 3,
+        size: 2.7 + Math.random() * 1.6,
+        seed: Math.random(),
+        color,
+      }));
 
-      /*
-       * ====================================================
-       * CREATE PARTICLES
-       * ====================================================
-       */
-
-      const count =
-        Math.min(
-          MAX_PARTICLES,
-          candidates.length
-        );
-
-      const nextParticles:
-        Particle[] = [];
-
-      for (
-        let i = 0;
-        i < count;
-        i++
-      ) {
-        const point =
-          candidates[i];
-
-        /*
-         * Small organic randomness.
-         */
-
-        const randomness = 3.2;
-
-        const randomX =
-          (Math.random() - 0.5) *
-          randomness;
-
-        const randomY =
-          (Math.random() - 0.5) *
-          randomness;
-
-        /*
-         * Small square pixels.
-         */
-
-        const size =
-        3.0 +
-        Math.random() * 1.5;
-
-        nextParticles.push({
-          x:
-            point.x -
-            sourceWidth / 2 +
-            randomX,
-
-          y:
-            point.y -
-            sourceHeight / 2 +
-            randomY,
-
-          homeX:
-            point.x -
-            sourceWidth / 2 +
-            randomX,
-
-          homeY:
-            point.y -
-            sourceHeight / 2 +
-            randomY,
-
-          vx: 0,
-          vy: 0,
-
-          size,
-
-          seed:
-            Math.random(),
-
-          color:
-            point.color,
-        });
-      }
-
-      particles =
-        nextParticles;
+      // Start formed, so resizing doesn't make the name fly in from offscreen.
+      const layout = getLayout();
+      particles.forEach((particle) => {
+        particle.x = layout.x + particle.homeX * layout.scale;
+        particle.y = layout.y + particle.homeY * layout.scale;
+      });
     };
 
+    const getLayout = () => {
+      const isMobile = width < 640;
+      const scale = Math.min(
+        width / (isMobile ? 1050 : 1750),
+        height / (isMobile ? 950 : 700),
+      );
 
-    /*
-     * ======================================================
-     * RESIZE
-     * ======================================================
-     */
+      return {
+        scale,
+        x: width * 0.489,
+        y: height * (isMobile ? 0.46 : 0.445),
+      };
+    };
 
     const resize = () => {
-      width =
-        window.innerWidth;
+      const bounds = parent.getBoundingClientRect();
+      width = Math.max(1, bounds.width);
+      height = Math.max(1, bounds.height);
 
-      height =
-        window.innerHeight;
-
-      /*
-       * Cap DPR at 1.5.
-       */
-
-      const dpr =
-        Math.min(
-          window.devicePixelRatio ||
-            1,
-          1.5
-        );
-
-      canvas.width =
-        width * dpr;
-
-      canvas.height =
-        height * dpr;
-
-      canvas.style.width =
-        `${width}px`;
-
-      canvas.style.height =
-        `${height}px`;
-
-      ctx.setTransform(
-        dpr,
-        0,
-        0,
-        dpr,
-        0,
-        0
-      );
-
-      createParticles();
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+      canvas.style.width = "100%";
+      canvas.style.height = "100%";
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      makeParticles();
+      if (reducedMotion.matches) draw();
     };
 
-
-    /*
-     * ======================================================
-     * MOUSE
-     * ======================================================
-     */
-
-    const handleMouseMove = (
-      event: MouseEvent
-    ) => {
-      const rect =
-        canvas.getBoundingClientRect();
-
-      mouse.current.x =
-        event.clientX -
-        rect.left;
-
-      mouse.current.y =
-        event.clientY -
-        rect.top;
+    const updateScroll = () => {
+      progress = Math.max(0, Math.min(1, window.scrollY / (window.innerHeight * 0.85)));
+      if (reducedMotion.matches) draw();
     };
 
-    const handleMouseLeave = () => {
-      mouse.current.x =
-        -9999;
-
-      mouse.current.y =
-        -9999;
+    const handlePointerMove = (event: PointerEvent) => {
+      if (event.pointerType === "touch" || reducedMotion.matches) return;
+      const bounds = canvas.getBoundingClientRect();
+      pointer.x = ((event.clientX - bounds.left) / bounds.width) * width;
+      pointer.y = ((event.clientY - bounds.top) / bounds.height) * height;
     };
 
-
-    /*
-     * ======================================================
-     * SCROLL
-     * ======================================================
-     */
-
-    const handleScroll = () => {
-      const heroHeight =
-        window.innerHeight;
-
-      const progress =
-        window.scrollY /
-        (heroHeight * 0.85);
-
-      scroll.current =
-        Math.max(
-          0,
-          Math.min(
-            1,
-            progress
-          )
-        );
+    const handlePointerLeave = () => {
+      pointer.x = -9999;
+      pointer.y = -9999;
     };
 
+    const draw = () => {
+      if (!isVisible) return;
+      ctx.clearRect(0, 0, width, height);
+      const layout = getLayout();
+      const scatter = reducedMotion.matches ? 0 : progress;
+      const fade = scatter < 0.62 ? 1 : Math.max(0, 1 - (scatter - 0.62) / 0.38);
+      const opacity = fade * (1 - scatter * 0.35);
+      ctx.globalAlpha = opacity;
 
-    /*
-     * ======================================================
-     * ANIMATION
-     * ======================================================
-     */
+      for (let index = 0; index < particles.length; index++) {
+        const particle = particles[index];
+        const angle = Math.sin(index * 13.17 + particle.seed * 20) * Math.PI * 2;
+        const distance = 160 + Math.abs(Math.sin(index * 4.21 + particle.seed)) * 420;
+        const desiredX = layout.x + particle.homeX * layout.scale + Math.cos(angle) * distance * scatter;
+        const desiredY = layout.y + particle.homeY * layout.scale + Math.sin(angle) * distance * scatter;
+
+        if (reducedMotion.matches) {
+          particle.x = desiredX;
+          particle.y = desiredY;
+        } else {
+          const dx = particle.x - pointer.x;
+          const dy = particle.y - pointer.y;
+          const dist = Math.hypot(dx, dy);
+          if (dist > 0 && dist < 210 && scatter < 0.45) {
+            const force = (1 - dist / 210) * 7;
+            particle.vx += (dx / dist) * force;
+            particle.vy += (dy / dist) * force;
+          }
+
+          particle.vx = (particle.vx + (desiredX - particle.x) * 0.018) * 0.84;
+          particle.vy = (particle.vy + (desiredY - particle.y) * 0.018) * 0.84;
+          particle.x += particle.vx;
+          particle.y += particle.vy;
+        }
+
+        const size = Math.max(1.2, (particle.size + scatter * 2) * Math.min(1, layout.scale * 1.5));
+        ctx.fillStyle = particle.color;
+        ctx.fillRect(particle.x - size / 2, particle.y - size / 2, size, size);
+      }
+      ctx.globalAlpha = 1;
+    };
 
     const animate = () => {
-      /*
-       * Clear screen.
-       */
-
-      ctx.clearRect(
-        0,
-        0,
-        width,
-        height
-      );
-
-      const centerX =
-        width / 2;
-
-      const centerY =
-        height / 2;
-
-
-      /*
-       * ====================================================
-       * LOGO SIZE
-       * ====================================================
-       */
-
-      const scale =
-        Math.min(
-          width / 1750,
-          height / 700
-        );
-
-      const scatter =
-        scroll.current;
-
-
-      /*
-       * ====================================================
-       * LOGO POSITION
-       * ====================================================
-       *
-       * Slightly left and slightly higher
-       * to create more breathing room around
-       * the person in the background.
-       */
-
-      const logoCenterX =
-        centerX -
-        width * 0.011;
-
-      const logoCenterY =
-        centerY -
-        height * 0.055;
-
-
-      /*
-       * ====================================================
-       * FADE
-       * ====================================================
-       */
-
-      const fade =
-        scatter < 0.62
-          ? 1
-          : Math.max(
-              0,
-              1 -
-                (scatter - 0.62) /
-                  0.38
-            );
-
-      const mouseX =
-        mouse.current.x;
-
-      const mouseY =
-        mouse.current.y;
-
-
-      /*
-       * ====================================================
-       * PARTICLES
-       * ====================================================
-       */
-
-      const rippleRadius =
-        210;
-
-      particles.forEach(
-        (
-          particle,
-          index
-        ) => {
-
-          /*
-           * ------------------------------------------------
-           * HOME POSITION
-           * ------------------------------------------------
-           */
-
-          const targetX =
-            particle.homeX *
-              scale +
-            logoCenterX;
-
-          const targetY =
-            particle.homeY *
-              scale +
-            logoCenterY;
-
-
-          /*
-           * ------------------------------------------------
-           * SCATTER
-           * ------------------------------------------------
-           */
-
-          const angle =
-            Math.sin(
-              index * 13.17 +
-                particle.seed * 20
-            ) *
-            Math.PI *
-            2;
-
-          const distance =
-            160 +
-            Math.abs(
-              Math.sin(
-                index * 4.21 +
-                  particle.seed
-              )
-            ) *
-              420;
-
-          const scatterX =
-            Math.cos(angle) *
-            distance;
-
-          const scatterY =
-            Math.sin(angle) *
-            distance;
-
-          const desiredX =
-            targetX +
-            scatterX *
-              scatter;
-
-          const desiredY =
-            targetY +
-            scatterY *
-              scatter;
-
-
-          /*
-           * ------------------------------------------------
-           * MOUSE RIPPLE
-           * ------------------------------------------------
-           */
-
-          const dx =
-            particle.x -
-            mouseX;
-
-          const dy =
-            particle.y -
-            mouseY;
-
-          const distanceToMouse =
-            Math.sqrt(
-              dx * dx +
-                dy * dy
-            );
-
-          if (
-            distanceToMouse <
-              rippleRadius &&
-            scatter < 0.45
-          ) {
-            const strength =
-              1 -
-              distanceToMouse /
-                rippleRadius;
-
-            const angleToMouse =
-              Math.atan2(
-                dy,
-                dx
-              );
-
-            /*
-             * Outward water ripple.
-             */
-
-            const force =
-              strength * 7;
-
-            particle.vx +=
-              Math.cos(
-                angleToMouse
-              ) *
-              force;
-
-            particle.vy +=
-              Math.sin(
-                angleToMouse
-              ) *
-              force;
-
-            /*
-             * Slight swirl.
-             */
-
-            const swirl =
-              strength * 1.8;
-
-            particle.vx +=
-              -Math.sin(
-                angleToMouse
-              ) *
-              swirl;
-
-            particle.vy +=
-              Math.cos(
-                angleToMouse
-              ) *
-              swirl;
-          }
-
-
-          /*
-           * ------------------------------------------------
-           * RETURN TO FORM
-           * ------------------------------------------------
-           */
-
-          particle.vx +=
-            (desiredX -
-              particle.x) *
-            0.018;
-
-          particle.vy +=
-            (desiredY -
-              particle.y) *
-            0.018;
-
-
-          /*
-           * Damping.
-           */
-
-          particle.vx *=
-            0.84;
-
-          particle.vy *=
-            0.84;
-
-
-          /*
-           * Update position.
-           */
-
-          particle.x +=
-            particle.vx;
-
-          particle.y +=
-            particle.vy;
-
-
-          /*
-           * ------------------------------------------------
-           * DRAW
-           * ------------------------------------------------
-           */
-
-          const size =
-            particle.size +
-            scatter * 2;
-
-          const particleAlpha =
-            fade *
-            (1 -
-              scatter * 0.35);
-
-          ctx.globalAlpha =
-            particleAlpha;
-
-          ctx.fillStyle =
-            particle.color;
-
-          ctx.fillRect(
-            particle.x -
-              size / 2,
-            particle.y -
-              size / 2,
-            size,
-            size
-          );
-        }
-      );
-
-
-      /*
-       * ====================================================
-       * SUBTITLE
-       * ====================================================
-       */
-
-      const subtitleSize =
-        Math.min(
-          30,
-          width * 0.025
-        );
-
-      const subtitle =
-        "";
-
-      ctx.save();
-
-      ctx.font =
-        `700 ${subtitleSize}px "Courier New", monospace`;
-
-      ctx.textAlign =
-        "center";
-
-      ctx.textBaseline =
-        "middle";
-
-
-      /*
-       * Subtitle now sits closer
-       * to the title.
-       */
-
-      const subtitleBaseY =
-        logoCenterY +
-        255;
-
-
-      /*
-       * ====================================================
-       * SUBTITLE MOUSE DISTANCE
-       * ====================================================
-       */
-
-      const subtitleDx =
-        mouseX -
-        logoCenterX;
-
-      const subtitleDy =
-        mouseY -
-        subtitleBaseY;
-
-      const subtitleDistance =
-        Math.sqrt(
-          subtitleDx *
-              subtitleDx +
-            subtitleDy *
-              subtitleDy
-        );
-
-      const subtitleRadius =
-        180;
-
-      let rippleStrength =
-        0;
-
-      if (
-        subtitleDistance <
-        subtitleRadius
-      ) {
-        rippleStrength =
-          1 -
-          subtitleDistance /
-            subtitleRadius;
-      }
-
-
-      /*
-       * ====================================================
-       * MEASURE CHARACTERS
-       * ====================================================
-       */
-
-      const characterWidths =
-        subtitle
-          .split("")
-          .map(
-            (character) =>
-              ctx.measureText(
-                character
-              ).width
-          );
-
-      const totalWidth =
-        characterWidths.reduce(
-          (
-            sum,
-            value
-          ) =>
-            sum + value,
-          0
-        );
-
-      let currentX =
-        logoCenterX -
-        totalWidth / 2;
-
-
-      /*
-       * ====================================================
-       * DRAW SUBTITLE
-       * ====================================================
-       */
-
-      subtitle
-        .split("")
-        .forEach(
-          (
-            character,
-            index
-          ) => {
-            const characterWidth =
-              characterWidths[
-                index
-              ];
-
-            const characterCenter =
-              currentX +
-              characterWidth /
-                2;
-
-            const distanceFromMouse =
-              Math.abs(
-                characterCenter -
-                  mouseX
-              );
-
-            const localStrength =
-              Math.max(
-                0,
-                1 -
-                  distanceFromMouse /
-                    120
-              ) *
-              rippleStrength;
-
-            const wave =
-              Math.sin(
-                index * 0.9
-              );
-
-            const rippleY =
-              wave *
-              localStrength *
-              8;
-
-            const rippleX =
-              Math.cos(
-                index * 0.9
-              ) *
-              localStrength *
-              3;
-
-            ctx.globalAlpha =
-              fade;
-
-            ctx.fillStyle =
-              "white";
-
-            ctx.fillText(
-              character,
-              characterCenter +
-                rippleX,
-              subtitleBaseY +
-                rippleY
-            );
-
-            currentX +=
-              characterWidth;
-          }
-        );
-
-      ctx.restore();
-
-      ctx.globalAlpha = 1;
-
-
-      /*
-       * ====================================================
-       * NEXT FRAME
-       * ====================================================
-       */
-
-      animationFrame =
-        requestAnimationFrame(
-          animate
-        );
+      if (isVisible) draw();
+      if (!reducedMotion.matches) animationFrame = requestAnimationFrame(animate);
     };
 
-
-    /*
-     * ======================================================
-     * EVENTS
-     * ======================================================
-     */
-
-    window.addEventListener(
-      "resize",
-      resize
-    );
-
-    window.addEventListener(
-      "mousemove",
-      handleMouseMove
-    );
-
-    window.addEventListener(
-      "mouseleave",
-      handleMouseLeave
-    );
-
-    window.addEventListener(
-      "scroll",
-      handleScroll,
-      {
-        passive: true,
+    const handleVisibility = () => {
+      isVisible = !document.hidden;
+      if (isVisible) {
+        if (reducedMotion.matches) draw();
+        else if (!animationFrame) animationFrame = requestAnimationFrame(animate);
+      } else {
+        cancelAnimationFrame(animationFrame);
+        animationFrame = 0;
       }
-    );
+    };
 
+    const handleMotionChange = () => {
+      cancelAnimationFrame(animationFrame);
+      animationFrame = 0;
+      if (reducedMotion.matches) draw();
+      else animate();
+    };
 
-    /*
-     * ======================================================
-     * START
-     * ======================================================
-     */
+    const observer = new ResizeObserver(resize);
+    observer.observe(parent);
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    window.addEventListener("pointerleave", handlePointerLeave);
+    window.addEventListener("scroll", updateScroll, { passive: true });
+    document.addEventListener("visibilitychange", handleVisibility);
+    reducedMotion.addEventListener("change", handleMotionChange);
 
     resize();
-
-    handleScroll();
-
-    animate();
-
-
-    /*
-     * ======================================================
-     * CLEANUP
-     * ======================================================
-     */
+    updateScroll();
+    if (!reducedMotion.matches) animate();
 
     return () => {
-      window.removeEventListener(
-        "resize",
-        resize
-      );
-
-      window.removeEventListener(
-        "mousemove",
-        handleMouseMove
-      );
-
-      window.removeEventListener(
-        "mouseleave",
-        handleMouseLeave
-      );
-
-      window.removeEventListener(
-        "scroll",
-        handleScroll
-      );
-
-      cancelAnimationFrame(
-        animationFrame
-      );
+      observer.disconnect();
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerleave", handlePointerLeave);
+      window.removeEventListener("scroll", updateScroll);
+      document.removeEventListener("visibilitychange", handleVisibility);
+      reducedMotion.removeEventListener("change", handleMotionChange);
+      cancelAnimationFrame(animationFrame);
     };
   }, []);
 
   return (
     <canvas
       ref={canvasRef}
-      className="
-        absolute
-        inset-0
-        h-full
-        w-full
-        pointer-events-auto
-      "
-      aria-label="Dhwani Patel"
+      className="absolute inset-0 h-full w-full pointer-events-none"
+      role="img"
+      aria-label="Animated title: Dhwani Patel"
     />
   );
 }

@@ -43,6 +43,7 @@ export default function Skills() {
         "Adobe Photoshop",
         "Adobe Illustrator",
         "Adobe InDesign",
+        "Adobe XD",
         "Adobe Premiere Pro",
         "Adobe Lightroom",
         "3D Modeling",
