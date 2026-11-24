@@ -72,7 +72,7 @@ export default function HoverTargets({
         {/* ================================================= */}
 
         <a
-          href="https://canva.link/lyqomyc283nk5x5"
+          href="/DHWANIPATEL_RESUME.pdf"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Resume"
